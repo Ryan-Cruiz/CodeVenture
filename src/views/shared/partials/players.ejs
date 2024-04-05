@@ -1,0 +1,8 @@
+
+    <% for(var x in data){ %>
+    <div>
+        <img src="img/<%= data[x].img %>" alt="<%= data[x].name %>'s profile">
+        <p><%= data[x].name%></p>
+        <p>Sports: <%=data[x].sport_name%></p>
+    </div>
+    <% } %>
