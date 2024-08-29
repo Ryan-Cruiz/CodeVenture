@@ -29,6 +29,7 @@ const session = require('express-session');
 const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(Express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use(Express.static(__dirname + '/node_modules/ace-builds'))
 app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 app.use(session(config.session));

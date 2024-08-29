@@ -10,7 +10,7 @@ middleware.routeRole = {
 }
 /* $.post is for the forms  if you want to get the data */
 $.get['/'] = UserController.index; // index function
-$.get['/success'] = UserController.success;
+$.get['/dashboard'] = UserController.success;
 $.get['/failure'] = UserController.fail; 
 module.exports = $.execute_path();
 middleware.routes = $.routes;

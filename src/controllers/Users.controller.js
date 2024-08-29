@@ -15,8 +15,9 @@ class Users {
         if($.req.user){
             $.res.redirect('/failure');
         }
-        console.log($.req.user);
-        $.res.send('Success!');
+        console.log($.req);
+        $.res.render('user/dashboard');
+        // $.res.send('Success!');
         $.res.end();
     }
     async fail() {
