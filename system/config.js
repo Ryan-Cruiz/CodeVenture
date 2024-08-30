@@ -9,7 +9,7 @@ module.exports = {
         "host": "localhost",
         "user": "root",
         "password": "root",
-        "database": "sample",
+        "database": "codeventure",
         "port": 3307
     },
     session:

@@ -40,7 +40,7 @@ class Middleware {
                 }
             }
         }
-        console.log(accessRoutes, 'aftter routs');
+        // console.log(accessRoutes, 'aftter routs');
     }
 }
 module.exports = new Middleware();
