@@ -1,14 +1,15 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
+        <a class="navbar-brand" href="/">
+            <img src="img/logo.png" alt="Logo" width="30" height="25" class="d-inline-block align-text-top">
+            CodeVenture</a>
         <div class="d-flex">
-            <p id="user-icon" class="user-select-none dropdown-toggle" style="cursor: pointer;">Hello, Developer</p>
+            <div id="user-icon" class="user-select-none dropdown-toggle align-middle" style="cursor: pointer;">Hello, <%=
+                    user.name %>
+            </div>
             <div class="list-group float-end position-absolute" id="user-container">
                 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                     Profile
-                </a>
-                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                    Settings
                 </a>
                 <a href="/logout" class="list-group-item list-group-item-action" aria-current="true">
                     Sign Out

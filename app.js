@@ -41,7 +41,10 @@ const middleware = require('./system/middleware.js');
 const passport = require('passport');
 app.use((req, res, next) => {
     profiler.time = Date.now(); // take the current time of execution
-    req.session.roles = ['guest']; // you can change this as a config.session or a database object(json)
+    if (req.session.roles == undefined) {
+        req.session.roles = ['all','guest']; // you can change this as a config.session or a database object(json)
+    }
+    console.log(req.url)
     req.appServiceRole = middleware.validate_role(req.url, req.session.roles);
     profiler.req = req; // take the request
     profiler.res = res; // take the response
@@ -64,12 +67,12 @@ app.get('/user/:id', (req, res, next) => {
     // console.log(req);
 
 })
-app.get('/auth/google', passport.authenticate('google',{ scope: ['email','profile']}));
-app.get( '/auth/google/callback', 
-	passport.authenticate( 'google', { 
-		successRedirect: '/success', 
-		failureRedirect: '/failure'
-}));
+app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        successRedirect: '/success',
+        failureRedirect: '/failure'
+    }));
 
 app.use(routes);
 app.listen(config.port, function () {

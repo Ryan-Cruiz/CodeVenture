@@ -6,17 +6,24 @@ const $ = route_path;
 const middleware = require('./middleware.js');
 
 middleware.routeRole = {
-    "guest": ['/createAccount','/register'],
-    "authenticated": ['/dashboard','/logout']
+    "all": ['/'],
+    "auth": ['/logout','/settings'],
+    "guest": ['/createAccount','/register','/login'],
+    "admin": ['/settings','/logout']
 }
 /* $.post is for the forms  if you want to get the data */
+/* START OF USERCONTROLLER */
 $.get['/'] = UserController.index; // index function
 $.post['/login'] = UserController.login;
 $.post['/createAccount'] = UserController.createAccount;
 $.get['/register'] = UserController.register;
 $.get['/logout'] = UserController.logOut;
-$.get['/dashboard'] = UserController.success;
-$.get['/failure'] = UserController.fail; 
+// $.get['/dashboard'] = UserController.success;
+// $.get['/failure'] = UserController.fail; 
+$.get['/settings'] = UserController.settings;
+/* END OF USERCONTROLLER */
+
+
 module.exports = $.execute_path();
 middleware.routes = $.routes;
 

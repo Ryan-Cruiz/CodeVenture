@@ -8,10 +8,11 @@ class User extends model {
         return query;
     }
     async login_process(form_input) {
-        let query = this.sql.format('SELECT * FROM users WHERE email = ?', [form_input.email]);
+        let query = this.sql.format('SELECT * FROM users INNER JOIN credentials ON users.id = user_id WHERE email = ?',
+            [form_input.email]);
         let result = await super.Rawquery(query);
-        this.profiler_enable();
-        console.log(this.bcrypt.compareSync(form_input.password,result[0].password))
+        // this.profiler_enable();
+        console.log(this.bcrypt.compareSync(form_input.password, result[0].password))
         if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
             return 'fail';
         }
@@ -21,7 +22,7 @@ class User extends model {
     async email_validate(form_input) {
         // let email = this.select('users', ['*']).where(['email = \'' + form_input.email + '\'']).exec();
         let query = this.sql.format('SELECT * FROM users WHERE email = ?', [form_input.email]);
-        console.log(query)
+        // console.log(query)
         // return callback('success');
         let result = await super.Rawquery(query);
         // console.log(result)
@@ -40,11 +41,13 @@ class User extends model {
         console.log(result)
         if (result != 'fail') {
             let userQuery = this.insert('users', ['email', 'password', 'created_at'],
-                [form_input.email, this.bcrypt.hashSync(form_input.password, 10), 'NOW()']).exec();
+                [form_input.email, this.bcrypt.hashSync(form_input.password, 10), `NOW()`]).exec();
             let lastData = await userQuery;
             // console.log(lastData.insertId, lastData, 'sadksaldksaldksa')
-            this.insert('credentials', ['firstName', 'lastName', 'user_id', 'created_at'],
-                [form_input.firstName, form_input.lastName, lastData.insertId, 'NOW()']).exec();
+            let credQuery = this.insert('credentials', ['first_name', 'last_name', 'user_id', 'created_at'],
+                [form_input.firstName, form_input.lastName, lastData.insertId, `NOW()`]).exec();
+            // console.log(credQuery.queries);
+            // let credRes = await super.Rawquery(credQuery.queries);
             // let query = this.sql.format(`INSERT INTO 
             // users(first_name,last_name,email,password,created_at) VALUES(?,?,?,?,NOW())`,
             //     [form_input.first_name, form_input.last_name, form_input.email, this.bcrypt.hashSync(form_input.password, 10)]);

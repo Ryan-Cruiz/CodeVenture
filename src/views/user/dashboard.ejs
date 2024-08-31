@@ -1,28 +1,14 @@
 <%- include('../shared/header') %>
 
-    <div class="container">
-        <button id="run-btn">Run</button>
-        <div class="container">
-            <code>function foo(){</code>
-            <code>
-    <pre id="code" contenteditable="true" style="border:1px solid black;">
-let x = "This piece of code will get executed";
-return x;
-        </pre>
-    </code>
-            <code>}</code>
+    <div class="container mt-3">
+        <div class="card" style="width: 18rem;">
+            <img src="img/logo.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
         </div>
-
     </div>
-    <!-- <script src="src/ace.js" type="text/javascript" charset="utf-8"></script> -->
-    <script>
-        // var editor = ace.edit("editor");
-        // editor.setTheme("ace/theme/monokai");
-        // editor.session.setMode("ace/mode/javascript");
-        $('#run-btn').click(function () {
-            let f = new Function(document.getElementById("code").innerText);
-            f()
-        })
-    </script>
-
     <%- include('../shared/footer') %>
