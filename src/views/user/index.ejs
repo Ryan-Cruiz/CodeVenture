@@ -1,10 +1,30 @@
-<%- include('../shared/header') %>
+<%- include('shared/header') %>
     <div class="container">
-        <h1>Login</h1>
-        <form action="/insertCar" method="post">
-            Name<input type="text" name="name" id="">
-            Brand <input type="text" name="brand" id="">
-            <input type="submit" value="Submit">
-        </form>
+        <div class="container position-absolute top-50 start-50 translate-middle w-50 border-1">
+            <!-- <h1 class="text-center">CodeVenture</h1> -->
+            <div class="text-center">
+                <img src="img/logo.png" alt="CodeVenture logo" srcset="">
+            </div>
+            <form action="/login" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" value="developer.access@email.com" name="email" required class="form-control" id="email" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" value="password" name="password" required class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Login" class="btn btn-primary w-50">
+                    <p class="mt-1">
+                        <a href="/register">Dont have account? Click Here</a>
+                    </p>
+                </div>
+            </form>
+            <!-- <a href="/auth/google">Log In using Google</a> -->
+        </div>
+        </head>
+
+        <body>
     </div>
-<%- include('../shared/footer') %>
+    <%- include('shared/footer') %>

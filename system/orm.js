@@ -27,10 +27,10 @@ class ORM {
      * @returns 
      * This will take an array of condition e.g WHERE([t1, ORM.and(t2) , ORM.or(t3) ])
      */
-    where() {
+    where(condition_arr) {
         this.queries += ` WHERE `
-        for (let i = 0; arguments.length; i++) {
-            this.queries += arguments[i] + ` `;
+        for (let i = 0; condition_arr.length; i++) {
+            this.queries += `${condition_arr[i]}  `;
         }
         return this;
     }

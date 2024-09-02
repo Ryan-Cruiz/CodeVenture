@@ -12,22 +12,32 @@ class Middleware {
      * @returns 
      * returns true if have access to the route
      */
-    validate_role(currURL, currRole) {
-        let routeRole = this.routeRole;
+    validate_role(currRole, currURL) {
+        let routeRole = [];
         let accessRoutes = this.routes;
-        // console.log(this.routes, 'calling from validate_role')
+        // console.log(this.routes, 'calling from validate_role', this.routeRole)
         accessRoutes = accessRoutes.filter((val, index) => accessRoutes.indexOf(val) === index)
-        // console.log(accessRoutes, currRole, routeRole);
-        this.removeRestrictedRoutes(accessRoutes, routeRole, currRole);
-        return accessRoutes.indexOf(currURL) !== -1 ? true : false;
-    }
-    removeRestrictedRoutes(accessRoutes, routeRole, currRole) {
-        let tempArr = [];
+        // console.log(accessRoutes, currRole, routeRole,currURL, 'asdsadsadsad');
         for (let i = 0; i < currRole.length; i++) {
-            delete routeRole[currRole[i]];
+            // console.log(this.routeRole[currRole[i]])
+            if (this.routeRole[currRole[i]] == currRole[i]) {
+                continue;
+            }
+            routeRole.push(this.routeRole[currRole[i]]);
         }
+
+        // console.log(routeRole, 'acssess')
+        // console.log(routeRole, this.routeRole, 'routerole')
+        let accessRoutes1 = this.removeRestrictedRoutes(accessRoutes, routeRole);
+        // console.log(currURL.indexOf(':') == -1, 'asdacurrent');
+        return accessRoutes1.indexOf(currURL) !== -1 ? true : false;
+        // return this.routeRole;
+
+    }
+    removeRestrictedRoutes(accessRoutes, routeRole) {
+        let tempArr = [];
         let keys = Object.keys(routeRole);
-        // console.log(routeRole, 'from rrr', accessRoutes)
+        // console.log(routeRole, 'from rrr', accessRoutes, keys)
         for (let i = 0; i < keys.length; i++) {
             tempArr.push(...routeRole[keys[i]])
         }
@@ -36,11 +46,12 @@ class Middleware {
             for (let i = 0; i < accessRoutes.length; i++) {
                 if (tempArr[j] === accessRoutes[i]) {
                     // console.log(accessRoutes[i], 'match', tempArr[j])
-                    accessRoutes.splice(accessRoutes.indexOf(tempArr[j]),1);
+                    accessRoutes.splice(accessRoutes.indexOf(tempArr[j]), 1);
                 }
             }
         }
-        console.log(accessRoutes, 'aftter routs');
+        console.log(tempArr, 'aftter routs');
+        return tempArr;
     }
 }
 module.exports = new Middleware();

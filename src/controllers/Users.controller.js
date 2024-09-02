@@ -1,22 +1,106 @@
 
-const loader = require('../loaders.js');
+const loader = require("../loaders.js");
 const model = loader.core.model;
 const $ = loader.profile;
+const user = model('User');
+const config = loader.config;
 class Users {
     async index() {
         // console.log(res);
         // const res = await car.getAllCars();
         // console.log(res, 'response')
-        $.res.render('index'); // render the index page
+        console.log($.req.session)
+        if (!$.req.session.logged) {
+            $.req.session.logged = false;
+            // this.result = [];
+            $.res.render('user/index', { result: $.req.session.result });
+            // $.res.render('user/index');
+        } else {
+            // $.res.locals.user_data = {name: "developer", user_id: 27};
+            console.log($.req.app.locals)
+            $.res.render('user/dashboard', { user: $.req.session.user_data });
+        }
         $.res.end();
         // console.log('this is a index function');
     }
-    async success(){
-        if($.req.user){
+    async login() {
+        let result = await user.login_validate($.req.body); // get validate
+        // console.log('wiwi',result,$.req.body);
+        if (result == 'success') {
+            let res = await user.login_process($.req.body); // get the query
+            // console.log(data.first_name, 'this is data');
+            console.log(res, 'login res');
+            if (res == 'fail') { // check if not
+                $.req.session.result = ['Wrong Password']; // get the result as a array of message
+            } else {
+                let data = res[0];
+                $.req.session.logged = true;
+                $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
+                $.req.session.roles = ['all', 'auth'];
+            }
+            // console.log($.req.session)
+            $.res.redirect('/')
+            // this.result = data; // reference the result to the data and render this.result on result.ejs
+        } else {
+            // this.result = result;
+            $.res.redirect('/');
+            $.res.end();
+        }
+    }
+    async createAccount() {
+        //check create validate if rules are all correct
+        let result = user.create_validate($.req.body);
+        // console.log(result)
+        if (await result == 'success') {
+            // register the user
+            let createProcess = await user.create_process($.req.body);
+            // console.log(data)
+            if (createProcess == 'success') {
+                let res = await user.login_process($.req.body); // get the query
+                // console.log(data.first_name, 'this is data');
+                console.log(res, 'login res');
+                if (res == 'fail') { // check if not
+                    $.req.session.result = ['Wrong Password']; // get the result as a array of message
+                } else {
+                    let data = res[0];
+                    $.req.session.logged = true;
+                    $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
+                    $.req.session.roles = ['all', 'auth'];
+                }
+            } else {
+                // console.log('failedasdsad')
+                // this.result = ['Email is Taken'];
+                $.res.redirect('/register');
+            }
+        } else {
+            // this.result = result;
+            $.res.redirect('/');
+        }
+        // $.res.redirect('/register')
+    }
+    async register() {
+        console.log($.req.session)
+        $.res.render('user/create');
+    }
+    async logOut() {
+        $.req.session.destroy();
+        console.log("dsadsad")
+        // this.result = [];
+        $.res.redirect('/');
+    }
+    async settings() {
+
+        $.res.render('user/settings', { config: config.database });
+    }
+
+    // for google auth
+    async success() {
+        if ($.req.user) {
             $.res.redirect('/failure');
         }
-        console.log($.req.user);
-        $.res.send('Success!');
+        console.log($.req);
+        $.res.render('user/dashboard');
+        // $.res.send('Success!');
         $.res.end();
     }
     async fail() {

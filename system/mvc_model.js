@@ -13,10 +13,10 @@ module.exports = class mvc_model extends ORM {
     }
     dbConnection() {
         try {
-            if (this.CONFIG.db_type == 'pg') {
+            if (this.CONFIG.db_type === 'pg') {
                 const Pool = require('pg').Pool;
                 this.connection = new Pool(this.CONFIG.database);
-            } else if (this.CONFIG.db_type == 'mysql') {
+            } else if (this.CONFIG.db_type === 'mysql') {
                 this.sql = require('mysql');
                 this.connection = this.sql.createConnection(this.CONFIG.database);
             }
@@ -44,8 +44,8 @@ module.exports = class mvc_model extends ORM {
     Rawquery(query) {
         return new Promise((resolve, reject) => {
             this.connection.query(query, (err, rows) => {
-                //  this.profiler.queries(query,rows);
                 if (err) reject(err);
+                this.profiler.query_result = rows;
                 resolve(rows);
             });
         });

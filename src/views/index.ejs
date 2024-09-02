@@ -1,5 +1,27 @@
 <%- include('shared/header') %>
     <div class="container">
-        <a href="/auth/google">Log In using Google</a>
+        <div class="container position-absolute top-50 start-50 translate-middle w-50">
+            <h1 class="text-center">CodeVenture</h1>
+            <form action="/insertCar" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" required class="form-control" id="email" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" required class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Login" class="btn btn-primary w-50">
+                    <p class="mt-1">
+                        <a href="/register">Dont have account? Click Here</a>
+                    </p>
+                </div>
+            </form>
+            <!-- <a href="/auth/google">Log In using Google</a> -->
+        </div>
+        </head>
+
+        <body>
     </div>
-<%- include('shared/footer') %>
+    <%- include('shared/footer') %>

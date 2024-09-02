@@ -29,6 +29,7 @@ const session = require('express-session');
 const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(Express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use(Express.static(__dirname + '/node_modules/ace-builds'))
 app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 app.use(session(config.session));
@@ -38,10 +39,19 @@ app.use(cors());
 const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 const passport = require('passport');
+app.locals.title = "CodeVenture";
 app.use((req, res, next) => {
     profiler.time = Date.now(); // take the current time of execution
-    req.session.roles = ['guest']; // you can change this as a config.session or a database object(json)
-    req.appServiceRole = middleware.validate_role(req.url, req.session.roles);
+    if (req.session.roles == undefined) {
+        req.session.logged = true;
+        req.session.user_data = {name: "developer", user_id: 27}
+        req.session.roles = ['all','auth']; // you can change this as a config.session or a database object(json)
+    }
+    if(req.session.logged){
+        res.locals.user_data = req.session.user_data;
+    }
+    // console.log(res.locals)
+    // req.appServiceRole = middleware.validate_role(req.session.roles);
     profiler.req = req; // take the request
     profiler.res = res; // take the response
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
@@ -63,12 +73,12 @@ app.get('/user/:id', (req, res, next) => {
     // console.log(req);
 
 })
-app.get('/auth/google', passport.authenticate('google',{ scope: ['email','profile']}));
-app.get( '/auth/google/callback', 
-	passport.authenticate( 'google', { 
-		successRedirect: '/success', 
-		failureRedirect: '/failure'
-}));
+app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        successRedirect: '/success',
+        failureRedirect: '/failure'
+    }));
 
 app.use(routes);
 app.listen(config.port, function () {

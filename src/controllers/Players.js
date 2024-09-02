@@ -28,7 +28,7 @@ class Players {
     async getCars() {
         // console.log('call from app', $.appServiceRole, $);
         const res  = await car.getAllCars();
-        $.res.send(res);
+        $.res.send(res,'awea');
     }
     async insertCar() {
         console.log('reached');
