@@ -1,13 +1,10 @@
 
-const loader = require('../loaders.js');
+const loader = require("../loaders.js");
 const model = loader.core.model;
 const $ = loader.profile;
 const user = model('User');
 const config = loader.config;
 class Users {
-    constructor() {
-        this.result = []; // this is to catch the result in database errors
-    }
     async index() {
         // console.log(res);
         // const res = await car.getAllCars();
@@ -16,8 +13,8 @@ class Users {
         if (!$.req.session.logged) {
             $.req.session.logged = false;
             // this.result = [];
-            // $.res.render('user/index', { result: this.result });
-            $.res.render('user/index');
+            $.res.render('user/index', { result: $.req.session.result });
+            // $.res.render('user/index');
         } else {
             $.res.render('user/dashboard', { user: $.req.session.user_data });
         }
@@ -29,18 +26,19 @@ class Users {
         // console.log('wiwi',result,$.req.body);
         if (result == 'success') {
             let res = await user.login_process($.req.body); // get the query
-            let data = res[0];
             // console.log(data.first_name, 'this is data');
-            if (data != 'fail') { // check if not
+            console.log(res, 'login res');
+            if (res == 'fail') { // check if not
+                $.req.session.result = ['Wrong Password']; // get the result as a array of message
+            } else {
+                let data = res[0];
                 $.req.session.logged = true;
                 $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
                 $.req.session.roles = ['all', 'auth'];
-                // console.log($.req.session)
-                $.res.redirect('/')
-                // this.result = data; // reference the result to the data and render this.result on result.ejs
-            } else {
-                // this.result = ['Wrong Password']; // get the result as a array of message
             }
+            // console.log($.req.session)
+            $.res.redirect('/')
+            // this.result = data; // reference the result to the data and render this.result on result.ejs
         } else {
             // this.result = result;
             $.res.redirect('/');
@@ -53,19 +51,19 @@ class Users {
         // console.log(result)
         if (await result == 'success') {
             // register the user
-            let data = await user.create_process($.req.body);
+            let createProcess = await user.create_process($.req.body);
             // console.log(data)
-            if (data == 'success') {
-                let data = await user.login_process($.req.body); // get the query
-                console.log(data);
-                if (data != 'fail') { // check if not
+            if (createProcess == 'success') {
+                let res = await user.login_process($.req.body); // get the query
+                // console.log(data.first_name, 'this is data');
+                console.log(res, 'login res');
+                if (res == 'fail') { // check if not
+                    $.req.session.result = ['Wrong Password']; // get the result as a array of message
+                } else {
+                    let data = res[0];
                     $.req.session.logged = true;
                     $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
                     $.req.session.roles = ['all', 'auth'];
-                    $.res.redirect('/')
-                    // this.result = data; // reference the result to the data and render this.result on result.ejs
-                } else {
-                    // this.result = ['Wrong Password']; // get the result as a array of message
                 }
             } else {
                 // console.log('failedasdsad')

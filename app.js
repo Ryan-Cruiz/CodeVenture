@@ -45,7 +45,7 @@ app.use((req, res, next) => {
         req.session.roles = ['all','guest']; // you can change this as a config.session or a database object(json)
     }
     console.log(req.url)
-    req.appServiceRole = middleware.validate_role(req.url, req.session.roles);
+    // req.appServiceRole = middleware.validate_role(req.session.roles);
     profiler.req = req; // take the request
     profiler.res = res; // take the response
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when

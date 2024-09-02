@@ -12,23 +12,27 @@ class Middleware {
      * @returns 
      * returns true if have access to the route
      */
-    validate_role(currURL, currRole) {
+    validate_role(currRole, currURL) {
         let routeRole = [];
         let accessRoutes = this.routes;
-        console.log(this.routes, 'calling from validate_role', this.routeRole)
+        // console.log(this.routes, 'calling from validate_role', this.routeRole)
         accessRoutes = accessRoutes.filter((val, index) => accessRoutes.indexOf(val) === index)
-        // console.log(accessRoutes, currRole, routeRole,'asdsadsadsad');
+        // console.log(accessRoutes, currRole, routeRole,currURL, 'asdsadsadsad');
         for (let i = 0; i < currRole.length; i++) {
-            // console.log(routeRole[currRole[i]])
+            // console.log(this.routeRole[currRole[i]])
             if (this.routeRole[currRole[i]] == currRole[i]) {
                 continue;
             }
             routeRole.push(this.routeRole[currRole[i]]);
         }
-        // console.log(routeRole[0],'routerole')
+
+        // console.log(routeRole, 'acssess')
+        // console.log(routeRole, this.routeRole, 'routerole')
         let accessRoutes1 = this.removeRestrictedRoutes(accessRoutes, routeRole);
-        // console.log(accessRoutes1.indexOf(currURL), 'asdacurrent');
+        // console.log(currURL.indexOf(':') == -1, 'asdacurrent');
         return accessRoutes1.indexOf(currURL) !== -1 ? true : false;
+        // return this.routeRole;
+
     }
     removeRestrictedRoutes(accessRoutes, routeRole) {
         let tempArr = [];
@@ -46,7 +50,7 @@ class Middleware {
                 }
             }
         }
-        // console.log(accessRoutes, tempArr, 'aftter routs');
+        console.log(tempArr, 'aftter routs');
         return tempArr;
     }
 }

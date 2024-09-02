@@ -12,8 +12,8 @@ class User extends model {
             [form_input.email]);
         let result = await super.Rawquery(query);
         // this.profiler_enable();
-        console.log(this.bcrypt.compareSync(form_input.password, result[0].password))
-        if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
+        console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
+        if (!this.bcrypt.compareSync(form_input.password, result[0].password)) {
             return 'fail';
         }
         return result;
