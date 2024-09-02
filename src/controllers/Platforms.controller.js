@@ -4,7 +4,8 @@ const $ = loader.profile;
 class Platforms {
     // Create something
     async index() {
-        $.res.send($.req.params.id);
+        // $.res.send($.req.params.id);
+        $.res.render('platform/index')
     }
     async test() {
         $.res.send($.req.params.id);

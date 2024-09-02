@@ -16,6 +16,8 @@ class Users {
             $.res.render('user/index', { result: $.req.session.result });
             // $.res.render('user/index');
         } else {
+            // $.res.locals.user_data = {name: "developer", user_id: 27};
+            console.log($.req.app.locals)
             $.res.render('user/dashboard', { user: $.req.session.user_data });
         }
         $.res.end();

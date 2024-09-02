@@ -25,8 +25,8 @@ $.get['/settings'] = UserController.settings;
 /* END OF USERCONTROLLER */
 
 /* START OF PLATFORMCONTROLLER */
-$.get['/chapters/:id'] = PlatformsController.test;
-$.get['/chapters/:id/levels/:level_id'] = PlatformsController.index;
+$.get['/chapters/:id'] = PlatformsController.index;
+$.get['/chapters/:id/levels/:level_id'] = PlatformsController.test;
 /* END OF PLATFORMCONTROLLER */
 
 module.exports = $.execute_path();
