@@ -22,7 +22,7 @@ module.exports = class mvc_model extends ORM {
             }
             this.connection.connect(function (err) {
                 if (err) throw err;
-                console.log("Connected!");
+                console.log("SQL Connected!");
             });
 
         } catch (e) {

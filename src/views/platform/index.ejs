@@ -3,13 +3,13 @@
     <div class="container">
         <button id="run-btn">Run</button>
         <div class="container">
-            <code>function foo(){</code>
+            <code class="language-javascript bg-transparent" id="function-name">function foo(x,y){</code>
+            <code class="language-javascript d-block" id="code" contenteditable="true"
+                style="border:1px solid black;">    console.log(1);</code>
+            <code class="language-javascript bg-transparent" id="function-end">}</code>
             <code>
-        <pre id="code" contenteditable="true" style="border:1px solid black;">
-            console.log(1)
-        </pre>
-    </code>
-            <code>}</code>
+                <!-- <div id="editor" style="width: 500px; height: 200px;"></div> -->
+            </code>
             <div class="container">
                 <p>Output</p>
                 <div id="output">
@@ -17,32 +17,26 @@
                 </div>
             </div>
         </div>
-        <code>
-            <div id="editor" style="width: 500px; height: 100px;">
-                </div>
-        </code>
     </div>
     <!-- <script src="../src/ace.js" type="text/javascript" charset="utf-8"></script> -->
     <script>
         // var editor = ace.edit("editor");
-        // editor.session.setTabSize(2);
-        // editor.session.setUseSoftTabs(true);
-        // editor.session.setUseWrapMode(true);
-        // let s =  ace.createEditSession(["function foo(){", "css", "}"]);
+        // let s =  ace.createEditSession([""]);
         // editor.setSession(s);
         // editor.setTheme("ace/theme/monokai");
         // editor.session.setMode("ace/mode/javascript");
         // editor.resize()
-        // console.log($('.ace_text-layer').html(""));
         // editor.session.replace(new ace.Range(0, 0, 1, 0), "new text");
-        $('#run-btn').click(function () {
-            console.log(editor.session.getTextRange(editor.getSelectionRange())); 
-            console.log($('.ace_line:last-child'));
-            let f = new Function(document.getElementById("code").innerText);
+        $('#run-btn').click(function (e) {
+            // console.log(editor.session.getTextRange(editor.getSelectionRange())); 
+            // console.log($('.ace_line:last-child'));
+            e.preventDefault();
+            let foo = Function('x','y',document.getElementById('code').innerText);
             var logger = document.getElementById('output');
             logger.innerHTML = "";
             if (!console) {
                 console = {};
+                // console.log(f(1,2));
             }
             var old = console.log;
             console.log = function (message) {
@@ -52,7 +46,9 @@
                     logger.innerHTML += message + '<br />';
                 }
             }
-            f()
+            console.log(foo(1,2));
+            console.log(foo(2,2));
+            // f()
 
         })
     </script>

@@ -3,13 +3,16 @@ const loader = require("../loaders.js");
 const model = loader.core.model;
 const $ = loader.profile;
 const user = model('User');
+const Platform = model("Platform");
 const config = loader.config;
+let error = [];
 class Users {
+
     async index() {
         // console.log(res);
         // const res = await car.getAllCars();
         // console.log(res, 'response')
-        console.log($.req.session)
+        // console.log($.req.session)
         if (!$.req.session.logged) {
             $.req.session.logged = false;
             // this.result = [];
@@ -17,8 +20,11 @@ class Users {
             // $.res.render('user/index');
         } else {
             // $.res.locals.user_data = {name: "developer", user_id: 27};
-            console.log($.req.app.locals)
-            $.res.render('user/dashboard', { user: $.req.session.user_data });
+            // console.log($.req.app.locals)
+            let res = await Platform.getLessons();
+            let data = res;
+            // console.log(data);
+            $.res.render('user/dashboard', { user: $.req.session.user_data, lessons: data });
         }
         $.res.end();
         // console.log('this is a index function');
@@ -31,21 +37,22 @@ class Users {
             // console.log(data.first_name, 'this is data');
             console.log(res, 'login res');
             if (res == 'fail') { // check if not
-                $.req.session.result = ['Wrong Password']; // get the result as a array of message
+                $.req.session.msg = { error: ['Wrong Password'] }; // get the result as a array of message
             } else {
                 let data = res[0];
                 $.req.session.logged = true;
                 $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
-                $.req.session.roles = ['all', 'auth'];
+                let roles = new Array(data.roles);
+                $.req.session.roles = ['all', 'auth', ...roles];
             }
             // console.log($.req.session)
-            $.res.redirect('/')
+            // $.res.redirect('/')
             // this.result = data; // reference the result to the data and render this.result on result.ejs
         } else {
-            // this.result = result;
-            $.res.redirect('/');
-            $.res.end();
+            $.req.session.msg = { error: result };
         }
+        $.res.redirect('/');
+        $.res.end();
     }
     async createAccount() {
         //check create validate if rules are all correct
@@ -55,36 +62,33 @@ class Users {
             // register the user
             let createProcess = await user.create_process($.req.body);
             // console.log(data)
-            if (createProcess == 'success') {
-                let res = await user.login_process($.req.body); // get the query
-                // console.log(data.first_name, 'this is data');
-                console.log(res, 'login res');
-                if (res == 'fail') { // check if not
-                    $.req.session.result = ['Wrong Password']; // get the result as a array of message
-                } else {
-                    let data = res[0];
-                    $.req.session.logged = true;
-                    $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
-                    $.req.session.roles = ['all', 'auth'];
-                }
+            if (createProcess != 'fail') {
+                let data = createProcess[0];
+                $.req.session.logged = true;
+                $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
+                let roles = new Array(data.roles);
+                $.req.session.roles = ['all', 'auth', ...roles];
+
+                $.res.redirect('/');
             } else {
                 // console.log('failedasdsad')
-                // this.result = ['Email is Taken'];
-                $.res.redirect('/register');
+                $.req.session.msg = { error: ['Email is Taken'] };
+                $.res.redirect('/register')
             }
         } else {
+            $.req.session.msg = { error: result };
             // this.result = result;
-            $.res.redirect('/');
+            // $.res.redirect('/');
+            $.res.redirect('/register')
         }
-        // $.res.redirect('/register')
     }
     async register() {
-        console.log($.req.session)
+        // console.log($.req.session)
         $.res.render('user/create');
     }
     async logOut() {
         $.req.session.destroy();
-        console.log("dsadsad")
+        // console.log("dsadsad")
         // this.result = [];
         $.res.redirect('/');
     }
@@ -98,7 +102,7 @@ class Users {
         if ($.req.user) {
             $.res.redirect('/failure');
         }
-        console.log($.req);
+        // console.log($.req);
         $.res.render('user/dashboard');
         // $.res.send('Success!');
         $.res.end();

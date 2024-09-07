@@ -2,9 +2,10 @@ class ORM {
     constructor() {
         this.queries = '';
         this.select_tbl = '';
+        this.arrVal = [];
     }
     select(tbl_name, arr_values) {
-        this.queries += `SELECT `;
+        this.queries = `SELECT `;
         if (arr_values[0] === '*' && arr_values.length === 1 || arr_values === '*') {
             this.queries += `* FROM `;
         } else {
@@ -29,7 +30,7 @@ class ORM {
      */
     where(condition_arr) {
         this.queries += ` WHERE `
-        for (let i = 0; condition_arr.length; i++) {
+        for (let i = 0; i < condition_arr.length; i++) {
             this.queries += `${condition_arr[i]}  `;
         }
         return this;
@@ -79,7 +80,7 @@ class ORM {
         return this;
     }
 
-    insert(table, query_fields_arr, query_val_arr, input_arr) {
+    insert(table, query_fields_arr) {
         this.queries = `INSERT INTO ${table}(`;
         for (let i = 0; i < query_fields_arr.length; i++) {
             if (i >= query_fields_arr.length - 1) {
@@ -88,33 +89,42 @@ class ORM {
                 this.queries += `${query_fields_arr[i]},`;
             }
         }
-        this.queries += ` VALUES(\'`;
-        for (let i = 0; i < query_val_arr.length; i++) {
-            if (i >= query_val_arr.length - 1) {
-                this.queries += query_val_arr[i]+`\');`;
+        this.queries += ` VALUES(`;
+        for (let i = 0; i < query_fields_arr.length; i++) {
+            if (i >= query_fields_arr.length - 1) {
+                this.queries +=  `?);`;
+                break;
             } else {
-                this.queries += query_val_arr[i]+`\',\'`;
+                this.queries += `?,`;
             }
         }
-        console.log(this.queries)
+        // console.log(this.queries)
+        return this;
+    }
+    values(arrVal){
+        this.arrVal = arrVal;
         return this;
     }
     exec() {
+        // console.log(this.queries,'exec funct'); // debugger console
         return new Promise((resolve, reject) => {
             const databaseType = this.CONFIG.db_type;
-            this.connection.query(databaseType === 'pg' ? this.queries : this.sql.format(this.queries), (err, rows) => {
+            // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
+            this.connection.query(databaseType === 'pg' ? this.queries : this.arrVal.length > 0 ? this.sql.format(this.queries,this.arrVal) : this.sql.format(this.queries), (err, rows) => {
                 //  this.profiler.queries(query,rows);
                 // if (err) {
-                //     reject(fase);l
+                //     reject(fase);
                 // } else {
                 //     this.queries = '';
                 //     this.select_tbl = '';
+                //     this.arrVal = [];
                 //     resolve(rows);
                 // }
                 setTimeout(() => {
+                    resolve(rows);
                     this.queries = '';
                     this.select_tbl = '';
-                    resolve(rows);
+                    this.arrVal = [];
                 }, 300);
             });
         });

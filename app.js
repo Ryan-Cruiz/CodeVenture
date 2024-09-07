@@ -40,17 +40,27 @@ const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 const passport = require('passport');
 app.locals.title = "CodeVenture";
+let saveTime = false;
 app.use((req, res, next) => {
+    // date_default_timezone_set("Asia/Kuala_Lumpur");
     profiler.time = Date.now(); // take the current time of execution
     if (req.session.roles == undefined) {
-        req.session.logged = true;
-        req.session.user_data = {name: "developer", user_id: 27}
-        req.session.roles = ['all','auth']; // you can change this as a config.session or a database object(json)
+        if (saveTime) {
+            req.session.logged = true;
+            req.session.user_data = { name: "developer", user_id: 1 }
+            req.session.roles = ['all', 'auth', 'admin'];
+        } else {
+            req.session.logged = false;
+            req.session.roles = ['all', 'guest']; // you can change this as a config.session or a database object(json)
+        }
     }
-    if(req.session.logged){
+    if (req.session.logged) {
         res.locals.user_data = req.session.user_data;
+        app.locals.roles = req.session.roles;
     }
-    // console.log(res.locals)
+    res.locals.msg = req.session.msg;
+    delete req.session.msg;
+    // console.log(req.session.msg);
     // req.appServiceRole = middleware.validate_role(req.session.roles);
     profiler.req = req; // take the request
     profiler.res = res; // take the response
@@ -80,6 +90,11 @@ app.get('/auth/google/callback',
         failureRedirect: '/failure'
     }));
 
+// app.use((req, res, next) => {
+//     // console.log(res.locals)
+//     // res.locals.msg = {};
+//     next();
+// })
 app.use(routes);
 app.listen(config.port, function () {
     console.log("listening on port " + `http://localhost:${config.port}`);
