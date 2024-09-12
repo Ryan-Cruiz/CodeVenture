@@ -33,12 +33,12 @@ app.use(Express.static(__dirname + '/node_modules/ace-builds'))
 app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 app.use(session(config.session));
-require('./passport.js')
+//require('./passport.js')
 app.set('view engine', 'ejs');
 app.use(cors());
 const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
-const passport = require('passport');
+// const passport = require('passport');
 app.locals.title = "CodeVenture";
 let saveTime = false;
 app.use((req, res, next) => {
@@ -83,13 +83,14 @@ app.get('/user/:id', (req, res, next) => {
     // console.log(req);
 
 })
+/*
 app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect: '/success',
         failureRedirect: '/failure'
     }));
-
+*/
 // app.use((req, res, next) => {
 //     // console.log(res.locals)
 //     // res.locals.msg = {};

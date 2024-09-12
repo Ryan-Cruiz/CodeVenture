@@ -2,15 +2,14 @@
 
 module.exports = {
 
-    port: 8080,
+    port: 3000,
     db_type: 'mysql',
     database:
     {
-        "host": "localhost",
+        "host": 'db',
         "user": "root",
         "password": "root",
-        "database": "codeventure",
-        "port": 3307
+        "database": "codeventure"
     },
     session:
     {
