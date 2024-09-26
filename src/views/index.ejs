@@ -2,10 +2,13 @@
     <div class="container">
         <div class="container position-absolute top-50 start-50 translate-middle w-50">
             <h1 class="text-center">CodeVenture</h1>
-            <form action="/insertCar" method="post">
+            <form action="/insertCar" method="post" class="needs-validation" novalidation>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" required class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <div class="invalid-feedback">
+                        Please Use Valid Email
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>

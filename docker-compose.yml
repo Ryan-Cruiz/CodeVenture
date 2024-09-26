@@ -1,0 +1,30 @@
+version: "3.2"
+services:
+  db:
+    image: mysql:5.6
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-dump:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'codeventure'    
+    ports:
+      - 3306:3306
+
+  web_app:
+      depends_on:
+       - db
+      build: ./
+      volumes:
+        - ./src:/var/www/app/src
+        - ./system:/var/www/app/system
+        - ./app.js:/var/www/app/app.js 
+        - ./package.json:/var/www/app/package.json
+      command: npm start
+      #command: ["./wait-for-it.sh -t 0", "db:3306", "--", "npm", "start"]
+      restart: always
+      ports:
+        - 3001:3000
+volumes:
+  db_data: {}

@@ -1,7 +1,50 @@
 <%- include('../shared/header') %>
 
-    <div class="container mt-3 d-flex">
-        <!-- <div class="card" style="width: 18rem;">
+    <% if(roles.indexOf('admin') !==-1) { %>
+        <div class="container my-3">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
+                Create Lesson
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="createLessonLabel" aria-hidden="true">
+            <form class="modal-dialog modal-dialog-centered" action="/create_lesson" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="createLessonLabel">Create Lesson</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input required type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea required class="form-control" id="description" name="description"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                        <input type="submit" value="Create" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <% } %>
+            <div class="container">
+                <% if(msg !=undefined){ %>
+                    <div class="alert alert-success">
+                        <%= msg.success[0] %>
+                    </div>
+                    <% }%>
+                        <h2 class="fs-5">Featured Lessons</h2>
+            </div>
+            <div class="container mt-2 d-flex">
+                <!-- <div class="card" style="width: 18rem;">
             <img src="https://media.istockphoto.com/id/1406674466/photo/big-data-connection-technology-concept.jpg?s=1024x1024&w=is&k=20&c=ZVAnrfrUwzAW-2ScErMqUHJr1jPyaZOTaCq3D-Jemkc="
                 class="card-img-top" alt="...">
             <div class="card-body">
@@ -11,17 +54,19 @@
                     card's content.</p>
             </div>
         </div> -->
-        <div class="card" style="width: 18rem;">
-            <img src="https://media.istockphoto.com/id/1406674466/photo/big-data-connection-technology-concept.jpg?s=1024x1024&w=is&k=20&c=ZVAnrfrUwzAW-2ScErMqUHJr1jPyaZOTaCq3D-Jemkc="
-                class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Introduction</h5>
-                <p class="card-text">Teaches about introduction to computing</p>
-                <a href="/chapters/1" class="btn btn-primary">See lesson</a>
+                <% lessons.map(lesson=> { %>
+                    <div class="card me-2" style="width: 18rem;">
+                        <img src="https://media.istockphoto.com/id/1406674466/photo/big-data-connection-technology-concept.jpg?s=1024x1024&w=is&k=20&c=ZVAnrfrUwzAW-2ScErMqUHJr1jPyaZOTaCq3D-Jemkc="
+                            class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= lesson.title %></h5>
+                            <p class="card-text"><%= lesson.description %></p>
+                            <a href="/chapters/<%= lesson.id %>" class="btn btn-primary">See lesson</a>
+                        </div>
+                    </div>
+                    <% }) %>
+
+
+
             </div>
-        </div>
-
-
-
-    </div>
-    <%- include('../shared/footer') %>
+            <%- include('../shared/footer') %>

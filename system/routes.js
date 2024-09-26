@@ -10,7 +10,7 @@ middleware.routeRole = {
     "all": ['/'],
     "auth": ['/logout', '/settings','/chapters/:id'],
     "guest": ['/createAccount', '/register', '/login'],
-    "admin": ['/settings', '/logout','/chapters/:id/levels/:level_id']
+    "admin": ['/settings','/create_lesson']
 }
 /* $.post is for the forms  if you want to get the data */
 /* START OF USERCONTROLLER */
@@ -26,6 +26,7 @@ $.get['/settings'] = UserController.settings;
 
 /* START OF PLATFORMCONTROLLER */
 $.get['/chapters/:id'] = PlatformsController.index;
+$.post['/create_lesson'] = PlatformsController.create_lesson;
 $.get['/chapters/:id/levels/:level_id'] = PlatformsController.test;
 /* END OF PLATFORMCONTROLLER */
 

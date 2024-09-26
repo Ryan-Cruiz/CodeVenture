@@ -52,13 +52,13 @@ class route_path {
     middlewareRoleChecker(req, res, next, currentURL) {
         let appServiceRole = middleware.validate_role(req.session.roles, currentURL);
         if (!appServiceRole) {
-            console.log(appServiceRole, 'app', currentURL);
+            // console.log(appServiceRole, 'app', currentURL);
             res.redirect('back');
             res.end();
         } else {
             next();
         }
-        console.log(appServiceRole, 'from middle')
+        // console.log(appServiceRole, 'from middle')
         // console.log(roles, 'from middle', req.session);
     }
 }

@@ -50,7 +50,7 @@ class Middleware {
                 }
             }
         }
-        console.log(tempArr, 'aftter routs');
+        // console.log(tempArr, 'aftter routs');
         return tempArr;
     }
 }
