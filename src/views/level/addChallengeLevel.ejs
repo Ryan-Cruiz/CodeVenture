@@ -1,0 +1,20 @@
+<%- include('../shared/header') %>
+    <div class="container">
+        <h2>New Level</h2>
+        <form action="/create_level" method="post">
+            <div class="text-end mb-3">
+                <input type="submit" value="Create" class="btn btn-danger w-25">
+            </div>
+            <div class="mb-2">
+                <label for="title" class="form-label">Level Title</label>
+                <input type="text" name="title" id="title" class="form-control">
+                <input type="hidden" name="isLesson" value="0">
+            </div>
+            <textarea class="form-control" id="MyID" class="description" required></textarea>
+        </form>
+    </div>
+    <script src="/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
+    </script>
+    <%- include('../shared/footer') %>

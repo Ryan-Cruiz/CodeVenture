@@ -11,6 +11,7 @@ class Platforms {
     async test() {
         $.res.send($.req.params.id);
     }
+    /**LESSON */
     async create_lesson() {
         // $.res.render('platform/createLesson');
         let res = await Platform.create_lesson($.req.body,$.req.session.user_data.user_id);
@@ -22,5 +23,9 @@ class Platforms {
         }
         // console.log($.req.body);
     }
+    async edit_lesson(){
+
+    }
+    /**END OF LESSON */
 }
 module.exports = new Platforms(); 

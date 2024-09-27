@@ -5,8 +5,8 @@ class Platform extends model {
     async create_lesson(inputs, role_id) {
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
-            let lessonQuery = this.insert('groups', ['role_id', 'title', 'description',],
-                [role_id, inputs.title, inputs.description]).exec();
+            let lessonQuery = this.insert('lessons', ['role_id', 'title', 'description',]).
+            values([role_id, inputs.title, inputs.description]).exec();
             return 'success';
         }
         return validation;
@@ -14,7 +14,7 @@ class Platform extends model {
     }
     async getLessons() {
         // let query = this.sql.format("SELECT * FROM credentials INNER JOIN roles ON credentials.user_id = roles.user_id INNER JOIN groups ON groups.role_id = roles.id");
-        let result = await this.select('roles', ["*"]).inner('credentials', ['user_id', 'user_id']).inner('groups', ['role_id', 'id']).exec()
+        let result = await this.select('roles', ["*"]).inner('credentials', ['user_id', 'user_id']).inner('lessons', ['role_id', 'id']).exec()
         // let result = await super.Rawquery(query);
         // console.log(result);
         // console.log();

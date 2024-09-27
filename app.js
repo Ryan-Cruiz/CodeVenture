@@ -29,7 +29,8 @@ const session = require('express-session');
 const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(Express.static(__dirname + '/node_modules/bootstrap/dist'));
-app.use(Express.static(__dirname + '/node_modules/ace-builds'))
+// app.use(Express.static(__dirname + '/node_modules/ace-builds'))
+app.use(Express.static(__dirname + '/node_modules/simplemde/dist'));
 app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 app.use(session(config.session));
@@ -40,7 +41,7 @@ const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 // const passport = require('passport');
 app.locals.title = "CodeVenture";
-let saveTime = false;
+let saveTime = true;
 app.use((req, res, next) => {
     // date_default_timezone_set("Asia/Kuala_Lumpur");
     profiler.time = Date.now(); // take the current time of execution

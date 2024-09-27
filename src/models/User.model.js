@@ -14,7 +14,11 @@ class User extends model {
         let result = await this.select('users',['*']).inner('credentials',['user_id','id']).inner('roles',['user_id','id']).where(['email=?']).values([form_input.email]).exec();
         // this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
-        if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
+        try{
+            if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
+                return 'fail';
+            }
+        }catch(e){
             return 'fail';
         }
         return result;

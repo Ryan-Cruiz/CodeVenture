@@ -6,14 +6,15 @@ module.exports = {
     db_type: 'mysql',
     database:
     {
-        "host": 'db',
+        "host": 'localhost',
         "user": "root",
         "password": "root",
-        "database": "codeventure"
+        "database": "codeventure",
+        "port": 3307
     },
     session:
     {
-        secret: 'keyboardkitteh',
+        secret: 'c0d3V3nTuR3',
         resave: false,
         saveUninitialized: true,
         cookie: { maxAge: 60000 }
