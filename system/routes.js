@@ -17,7 +17,14 @@ middleware.routeRole = {
             '/lesson/:id/level/:level_id',
         ],
     "guest": ['/createAccount', '/register', '/login'],
-    "admin": ['/settings', '/create_lesson','/create_level','/new_level/material','/new_level/task']
+    "admin": [
+        '/settings',
+        '/create_lesson',
+        '/create_level',
+        '/new_level/:lesson_id/material',
+        '/new_level/:lesson_id/task',
+        '/create_challenge'
+    ]
 }
 /* $.post is for the forms  if you want to get the data */
 /* START OF USERCONTROLLER */
@@ -41,8 +48,10 @@ $.get['/lesson/:id/level/:level_id'] = PlatformsController.test;
 /* END OF PLATFORMCONTROLLER */
 
 /* START OF LEVELCONTROLLER */
-$.get['/new_level/material'] = LevelsController.new_level;
-$.post['/create_level'] = LevelsController.create_level;
+$.get['/new_level/:lesson_id/material'] = LevelsController.new_material;
+$.get['/new_level/:lesson_id/task'] = LevelsController.new_task;
+$.post['/create_material'] = LevelsController.create_material;
+$.post['/create_task'] = LevelsController.create_task;
 /* END OF PLATFORMCONTROLLER */
 module.exports = $.execute_path();
 middleware.routes = $.routes;

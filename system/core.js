@@ -19,7 +19,7 @@ class route_path {
         let post = Object.keys(this.post);
         let put = Object.keys(this.put);
         let destroy = Object.keys(this.destroy);
-        // console.log('get', this.get);
+        // console.log('get',get);
         for (let i = 0; i < get.length; i++) {
             Router.get(get[i], (req, res, next) => {
                 this.middlewareRoleChecker(req, res, next, get[i]);

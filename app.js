@@ -43,7 +43,8 @@ const middleware = require('./system/middleware.js');
 app.locals.title = "CodeVenture";
 let saveTime = true;
 app.use((req, res, next) => {
-    // date_default_timezone_set("Asia/Kuala_Lumpur");
+    app.locals.host = req.get('host');
+    // console.log(app.locals);
     profiler.time = Date.now(); // take the current time of execution
     if (req.session.roles == undefined) {
         if (saveTime) {

@@ -5,7 +5,8 @@ const $ = loader.profile;
 class Platforms {
     // Create something
     async index() {
-        // $.res.send($.req.params.id);
+        $.res.locals.lesson_id = $.req.params.id;
+        console.log($.res.locals)
         $.res.render('platform/index')
     }
     async test() {
