@@ -6,11 +6,14 @@ module.exports = {
     db_type: 'mysql',
     database:
     {
-        "host": 'localhost',
-        "user": "root",
-        "password": "root",
-        "database": "codeventure",
-        "port": 3307
+        host: 'db',
+        // host: 'localhost',
+        user: 'root',
+        // password: "password",
+        password: 'root',
+        database: 'codeventure',
+        // "port": 3307
+        port: 3306
     },
     session:
     {
