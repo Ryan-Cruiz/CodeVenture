@@ -26,13 +26,13 @@ class User extends model {
 
     async email_validate(form_input) {
         let email = this.select('users', ['*']).where(['email = \'' + form_input.email + '\'']).exec();
-        let query = this.sql.format('SELECT * FROM users WHERE email = ?', [form_input.email]);
-        console.log(await this.Rawquery(query));
+        // let query = this.sql.format('SELECT * FROM users WHERE email = ?', [form_input.email]);
+        // console.log(await this.Rawquery(query));
         // console.log(query)
         // return callback('success');
         let result = await this.select('users',['*']).where([`email=?`]).values([form_input.email]).exec();
         // console.log(result)
-        this.profiler_enable();
+        // this.profiler_enable();
         if (result.length == 0) {
             return result;
         } else {

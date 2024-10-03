@@ -13,3 +13,22 @@
     width: 500px;
     height: 500px;
 }
+/* HTML: <div class="octagon"></div> */
+.octagon {
+    width: 80px;
+    aspect-ratio: 1;
+    --o:calc(50%*tan(-22.5deg));
+    clip-path: polygon(
+      var(--o) 50%,
+      50% var(--o),
+      calc(100% - var(--o)) 50%,
+      50% calc(100% - var(--o))
+    );
+    background: #3B8686;
+  }
+  .rhombus {
+    height: 200px; /* adjust to control the size  */
+    aspect-ratio: 1;
+    clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+    background: #88A65E;
+  }

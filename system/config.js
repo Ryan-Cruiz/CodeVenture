@@ -4,22 +4,26 @@ module.exports = {
 
     port: 3000,
     db_type: 'mysql',
-    database:
-    {
-        host: 'db',
-        // host: 'localhost',
+    // database:
+    // {
+    //     host: 'db',
+    //     user: 'root',
+    //     password: 'root',
+    //     database: 'codeventure',
+    //     port: 3306
+    // },
+    database: {
+        host: 'localhost',
         user: 'root',
-        // password: "password",
         password: 'root',
         database: 'codeventure',
-        // "port": 3307
-        port: 3306
+        port: 3307
     },
     session:
     {
         secret: 'c0d3V3nTuR3',
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 60000 }
+        cookie: { maxAge: 600000 }
     },
 }
