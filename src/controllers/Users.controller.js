@@ -22,7 +22,7 @@ class Users {
             // $.res.locals.user_data = {name: "developer", user_id: 27};
             // console.log($.req.app.locals)
             let res = await Platform.getLessons();
-            let data = res;
+            let data = res || [];
             // console.log(data);
             $.res.render('user/dashboard', { user: $.req.session.user_data, lessons: data });
         }

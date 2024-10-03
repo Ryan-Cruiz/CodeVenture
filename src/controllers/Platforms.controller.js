@@ -1,16 +1,18 @@
 const loader = require('../loaders.js');
 const model = loader.core.model;
 const Platform = model("Platform");
+const Level = model("Level");
 const $ = loader.profile;
 class Platforms {
     // Create something
     async index() {
-        // $.res.send($.req.params.id);
-        $.res.render('platform/index')
+        $.res.locals.lesson_id = $.req.params.id;
+        // console.log($.res.locals)
+        let materials_res = await Level.getMaterials($.req.params.id);
+        // console.log(materials_res);
+        $.res.render('platform/index',{data: materials_res});
     }
-    async test() {
-        $.res.send($.req.params.id);
-    }
+    /**LESSON */
     async create_lesson() {
         // $.res.render('platform/createLesson');
         let res = await Platform.create_lesson($.req.body,$.req.session.user_data.user_id);
@@ -22,5 +24,9 @@ class Platforms {
         }
         // console.log($.req.body);
     }
+    async edit_lesson(){
+
+    }
+    /**END OF LESSON */
 }
 module.exports = new Platforms(); 

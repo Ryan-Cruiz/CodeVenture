@@ -1,0 +1,14 @@
+<%- include('../shared/header') %>
+    <div class="container">
+        <h2>New Task</h2>
+        <form action="/create_task" method="post">
+            <div class="text-end mb-3">
+                <input type="submit" value="Create" class="btn btn-danger w-25">
+            </div>
+            <div class="mb-2">
+                <label for="title" class="form-label">Level Title</label>
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+        </form>
+    </div>
+    <%- include('../shared/footer') %>

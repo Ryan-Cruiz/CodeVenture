@@ -1,0 +1,19 @@
+<%- include('../shared/header') %>
+    <div class="container">
+        <h2>New Material</h2>
+        <form action="/create_material" method="post" id="create_material">
+            <div class="text-end mb-3">
+                <input type="submit" value="Create" class="btn btn-danger w-25">
+            </div>
+            <div class="mb-2">
+                <label for="title" class="form-label">Level Title</label>
+                <input type="text" name="title" id="title" class="form-control" required>
+            </div>
+            <input type="hidden" name="isTask" value="0">
+            <input type="hidden" name="lesson_id" value="<%= lesson_id %>">
+            <textarea class="form-control" id="MyID" name="description" ></textarea>
+        </form>
+    </div>
+    <script src="/simplemde.min.js"></script>
+    <%- include('../shared/footer') %>
+    

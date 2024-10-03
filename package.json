@@ -13,7 +13,8 @@
     "mysql": "^2.18.1",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
-    "redis": "^4.6.6"
+    "redis": "^4.6.6",
+    "simplemde": "^1.11.2"
   },
   "name": "mvc_123---sports-player",
   "description": "- Controller\r -- This where all the controllers go\r - Model\r -- All of the Logics and query\r - Views\r -- All of the HTML/EJS going here\r - Assets\r -- All of the img,css will go here\r - System\r -- All core structure that made this framework run",
@@ -22,7 +23,9 @@
   "scripts": {
     "start": "nodemon --inspect=0.0.0.0 app.js",
     "test": "mocha src/test/*.test.js",
-    "test1": "./node_modules/.bin/mocha src/test/*.test.js"
+    "test1": "./node_modules/.bin/mocha src/test/*.test.js",
+    "controller": "chmod -x \"./controller.bat\" & \"./controller.bat\"",
+    "model": "chmod -x \"./model.bat\" & \"./model.bat\""
   },
   "keywords": [],
   "author": "Ryan-Cruiz",
