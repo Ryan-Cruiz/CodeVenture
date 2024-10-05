@@ -8,30 +8,32 @@ class User extends model {
         return query;
     }
     async login_process(form_input) {
-        // let query = this.sql.format("SELECT * FROM users INNER JOIN credentials AS cred ON users.id = cred.user_id INNER JOIN roles ON users.id = roles.user_id WHERE email = ?",
+        // let query = this.sql.format("SELECT * FROM users INNER JOIN credentials AS cred ON users.id = cred.user_id LEFT JOIN roles ON users.id = roles.user_id WHERE email = ?",
         //     [form_input.email]);
         // let result = await super.Rawquery(query)
-        let result = await this.select('users',['*']).inner('credentials',['user_id','id']).inner('roles',['user_id','id']).where(['email=?']).values([form_input.email]).exec();
-        // this.profiler_enable();
+        // console.log(result);
+        let result = await this.select('users',['*']).left('roles',['user_id','id']).inner('credentials',['user_id','id']).where(['email=?']).values([form_input.email]).exec();
+        this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
         try{
             if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
                 return 'fail';
             }
         }catch(e){
+        console.log(e);
             return 'fail';
         }
         return result;
     }
 
     async email_validate(form_input) {
-        let email = this.select('users', ['*']).where(['email = \'' + form_input.email + '\'']).exec();
+        // let email = this.select('users', ['*']).where(['email = \'' + form_input.email + '\'']).exec();
         // let query = this.sql.format('SELECT * FROM users WHERE email = ?', [form_input.email]);
         // console.log(await this.Rawquery(query));
         // console.log(query)
         // return callback('success');
         let result = await this.select('users',['*']).where([`email=?`]).values([form_input.email]).exec();
-        // console.log(result)
+        console.log(result)
         // this.profiler_enable();
         if (result.length == 0) {
             return result;

@@ -8,5 +8,4 @@ $(document).ready(function () {
     $('#user-icon').click(function () {
         user_container.toggle();
     })
-    var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
 });

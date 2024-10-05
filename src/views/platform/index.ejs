@@ -1,36 +1,31 @@
 <%- include('../shared/header') %>
     <% if(roles.indexOf('admin') !==-1) { %>
         <div class="container my-3">
-            <% if(roles.indexOf('admin') !==-1) { %>
-                <div class="container my-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
-                        Create Level
-                    </button>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="createLessonLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="createLessonLabel">Create Level</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="m-1 text-center">
-                                    <a href="/new_level/<%= lesson_id %>/material" class="btn btn-primary w-50">Create
-                                        Material</a>
-                                </div>
-                                <div class="m-1 text-center">
-                                    <a href="/new_level/<%= lesson_id %>/task" class="btn btn-primary w-50">Create
-                                        Task</a>
-                                </div>
-                            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
+                Create Level
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="createLessonLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="createLessonLabel">Create Level</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-1 text-center">
+                            <a href="/new_level/<%= lesson_id %>/material" class="btn btn-primary w-50">Create
+                                Material</a>
+                        </div>
+                        <div class="m-1 text-center">
+                            <a href="/new_level/<%= lesson_id %>/task" class="btn btn-primary w-50">Create
+                                Task</a>
                         </div>
                     </div>
                 </div>
-                <% } %>
+            </div>
         </div>
         <% } %>
             <div class="container">
@@ -39,9 +34,11 @@
                         <%= msg.success[0] %>
                     </div>
                     <% }%>
-                    <% data.forEach(item=> { %>
-                        <a class="btn btn-primary octagon" href="/material/<%= item.lesson_id%>/level/<%= item.id %>"><span class="position-relative top-25 translate-middle fs-1"><%= item.id %></span></a>
-                        <% });%>
+                        <% data.forEach(item=> { %>
+                            <a class="btn btn-primary" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
+                                <%= item.level_name %>
+                            </a>
+                            <% });%>
 
             </div>
 

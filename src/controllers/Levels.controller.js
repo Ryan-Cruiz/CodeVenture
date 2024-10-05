@@ -3,28 +3,33 @@ const model = loader.core.model;
 const Level = model("Level");
 const $ = loader.profile;
 class Levels {
-    async new_material(){
+    async new_material() {
         $.res.locals.lesson_id = $.req.params.lesson_id;
         $.res.render('level/addMaterial');
     }
     async create_material() {
         let res = await Level.createMaterial($.req.body)
-        if(res != 'fail'){
+        let id = $.req.body.lesson_id;
+        if (res != 'fail') {
             console.log(res);
         }
-        $.res.redirect('back');
+        $.res.redirect(`lesson/${id}`);
     }
     async create_task() {
-        
+
     }
     async new_task() {
         $.res.render('level/addTask');
     }
     async edit_level() {
-
+        $.res.locals.lesson_id = $.req.params.lesson_id;
+        $.res.render('level/editMaterial');
     }
-    async show_material(){
-        $.res.render('level/showLevel');
+    async show_material() {
+        let res = await Level.getLevel($.req.params);
+        console.log(res);
+        let listRes = await Level.getMaterials($.req.params.id);
+        $.res.render('level/showLevel', { data: res, lists: listRes });
     }
 }
 module.exports = new Levels(); 

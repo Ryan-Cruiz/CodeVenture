@@ -73,6 +73,11 @@ class ORM {
         this.queries += output;
         return this;
     }
+    left(tbl_name, tbl_columns) {
+        let output = ` LEFT JOIN ${tbl_name} ON ${tbl_name}.${tbl_columns[0]} = ${this.select_tbl}.${tbl_columns[1]}`;
+        this.queries += output;
+        return this;
+    }
 
     destroy(tbl_name) {
         let output = `DELETE FROM ${tbl_name}`;
