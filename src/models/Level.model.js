@@ -9,19 +9,29 @@ class Level extends model {
             return validation;
         }
         console.log(inputs);
-        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content','isTask']).
-            values([inputs.lesson_id, inputs.title, inputs.description,inputs.isTask]).exec();
+        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
+            values([inputs.lesson_id, inputs.title, inputs.description, inputs.isTask]).exec();
         return 'success';
 
 
     }
     async getLevel(inputs) {
-        return await this.select('levels', ["*"]).where(['lesson_id=? AND id=?']).values([inputs.id,inputs.level_id]).exec();
+        return await this.select('levels', ["*"]).where(['lesson_id=? AND id=?']).values([inputs.id, inputs.level_id]).exec();
     }
     async getMaterials(id) {
         return await this.select('levels', ["id,lesson_id,level_name"]).where(['lesson_id=?']).values([id]).exec();
     }
-
+    async updateMaterial(inputs, id) {
+        let validation = await this.level_validate(inputs);
+        if (validation != 'success') {
+            return validation;
+        }
+        let result = await this.update('levels', ['level_name=?', 'content=?']).
+            where(['lesson_id=?', this.and('id=?')]).
+            values([inputs.title, inputs.description, id.lesson_id, id.id]).exec()
+        console.log(result);
+        return 'success'
+    }
     async level_validate(inputs) {
         const form = this.Validation;
         form.validate['title'] = { form_data: inputs.title, rules: ['required'] };

@@ -1,21 +1,27 @@
 <%- include('../shared/header') %>
     <div class="container">
         <h2>Edit Material</h2>
-        <form action="/edit_material" method="post" id="create_material">
+        <form action="/edit_material/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="create_material">
             <div class="text-end mb-3">
-                <input type="submit" value="Create" class="btn btn-danger w-25">
+                <input type="submit" value="Update" class="btn btn-danger w-25">
             </div>
             <div class="mb-2">
                 <label for="title" class="form-label">Level Title</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <input type="text" name="title" id="title" class="form-control" value="<%= data[0].level_name %>"
+                    required>
             </div>
-            <input type="hidden" name="isTask" value="0">
-            <input type="hidden" name="lesson_id" value="<%= lesson_id %>">
-            <textarea class="form-control" id="MyID" name="description"></textarea>
+            <input type="hidden" name="isTask" value="<%= data[0].isTask %>">
+            <textarea class="form-control" id="MyID" name="description"><%= data[0].content %></textarea>
         </form>
     </div>
     <script src="/simplemde.min.js"></script>
     <script>
-        var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
+        var simplemde = new SimpleMDE({
+            element: $("#MyID")[0],
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+        });
     </script>
     <%- include('../shared/footer') %>

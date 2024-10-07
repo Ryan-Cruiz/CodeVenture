@@ -16,6 +16,12 @@
     </div>
     <script src="/simplemde.min.js"></script>
     <script>
-        var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
+        var simplemde = new SimpleMDE({
+            element: $("#MyID")[0],
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+        });
     </script>
     <%- include('../shared/footer') %>

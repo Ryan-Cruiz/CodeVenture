@@ -27,7 +27,8 @@
                 <%= data[0].level_name %>
             </h2>
             <% if(roles.indexOf('admin') !==-1) { %>
-                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="btn btn-danger">Edit Level</a>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="btn btn-danger">Edit
+                    Level</a>
                 <% } %>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
 
@@ -35,12 +36,17 @@
     </div>
     <script src="/simplemde.min.js"></script>
     <script>
-        var previewMde = new SimpleMDE({
-            toolbar: null,
-            element: $("#previewMode")[0],
-            status: false,
-        });
-        // previewMde.value()
-        previewMde.togglePreview();
+        $(document).ready(function(){
+            var previewMde = new SimpleMDE({
+                element: $("#previewMode")[0],
+                renderingConfig: {
+                    codeSyntaxHighlighting: true,
+                },
+                toolbar: null,
+                status: false,
+            });
+            // previewMde.value()
+            previewMde.togglePreview();
+        })
     </script>
     <%- include('../shared/footer') %>

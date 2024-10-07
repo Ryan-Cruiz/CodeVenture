@@ -1,40 +1,139 @@
-*{
-    /* padding:0px;
+* {
+  /* padding:0px;
     margin:0px;
     outline:1px solid black; */
-    
+
 }
-.sidebar{
+
+.sidebar {
   width: 300px;
 }
-.level-container{
+
+.level-container {
   height: 90%;
 }
-#user-container{
-    top: 35px;
-    right: 10px;
-    z-index: 99;
+
+#user-container {
+  top: 35px;
+  right: 10px;
+  z-index: 99;
 }
-#editor { 
-    width: 500px;
-    height: 500px;
+
+#editor {
+  width: 500px;
+  height: 500px;
 }
+
 /* HTML: <div class="octagon"></div> */
 .octagon {
-    width: 80px;
-    aspect-ratio: 1;
-    --o:calc(50%*tan(-22.5deg));
-    clip-path: polygon(
-      var(--o) 50%,
+  width: 80px;
+  aspect-ratio: 1;
+  --o: calc(50%*tan(-22.5deg));
+  clip-path: polygon(var(--o) 50%,
       50% var(--o),
       calc(100% - var(--o)) 50%,
-      50% calc(100% - var(--o))
-    );
-    background: #3B8686;
-  }
-  .rhombus {
-    height: 200px; /* adjust to control the size  */
-    aspect-ratio: 1;
-    clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
-    background: #88A65E;
-  }
+      50% calc(100% - var(--o)));
+  background: #3B8686;
+}
+
+.rhombus {
+  height: 200px;
+  /* adjust to control the size  */
+  aspect-ratio: 1;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: #88A65E;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold
+}
+
+.hljs-subst {
+  font-weight: normal
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold
+}
+
+.hljs-deletion {
+  background: #fdd
+}
+
+.hljs-addition {
+  background: #dfd
+}
+
+.hljs-emphasis {
+  font-style: italic
+}
+
+.hljs-strong {
+  font-weight: bold
+}
