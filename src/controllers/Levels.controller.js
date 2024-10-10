@@ -16,7 +16,24 @@ class Levels {
         $.res.redirect(`lesson/${id}`);
     }
     async create_task() {
-
+        let questions = $.req.body.question;
+        let answers = $.req.body.correctAnswer;
+        let questionChoices = $.req.body.questionChoice;
+        let questionLen = $.req.body.choice_length;
+        let output = []
+        console.log($.req.body);
+        for (let i = 0; i < questionLen.length; i++) {
+            console.log('in')
+            let json = { question: "", choices: [], answer: "" }
+            json.question = questions[i];
+            json.answer = answers[i];
+            for (let j = 0; j < questionLen[i]; j++) {
+                json.choices.push(questionChoices[0]);
+                questionChoices.shift();
+            }
+            output.push(json);
+        }
+        console.log(output)
     }
     async new_task() {
         $.res.render('level/addTask');
