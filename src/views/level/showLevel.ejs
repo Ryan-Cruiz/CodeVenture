@@ -30,13 +30,35 @@
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="btn btn-danger">Edit
                     Level</a>
                 <% } %>
-                    <textarea id="previewMode"><%= data[0].content %></textarea>
+                    <% if(data[0].isTask=='0' ) { %>
+                        <textarea id="previewMode"><%= data[0].content %></textarea>
+                    <% }else if(data[0].isTask=='1' ){ JSON.parse(data[0].content).forEach((item,i)=> { %>
+                        <div class="container" id="question-container">
+                            <div class="mt-5 border">
+                                <div class="m-2">
+                                    <label>Question</label>
+                                    <p><%= item.question %></p>
+                                </div>
+                                <div class="choice-container m-2" aria-value="0">
+                                    <% item.choices.forEach((choice) => { %>
+                                        <div class="input-group my-2">
+                                            <div class="input-group-text">
+                                              <input class="form-check-input mt-0" type="radio" value="<%= choice %>" name="correctAnswer[<%= i %>]">
+                                            </div>
+                                            <input type="text" class="form-control option-input" value="<%= choice %>" autocomplete="off" name="questionChoice[]" readonly disabled>
+                                        </div>
+                                  <%  });  %>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    <% }); } %>
 
         </div>
     </div>
     <script src="/simplemde.min.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var previewMde = new SimpleMDE({
                 element: $("#previewMode")[0],
                 renderingConfig: {

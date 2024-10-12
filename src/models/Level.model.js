@@ -12,8 +12,6 @@ class Level extends model {
         let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
             values([inputs.lesson_id, inputs.title, inputs.description, inputs.isTask]).exec();
         return 'success';
-
-
     }
     async getLevel(inputs) {
         return await this.select('levels', ["*"]).where(['lesson_id=? AND id=?']).values([inputs.id, inputs.level_id]).exec();
@@ -21,14 +19,32 @@ class Level extends model {
     async getMaterials(id) {
         return await this.select('levels', ["id,lesson_id,level_name"]).where(['lesson_id=?']).values([id]).exec();
     }
-    async updateMaterial(inputs, id) {
+    async createTask(inputs, content) {
+        if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
+            let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
+                values([inputs.lesson_id, inputs.title, content, inputs.isTask]).exec();
+            return 'success';
+        }
+        return 'fail';
+    }
+    async updateTask(inputs,params, content) {
+        if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
+            let result = await this.update('levels', ['level_name=?', 'content=?']).
+                where(['lesson_id=?', this.and('id=?')]).
+                values([inputs.title, content, params.lesson_id, params.id]).exec()
+            console.log(result);
+            return 'success';
+        }
+        return 'fail';
+    }
+    async updateMaterial(inputs, params) {
         let validation = await this.level_validate(inputs);
         if (validation != 'success') {
             return validation;
         }
         let result = await this.update('levels', ['level_name=?', 'content=?']).
             where(['lesson_id=?', this.and('id=?')]).
-            values([inputs.title, inputs.description, id.lesson_id, id.id]).exec()
+            values([inputs.title, inputs.description, params.lesson_id, params.id]).exec()
         console.log(result);
         return 'success'
     }

@@ -20,44 +20,73 @@ class Levels {
         let answers = $.req.body.correctAnswer;
         let questionChoices = $.req.body.questionChoice;
         let questionLen = $.req.body.choice_length;
-        let output = []
-        console.log($.req.body);
-        for (let i = 0; i < questionLen.length; i++) {
-            console.log('in')
-            let json = { question: "", choices: [], answer: "" }
-            json.question = questions[i];
-            json.answer = answers[i];
-            for (let j = 0; j < questionLen[i]; j++) {
-                json.choices.push(questionChoices[0]);
-                questionChoices.shift();
-            }
-            output.push(json);
+        console.log($.req.body, $.req.params);
+        let content = arrayToJson(questionLen, questions, answers, questionChoices)
+        // console.log(typeof content)
+        let res = await Level.createTask($.req.body, JSON.stringify(content));
+        if (res == 'success') {
+            let id = $.req.body.lesson_id;
+            $.res.redirect(`lesson/${id}`);
+        } else {
+            $.res.redirect('back');
         }
-        console.log(output)
     }
+
     async new_task() {
+        $.res.locals.lesson_id = $.req.params.lesson_id;
         $.res.render('level/addTask');
     }
     async edit_level() {
         $.res.locals.lesson_id = $.req.params.lesson_id;
         let res = await Level.getLevel($.req.params);
+        console.log(res)
         $.res.render('level/editMaterial', { data: res });
     }
     async update_level() {
         console.log($.req.body);
         console.log($.req.params)
-        let res = await Level.updateMaterial($.req.body, $.req.params)
-        if (res != 'success') {
-            $.res.redirect('back')
+        if ($.req.body.isTask == '0') {
+            let res = await Level.updateMaterial($.req.body, $.req.params)
+            if (res != 'success') {
+                $.res.redirect('back')
+            } else {
+                $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
+            }
         } else {
-            $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
+            let questions = $.req.body.question;
+            let answers = $.req.body.correctAnswer;
+            let questionChoices = $.req.body.questionChoice;
+            let questionLen = $.req.body.choice_length;
+            let content = arrayToJson(questionLen, questions, answers, questionChoices)
+            console.log($.req.body, $.req.params, content);
+            let res = await Level.updateTask($.req.body,$.req.params, JSON.stringify(content));
+            if (res != 'success') {
+                $.res.redirect('back')
+            } else {
+                $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
+            }
         }
+
     }
     async show_material() {
         let res = await Level.getLevel($.req.params);
-        console.log(res);
+        // console.log(res, typeof JSON.parse(res[0].content));
         let listRes = await Level.getMaterials($.req.params.id);
         $.res.render('level/showLevel', { data: res, lists: listRes });
     }
+}
+function arrayToJson(questionLen, questions, answers, questionChoices) {
+    let content = []
+    for (let i = 0; i < questionLen.length; i++) {
+        let json = { question: "", choices: [], answer: "" }
+        json.question = questions[i];
+        json.answer = answers[i];
+        for (let j = 0; j < questionLen[i]; j++) {
+            json.choices.push(questionChoices[0]);
+            questionChoices.shift();
+        }
+        content.push(json);
+    }
+    return content;
 }
 module.exports = new Levels(); 
