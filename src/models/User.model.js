@@ -12,7 +12,7 @@ class User extends model {
         //     [form_input.email]);
         // let result = await super.Rawquery(query)
         // console.log(result);
-        let result = await this.select('users',['*']).left('roles',['user_id','id']).inner('credentials',['user_id','id']).where(['email=?']).values([form_input.email]).exec();
+        let result = await this.select('users',['*']).left('roles',['user_id','id']).inner('credentials',['user_id','id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
         this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
         try{
@@ -48,7 +48,7 @@ class User extends model {
         let result = await this.email_validate(form_input);
         console.log(result)
         if (result != 'fail') {
-            let userQuery = this.insert('users', ['email', 'password']).values([form_input.email, this.bcrypt.hashSync(form_input.password, 10)]).exec();
+            let userQuery = this.insert('users', ['email', 'password']).values([form_input.email.toLowerCase(), this.bcrypt.hashSync(form_input.password, 10)]).exec();
             let lastData = await userQuery;
             // console.log(lastData.insertId, lastData, 'sadksaldksaldksa')
             let credQuery = this.insert('credentials', ['first_name', 'last_name', 'user_id']).values([form_input.firstName, form_input.lastName, lastData.insertId]).exec();

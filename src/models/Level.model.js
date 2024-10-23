@@ -19,6 +19,20 @@ class Level extends model {
     async getMaterials(id) {
         return await this.select('levels', ["id,lesson_id,level_name"]).where(['lesson_id=?']).values([id]).exec();
     }
+    async saveTaskAnswers(params, input) {
+        let isUserExist = await this.select("task_answers", ["*"]).where(["user_id=? AND task_id=? AND lesson_id=?"])
+            .values([params.user_id, params.level_id, params.id]).exec();
+        console.log(isUserExist)
+        if (isUserExist.length > 0) {
+            console.log("existed")
+        } else {
+            let result = await this.insert('task_answers', ["answers", "task_id", "lesson_id", "user_id"])
+                .values([input, params.level_id, params.id, params.user_id]).exec();
+            // this.profiler_enable();
+            console.log(result);
+            return 'success';
+        }
+    }
     async createTask(inputs, content) {
         if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
             let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
@@ -27,7 +41,7 @@ class Level extends model {
         }
         return 'fail';
     }
-    async updateTask(inputs,params, content) {
+    async updateTask(inputs, params, content) {
         if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
             let result = await this.update('levels', ['level_name=?', 'content=?']).
                 where(['lesson_id=?', this.and('id=?')]).

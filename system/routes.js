@@ -15,6 +15,7 @@ middleware.routeRole = {
             '/settings',
             '/lesson/:id',
             '/material/:id/level/:level_id',
+            '/submit/task/:lesson_id/:id',
         ],
     "guest": ['/createAccount', '/register', '/login'],
     "admin": [
@@ -58,6 +59,7 @@ $.post['/create_material'] = LevelsController.create_material;
 $.post['/edit_material/:lesson_id/:id'] = LevelsController.update_level;
 $.post['/create_task'] = LevelsController.create_task;
 $.post['/edit_task/:lesson_id/:id'] = LevelsController.update_level;
+$.post['/submit/task/:lesson_id/:id'] = LevelsController.submit_task;
 /* END OF PLATFORMCONTROLLER */
 module.exports = $.execute_path();
 middleware.routes = $.routes;

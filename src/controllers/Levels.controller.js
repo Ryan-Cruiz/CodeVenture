@@ -59,7 +59,7 @@ class Levels {
             let questionLen = $.req.body.choice_length;
             let content = arrayToJson(questionLen, questions, answers, questionChoices)
             console.log($.req.body, $.req.params, content);
-            let res = await Level.updateTask($.req.body,$.req.params, JSON.stringify(content));
+            let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
             if (res != 'success') {
                 $.res.redirect('back')
             } else {
@@ -73,6 +73,23 @@ class Levels {
         // console.log(res, typeof JSON.parse(res[0].content));
         let listRes = await Level.getMaterials($.req.params.id);
         $.res.render('level/showLevel', { data: res, lists: listRes });
+    }
+    async submit_task() {
+        let inputs = { id: $.req.params.lesson_id, level_id: $.req.params.id,user_id: $.req.session.user_data.user_id };
+        let res = await Level.getLevel(inputs);
+        let answers = $.req.body.answers;
+        let questions = JSON.parse(res[0].content.toString());
+        let correct = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (questions[i].answer === answers[i]) {
+                correct++;
+            }
+        }
+        let saveTaskAnswers = await Level.saveTaskAnswers(inputs,JSON.stringify($.req.body));
+        // console.log(answers.toString())
+        console.log(saveTaskAnswers);
+        console.log('Correct Answer:', correct);
+        // $.res.send($.req.body)
     }
 }
 function arrayToJson(questionLen, questions, answers, questionChoices) {
