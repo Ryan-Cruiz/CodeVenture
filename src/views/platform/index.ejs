@@ -1,9 +1,10 @@
 <%- include('../shared/header') %>
     <% if(roles.indexOf('admin') !==-1) { %>
-        <div class="container my-3">
+        <div class="container my-3 border p-2">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
                 Create Level
             </button>
+            <a href="/tasks/answers/<%= lesson_id %>" class="btn btn-primary">All Answer</a>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -28,7 +29,7 @@
             </div>
         </div>
         <% } %>
-            <div class="container">
+            <div class="container border p-2">
                 <% if(msg !=undefined){ %>
                     <div class="alert alert-success">
                         <%= msg.success[0] %>

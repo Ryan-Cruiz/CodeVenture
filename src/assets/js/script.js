@@ -52,4 +52,14 @@ $(document).ready(function () {
     $(document).on('keyup', 'input.option-input', function () {
         $(this).siblings('.input-group-text').children('input').val($(this).val())
     });
+    $("#editBtn").click(function(){
+        // console.log($(this).siblings());
+        let title = $(this).siblings('.lesson-title').text();
+        let description = $(this).siblings('.lesson-description').text();
+        let id = $(this).parent().data('id')
+        console.log(id)
+        $('#editTitle').val(title);
+        $('#editDescription').val(description);
+        $('#lesson_id').val(id);
+    })
 });

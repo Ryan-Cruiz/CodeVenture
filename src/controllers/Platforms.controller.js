@@ -10,22 +10,29 @@ class Platforms {
         // console.log($.res.locals)
         let materials_res = await Level.getMaterials($.req.params.id);
         // console.log(materials_res);
-        $.res.render('platform/index',{data: materials_res});
+        $.res.render('platform/index', { data: materials_res });
     }
     /**LESSON */
     async create_lesson() {
         // $.res.render('platform/createLesson');
-        let res = await Platform.create_lesson($.req.body,$.req.session.user_data.user_id);
+        let res = await Platform.create_lesson($.req.body, $.req.session.user_data.user_id);
         if (res == 'success') {
             $.req.session.msg = { success: ["Lesson Created Successfully!"] };
             $.res.redirect('/');
-        }else{
+        } else {
             $.req.session.msg = { error: res };
         }
         // console.log($.req.body);
     }
-    async edit_lesson(){
-
+    async edit_lesson() {
+        console.log($.req.body);
+        let res = await Platform.edit_lesson($.req.body);
+        if (res == 'success') {
+            $.req.session.msg = { success: ["Lesson Updated Successfully!"] };
+            $.res.redirect('/');
+        } else {
+            $.req.session.msg = { error: res };
+        }
     }
     /**END OF LESSON */
 }

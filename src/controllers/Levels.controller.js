@@ -71,6 +71,8 @@ class Levels {
     async show_material() {
         let res = await Level.getLevel($.req.params);
         // console.log(res, typeof JSON.parse(res[0].content));
+        // $.res.locals.params = $.req.params;
+        // console.log($.req.params);
         let listRes = await Level.getMaterials($.req.params.id);
         $.res.render('level/showLevel', { data: res, lists: listRes });
     }
@@ -87,9 +89,10 @@ class Levels {
         }
         let saveTaskAnswers = await Level.saveTaskAnswers(inputs,JSON.stringify($.req.body));
         // console.log(answers.toString())
-        console.log(saveTaskAnswers);
+        // console.log(saveTaskAnswers);
         console.log('Correct Answer:', correct);
         // $.res.send($.req.body)
+        $.res.redirect(`/lesson/${inputs.id}`);
     }
 }
 function arrayToJson(questionLen, questions, answers, questionChoices) {

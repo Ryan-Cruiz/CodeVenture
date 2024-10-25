@@ -28,7 +28,8 @@ middleware.routeRole = {
         '/create_challenge',
         '/material/:id/level/:level_id/edit',
         '/edit_material/:lesson_id/:id',
-        '/edit_task/:lesson_id/:id'
+        '/edit_task/:lesson_id/:id',
+        '/edit_lesson'
     ]
 }
 /* $.post is for the forms  if you want to get the data */
@@ -46,7 +47,7 @@ $.get['/settings'] = UserController.settings;
 /* START OF PLATFORMCONTROLLER */
 $.get['/lesson/:id'] = PlatformsController.index;
 $.post['/create_lesson'] = PlatformsController.create_lesson;
-
+$.post['/edit_lesson'] = PlatformsController.edit_lesson;
 /* END OF PLATFORMCONTROLLER */
 
 /* START OF LEVELCONTROLLER */

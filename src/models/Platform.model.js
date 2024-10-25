@@ -6,11 +6,22 @@ class Platform extends model {
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
             let lessonQuery = this.insert('lessons', ['role_id', 'title', 'description',]).
-            values([role_id, inputs.title, inputs.description]).exec();
+                values([role_id, inputs.title, inputs.description]).exec();
             return 'success';
         }
         return validation;
 
+    }
+    async edit_lesson(inputs) {
+        let validation = await this.lesson_validate(inputs);
+        if (validation == 'success') {
+            let lessonQuery = this.update('lessons', ['title=?', 'description=?']).
+                where(["id=?"]).
+                values([inputs.title, inputs.description,inputs.lesson_id]).exec();
+                // console.log(lessonQuery);
+            return 'success';
+        }
+        return validation;
     }
     async getLessons() {
         // let query = this.sql.format("SELECT * FROM credentials INNER JOIN roles ON credentials.user_id = roles.user_id INNER JOIN groups ON groups.role_id = roles.id");

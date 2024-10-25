@@ -31,11 +31,11 @@ class Users {
     }
     async login() {
         let result = await user.login_validate($.req.body); // get validate
-        console.log('wiwi',result,$.req.body);
+        // console.log('wiwi',result,$.req.body);
         if (result == 'success') {
             let res = await user.login_process($.req.body); // get the query
             // console.log(data.first_name, 'this is data');
-            console.log(res, 'login res');
+            // console.log(res, 'login res');
             if (res == 'fail') { // check if not
                 $.req.session.msg = { error: ['Wrong Password'] }; // get the result as a array of message
             } else {

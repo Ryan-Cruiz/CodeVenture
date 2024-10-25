@@ -61,5 +61,7 @@
                 <% } %>
     </div>
     <script src="/simplemde.min.js"></script>
-    <script src="../../assets/js/taskScript.js"></script>
+    <% if(data[0].isTask == '0'){ %>
+    <script src="../../../../js/taskScript.js"></script>
+    <% } %>
     <%- include('../shared/footer') %>

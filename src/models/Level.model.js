@@ -22,14 +22,19 @@ class Level extends model {
     async saveTaskAnswers(params, input) {
         let isUserExist = await this.select("task_answers", ["*"]).where(["user_id=? AND task_id=? AND lesson_id=?"])
             .values([params.user_id, params.level_id, params.id]).exec();
-        console.log(isUserExist)
+        // console.log(isUserExist)
         if (isUserExist.length > 0) {
-            console.log("existed")
+            let result = await this.update('task_answers', ["answers=?","updated_at=NOW()"])
+            .where(["task_id=?", this.and("lesson_id=?"), this.and("user_id=?")])
+            .values([input, params.level_id, params.id, params.user_id]).exec();
+            return 'success';
+        // this.profiler_enable();
+        // console.log(result);
         } else {
             let result = await this.insert('task_answers', ["answers", "task_id", "lesson_id", "user_id"])
                 .values([input, params.level_id, params.id, params.user_id]).exec();
             // this.profiler_enable();
-            console.log(result);
+            // console.log(result);
             return 'success';
         }
     }
