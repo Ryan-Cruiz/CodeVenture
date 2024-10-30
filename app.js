@@ -41,7 +41,7 @@ const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 // const passport = require('passport');
 app.locals.title = "CodeVenture";
-let saveTime = false;
+let saveTime = true;
 app.use((req, res, next) => {
     app.locals.host = req.get('host');
     // console.log(app.locals);
@@ -49,8 +49,8 @@ app.use((req, res, next) => {
     if (req.session.roles == undefined) {
         if (saveTime) {
             req.session.logged = true;
-            req.session.user_data = { name: "developer", user_id: 1 }
-            req.session.roles = ['all', 'auth', 'admin'];
+            req.session.user_data = { name: "developer", user_id: 2 }
+            req.session.roles = ['all', 'auth'];
         } else {
             req.session.logged = false;
             req.session.roles = ['all', 'guest']; // you can change this as a config.session or a database object(json)

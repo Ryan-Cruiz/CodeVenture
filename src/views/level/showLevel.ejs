@@ -29,7 +29,10 @@
             <% if(roles.indexOf('admin') !==-1) { %>
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="align-middle btn btn-danger">Edit
                     Level</a>
+                <% if(data[0].isTask == '1') { %>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
                 <% } %>
+            <% } %>
                     <% if(data[0].isTask=='0' ) { %>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
                     <% }else if(data[0].isTask=='1' ){ %>

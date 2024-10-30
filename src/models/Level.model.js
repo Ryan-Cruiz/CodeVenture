@@ -1,3 +1,4 @@
+const { param } = require('express/lib/request.js');
 const loader = require('../loaders.js');
 const model = loader.model;
 class Level extends model {
@@ -66,6 +67,12 @@ class Level extends model {
             values([inputs.title, inputs.description, params.lesson_id, params.id]).exec()
         console.log(result);
         return 'success'
+    }
+    async getTaskAnswer(params){
+        return await this.select("task_answers",["*"]).inner('credentials',['id','user_id']).where(["task_id=?",this.and("lesson_id=?")]).values([params.level_id,params.id]).exec();
+    }
+    async getUserAnswer(params,user_id){
+        return await this.select("task_answers",["*"]).where(["user_id=?",this.and("task_id=?"),this.and("lesson_id=?")]).values([user_id,params.level_id,params.id]).exec();
     }
     async level_validate(inputs) {
         const form = this.Validation;

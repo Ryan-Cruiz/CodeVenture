@@ -3,7 +3,7 @@ module.exports = class mvc_model extends ORM {
     constructor() {
         super();
         this.result;
-        this.redis = require('redis');
+        //this.redis = require('redis');
         const { profile, config, validation } = require('../src/loaders.js');
         this.profiler = profile;
         this.Validation = validation;

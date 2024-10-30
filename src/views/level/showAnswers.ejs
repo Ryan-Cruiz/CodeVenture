@@ -1,0 +1,20 @@
+<%- include('../shared/header') %>
+    <div class="container">
+        <a href="/material/<%= params.id %>/level/<%= params.level_id %>" class="btn btn-primary">Back</a>
+        <table class="table">
+            <thead>
+                <th>Name</th>
+                <th>Answers</th>
+            </thead>
+            <tbody>
+                <% users_answers.forEach(answers =>{ %>
+                    <tr>
+                        <td><%= answers.first_name %> <%= answers.last_name %></td>
+                        <td><%= JSON.parse(answers.answers).answers %></td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+
+    </div>
+    <%- include('../shared/footer') %>
