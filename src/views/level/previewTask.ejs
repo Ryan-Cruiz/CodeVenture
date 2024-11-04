@@ -1,0 +1,70 @@
+<%- include('../shared/header') %>
+    <div class="d-flex level-container">
+        <div class="p-2 sidebar">
+            <div class="list-group">
+                <% lists.forEach(list=> { %>
+                    <% if(list.id==data[0].id) { %>
+                        <div class="list-group-item active">
+                            <%= list.level_name %>
+                        </div>
+                        <% } else { %>
+                            <a href="/material/<%=list.lesson_id%>/level/<%=list.id%>"
+                                class="text-start list-group-item list-group-item-action btn btn-transparent">
+                                <%= list.level_name %>
+                            </a>
+                            <% } %>
+                                <% }); %>
+            </div>
+        </div>
+        <div class="p-2 flex-fill">
+            <h2 class="m-2 d-inline-block align-middle">
+                <%= data[0].level_name %>
+            </h2>
+            <% if(roles.indexOf('admin') !==-1) { %>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="align-middle btn btn-danger">Edit
+                    Level</a>
+                <% if(data[0].isTask == '1') { %>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
+                <% } %>
+            <% } %>
+                <%JSON.parse(data[0].content).forEach((item,i)=> { %>
+                <div class="container" id="question-container">
+                    <div class="mt-5 border">
+                        <div class="m-2">
+                            <label>Question</label>
+                            <p>
+                                <%= item.question %>
+                            </p>
+                        </div>
+                        <div class="choice-container m-2" aria-value="0">
+                          
+                            <% item.choices.forEach((choice)=> { %>
+                            <div class="input-group my-2">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="radio"
+                                        value="<%= choice %>" name="answers[<%= i %>]" <%= answers[i] == choice ? "checked" : "" %> required disabled>
+                                </div>
+                                <input type="text" class="form-control option-input
+                                 <%=  (item.answer !=  answers[i] && answers[i] == choice) ? 'bg-danger' : 
+                                 (item.answer ==  answers[i] && answers[i] == choice) ? 'bg-success' : '' %>"
+                                    value="<%= choice %>" autocomplete="off" 
+                                    readonly disabled >
+                            </div>
+                        <% }); %>
+                            <div class="form-control">
+                                <p>Description of Correct Answer:</p>
+                                <p><%= item.description %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+                <div class="m-4">
+                    <form action="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>" method="get">
+                        <input type="hidden" name="event" value="retake">
+                        <input class="mb-2 btn btn-danger float-end w-25" value="Retake" type="submit">
+                    </form>
+                </div>
+        </div>
+    </div>
+    <%- include('../shared/footer') %>

@@ -26,6 +26,10 @@ $(document).ready(function () {
                         </div>
                      </div>
                      <input type="hidden" name="choice_length" value="1" class="choice-counter">
+                       <div class="m-2">
+                            <label for="description">Description of Correct Answer</label>
+                            <textarea name="description[]" class="form-control" id="description"></textarea>
+                        </div>
                      <div class="btn btn-primary m-2 add-choice">Add Choice</div>
                     </div>`;
         $('#question-container').append(html);

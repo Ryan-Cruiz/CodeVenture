@@ -49,8 +49,8 @@ app.use((req, res, next) => {
     if (req.session.roles == undefined) {
         if (saveTime) {
             req.session.logged = true;
-            req.session.user_data = { name: "developer", user_id: 2 }
-            req.session.roles = ['all', 'auth'];
+            req.session.user_data = { name: "developer", user_id: 1 }
+            req.session.roles = ['all', 'auth','admin'];
         } else {
             req.session.logged = false;
             req.session.roles = ['all', 'guest']; // you can change this as a config.session or a database object(json)

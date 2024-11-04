@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`levels` (
   `lesson_id` INT NOT NULL,
   `level_name` VARCHAR(45) NULL,
   `content` BLOB NULL,
+  `description` TEXT NULL,
   `isTask` TINYINT NULL,
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),

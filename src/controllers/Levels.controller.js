@@ -20,8 +20,9 @@ class Levels {
         let answers = $.req.body.correctAnswer;
         let questionChoices = $.req.body.questionChoice;
         let questionLen = $.req.body.choice_length;
+        let description = $.req.body.description;
         console.log($.req.body, $.req.params);
-        let content = arrayToJson(questionLen, questions, answers, questionChoices)
+        let content = arrayToJson(questionLen, questions, answers, questionChoices, description)
         // console.log(typeof content)
         let res = await Level.createTask($.req.body, JSON.stringify(content));
         if (res == 'success') {
@@ -73,10 +74,27 @@ class Levels {
         // console.log(res, typeof JSON.parse(res[0].content));
         // $.res.locals.params = $.req.params;
         let listRes = await Level.getMaterials($.req.params.id);
-        $.res.render('level/showLevel', { data: res, lists: listRes });
+        let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+        // console.log($.req.query);
+        if (answers.length == 0 || $.req.query.event == "retake") {
+            $.res.render('level/showLevel', { data: res, lists: listRes });
+        }else{
+            $.res.redirect(`/material/${$.req.params.id}/level/${$.req.params.level_id}/preview`);
+        }
+
+    }
+    async previewTask() {
+        let res = await Level.getLevel($.req.params);
+        // console.log(res, typeof JSON.parse(res[0].content));
+        console.log($.req.params);
+        // $.res.locals.params = $.req.params;
+        let listRes = await Level.getMaterials($.req.params.id);
+        let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+        console.log(JSON.parse(answers[0].answers));
+        $.res.render('level/previewTask', { data: res, lists: listRes, answers: JSON.parse(answers[0].answers).answers });
     }
     async submit_task() {
-        let inputs = { id: $.req.params.lesson_id, level_id: $.req.params.id,user_id: $.req.session.user_data.user_id };
+        let inputs = { id: $.req.params.lesson_id, level_id: $.req.params.id, user_id: $.req.session.user_data.user_id };
         let res = await Level.getLevel(inputs);
         let answers = $.req.body.answers;
         let questions = JSON.parse(res[0].content.toString());
@@ -86,26 +104,27 @@ class Levels {
                 correct++;
             }
         }
-        let saveTaskAnswers = await Level.saveTaskAnswers(inputs,JSON.stringify($.req.body));
+        let saveTaskAnswers = await Level.saveTaskAnswers(inputs, JSON.stringify($.req.body));
         // console.log(answers.toString())
         // console.log(saveTaskAnswers);
         $.req.session.score = correct;
         // $.res.send($.req.body)
         $.res.redirect(`/lesson/${inputs.id}`);
     }
-    async task_answers(){
+    async task_answers() {
         let getTask = await Level.getTaskAnswer($.req.params);
         // console.log(getTask);
         $.res.locals.params = $.req.params;
         $.res.render('level/showAnswers', { users_answers: getTask });
     }
 }
-function arrayToJson(questionLen, questions, answers, questionChoices) {
+function arrayToJson(questionLen, questions, answers, questionChoices, description) {
     let content = []
     for (let i = 0; i < questionLen.length; i++) {
-        let json = { question: "", choices: [], answer: "" }
+        let json = { question: "", choices: [], answer: "", description: "" }
         json.question = questions[i];
         json.answer = answers[i];
+        json.description = description[i];
         for (let j = 0; j < questionLen[i]; j++) {
             json.choices.push(questionChoices[0]);
             questionChoices.shift();
