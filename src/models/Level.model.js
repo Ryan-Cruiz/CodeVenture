@@ -1,4 +1,3 @@
-const { param } = require('express/lib/request.js');
 const loader = require('../loaders.js');
 const model = loader.model;
 class Level extends model {
@@ -25,12 +24,12 @@ class Level extends model {
             .values([params.user_id, params.level_id, params.id]).exec();
         // console.log(isUserExist)
         if (isUserExist.length > 0) {
-            let result = await this.update('task_answers', ["answers=?","updated_at=NOW()"])
-            .where(["task_id=?", this.and("lesson_id=?"), this.and("user_id=?")])
-            .values([input, params.level_id, params.id, params.user_id]).exec();
+            let result = await this.update('task_answers', ["answers=?", "updated_at=NOW()"])
+                .where(["task_id=?", this.and("lesson_id=?"), this.and("user_id=?")])
+                .values([input, params.level_id, params.id, params.user_id]).exec();
             return 'success';
-        // this.profiler_enable();
-        // console.log(result);
+            // this.profiler_enable();
+            // console.log(result);
         } else {
             let result = await this.insert('task_answers', ["answers", "task_id", "lesson_id", "user_id"])
                 .values([input, params.level_id, params.id, params.user_id]).exec();
@@ -49,7 +48,7 @@ class Level extends model {
     }
     async updateTask(inputs, params, content) {
         if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
-            let result = await this.update('levels', ['level_name=?', 'content=?']).
+            let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
                 where(['lesson_id=?', this.and('id=?')]).
                 values([inputs.title, content, params.lesson_id, params.id]).exec()
             console.log(result);
@@ -62,17 +61,17 @@ class Level extends model {
         if (validation != 'success') {
             return validation;
         }
-        let result = await this.update('levels', ['level_name=?', 'content=?']).
+        let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
             where(['lesson_id=?', this.and('id=?')]).
             values([inputs.title, inputs.description, params.lesson_id, params.id]).exec()
         console.log(result);
         return 'success'
     }
-    async getTaskAnswer(params){
-        return await this.select("task_answers",["*"]).inner('credentials',['id','user_id']).where(["task_id=?",this.and("lesson_id=?")]).values([params.level_id,params.id]).exec();
+    async getTaskAnswer(params) {
+        return await this.select("task_answers", ["*"]).inner('credentials', ['id', 'user_id']).where(["task_id=?", this.and("lesson_id=?")]).values([params.level_id, params.id]).exec();
     }
-    async getUserAnswer(params,user_id){
-        return await this.select("task_answers",["*"]).where(["user_id=?",this.and("task_id=?"),this.and("lesson_id=?")]).values([user_id,params.level_id,params.id]).exec();
+    async getUserAnswer(params, user_id) {
+        return await this.select("task_answers", ["*"]).where(["user_id=?", this.and("task_id=?"), this.and("lesson_id=?")]).values([user_id, params.level_id, params.id]).exec();
     }
     async level_validate(inputs) {
         const form = this.Validation;

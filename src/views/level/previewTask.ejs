@@ -32,12 +32,9 @@
                     <div class="mt-5 border">
                         <div class="m-2">
                             <label>Question</label>
-                            <p>
-                                <%= item.question %>
-                            </p>
+                            <pre><%= item.question %></pre>
                         </div>
                         <div class="choice-container m-2" aria-value="0">
-                          
                             <% item.choices.forEach((choice)=> { %>
                             <div class="input-group my-2">
                                 <div class="input-group-text">

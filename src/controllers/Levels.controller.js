@@ -53,7 +53,7 @@ class Levels {
             } else {
                 $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
             }
-        } else {
+        } else if ($.req.body.isTask == '1') {
             let questions = $.req.body.question;
             let answers = $.req.body.correctAnswer;
             let questionChoices = $.req.body.questionChoice;
@@ -78,7 +78,7 @@ class Levels {
         // console.log($.req.query);
         if (answers.length == 0 || $.req.query.event == "retake") {
             $.res.render('level/showLevel', { data: res, lists: listRes });
-        }else{
+        } else {
             $.res.redirect(`/material/${$.req.params.id}/level/${$.req.params.level_id}/preview`);
         }
 

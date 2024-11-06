@@ -15,7 +15,7 @@ class Platform extends model {
     async edit_lesson(inputs) {
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
-            let lessonQuery = this.update('lessons', ['title=?', 'description=?']).
+            let lessonQuery = this.update('lessons', ['title=?', 'description=?','updated_at=NOW()']).
                 where(["id=?"]).
                 values([inputs.title, inputs.description,inputs.lesson_id]).exec();
                 // console.log(lessonQuery);

@@ -1,0 +1,59 @@
+<% let content = JSON.parse(data[0].content) %>
+<div class="d-flex mt-4">
+    <!-- navigation and title -->
+    <div class="col">
+        <!-- description -->
+        <div class="container mt-2">
+            <h5>Description</h5>
+            <p class="p-2 border rounded border-1">
+                <%=content.description%>
+            </p>
+        </div>
+    </div>
+    <div class="container col-9">
+        <div class="container">
+            <div class="text-end">
+                <button id="run-btn" class="btn btn-success w-25">Run</button>
+            </div>
+            <div class="container">
+                <code class="language-javascript bg-transparent" id="function-name">function <%=content.functionName%>(<%=content.params%>){</code>
+                <code class="d-block px-5" id="code" contenteditable="true"
+                    style="border:1px solid black;">// Enter code below</code>
+                <code class="language-javascript bg-transparent" id="function-end">}</code>
+                <code>
+                        <!-- <div id="editor" style="width: 500px; height: 200px;"></div> -->
+                    </code>
+                <form action="" method="post">
+                    <input type="hidden" name="user_code" id="user_code">
+                    <!-- <textarea name="user_code" id="user_code" class="form-control"></textarea> -->
+                </form>
+            </div>
+            <div class="container d-flex border border-1">
+                <div class="col">
+                    <p>Output</p>
+                    <div id="output"></div>
+                </div>
+                <div class="col border-start">
+                    <p class="ms-2">Test Cases <span id="correctAnswer">0</span>/<%=content.testCases.length%></p>
+                    <div class="cases">
+                        <ul class="list-group list-group-flush" id="test_cases">
+                    <% content.testCases.forEach((val,i) =>{ %>
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="check-icon bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                            </svg>
+                            <span><%=content.functionName %>(<%= val %>)</span> returns <%= content.testCasesAnswer[i] %>
+                        </li>
+                    <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script src="../src/ace.js" type="text/javascript" charset="utf-8"></script> -->
+<script>let json = <%- JSON.stringify(content) %></script>
+<script src="../../../js/compile.js"></script>

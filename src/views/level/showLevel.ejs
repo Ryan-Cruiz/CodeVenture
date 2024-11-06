@@ -43,9 +43,7 @@
                             <div class="mt-5 border">
                                 <div class="m-2">
                                     <label>Question</label>
-                                    <p>
-                                        <%= item.question %>
-                                    </p>
+                                    <pre><%= item.question %></pre>
                                 </div>
                                 <div class="choice-container m-2" aria-value="0">
                                 <% item.choices.forEach((choice)=> { %>
@@ -67,8 +65,10 @@
                             <input type="submit" class="mb-2 btn btn-danger float-end w-25"
                                 value="Submit">
                         </div>
-                        <% } %>
                     </form>
+                    <% }else if(data[0].isTask == '2'){ %>
+                        <%- include('../code/index') %>
+                    <% } %>
 
         </div>
     </div>
