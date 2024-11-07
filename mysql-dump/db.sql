@@ -204,6 +204,37 @@ CREATE INDEX `fk_challenge_answers_lessons1_idx` ON `codeVenture`.`task_answers`
 
 CREATE INDEX `fk_task_answers_users1_idx` ON `codeVenture`.`task_answers` (`user_id` ASC) ;
 
+-- -----------------------------------------------------
+-- Table `codeVenture`.`feedbacks`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `codeVenture`.`feedbacks` ;
+
+CREATE TABLE IF NOT EXISTS `codeVenture`.`feedbacks` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `rate` INT(2) NOT NULL,
+  `lesson_id` INT NOT NULL,
+  `content` TEXT NULL,
+  `created_at` DATETIME NULL DEFAULT NOW(),
+  `updated_at` DATETIME NULL DEFAULT NOW(),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_feedbacks_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `codeVenture`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_feedbacks_lessons1`
+    FOREIGN KEY (`lesson_id`)
+    REFERENCES `codeVenture`.`lessons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_feedbacks_users1_idx` ON `codeVenture`.`feedbacks` (`user_id` ASC) ;
+
+CREATE INDEX `fk_feedbacks_lessons1_idx` ON `codeVenture`.`feedbacks` (`lesson_id` ASC) ;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

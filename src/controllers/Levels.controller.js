@@ -74,7 +74,10 @@ class Levels {
         // console.log(res, typeof JSON.parse(res[0].content));
         // $.res.locals.params = $.req.params;
         let listRes = await Level.getMaterials($.req.params.id);
-        let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+        let answers = "";
+        if(res[0].isTask == 1){
+            answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+        }
         // console.log($.req.query);
         if (answers.length == 0 || $.req.query.event == "retake") {
             $.res.render('level/showLevel', { data: res, lists: listRes });
@@ -104,7 +107,8 @@ class Levels {
                 correct++;
             }
         }
-        let saveTaskAnswers = await Level.saveTaskAnswers(inputs, JSON.stringify($.req.body));
+        let content = {answers: $.req.body.answers,score: correct};
+        let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
         // console.log(answers.toString())
         // console.log(saveTaskAnswers);
         $.req.session.score = correct;

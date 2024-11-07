@@ -1,0 +1,49 @@
+<%- include('../shared/header') %>
+    <div class="container">
+        <h2>Leave a feedback</h2>
+        <form action="/material/<%=lesson_id%>/feedback/submit" method="post">
+            <div class="container" id="question-container">
+                <div class="mt-5 border rounded ">
+                    <div class="m-2">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis illum quisquam labore vitae,
+                            nulla deleniti exercitationem corrupti accusamus, quasi veniam molestias dolor incidunt
+                            sequi ut.</p>
+                    </div>
+                    <div class="choice-container m-2">
+                        <p>Rate(1 - least and 5 - most) <span class="text-danger">*</span></p>
+                        <div class="input-group my-2">
+                            <div class="input-group-text">
+                                <label class="me-2">1</label>
+                                <input class="form-check-input mt-0" type="radio" value="1" name="rate" required>
+                            </div>
+                            <div class="input-group-text">
+                                <label class="me-2">2</label>
+                                <input class="form-check-input mt-0" type="radio" value="2" name="rate" required>
+                            </div>
+                            <div class="input-group-text">
+                                <label class="me-2">3</label>
+                                <input class="form-check-input mt-0" type="radio" value="3" name="rate" required>
+                            </div>
+                            <div class="input-group-text">
+                                <label class="me-2">4</label>
+                                <input class="form-check-input mt-0" type="radio" value="4" name="rate" required>
+                            </div>
+                            <div class="input-group-text">
+                                <label class="me-2">5</label>
+                                <input class="form-check-input mt-0" type="radio" value="5" name="rate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-2">
+                        <label for="content">Feedback/Comments <span class="text-danger">*</span></label>
+                        <textarea name="content" id="content" class="form-control" required></textarea>
+                    </div>
+                    <div class="text-end mb-3">
+                        <input type="submit" value="Submit" class="btn btn-danger w-25">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <%- include('../shared/footer') %>

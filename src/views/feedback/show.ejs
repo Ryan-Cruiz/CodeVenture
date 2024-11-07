@@ -1,0 +1,35 @@
+<%- include('../shared/header') %>
+    <div class="d-flex level-container">
+        <div class="p-2 sidebar">
+            <div class="list-group">
+                <% lists.forEach(list=> { %>
+                    <a href="/material/<%=list.lesson_id%>/level/<%=list.id%>"
+                        class="text-start list-group-item list-group-item-action btn btn-transparent">
+                        <%= list.level_name %>
+                    </a>
+                    <% }); %>
+                        <div class="list-group-item active">
+                            Feedback
+                        </div>
+            </div>
+        </div>
+        <div class="p-2 flex-fill">
+            <h2>Feedbacks</h2>
+            <div class="feedback-container">
+                <% data.forEach(feedback=>{ %>
+                    <div class="container border rounded">
+                        <p class="p-2 pb-0 m-0"><%= feedback.first_name %> <%= feedback.last_name %> <span class="text-secondary">@ <%= new Date(feedback.created_at).toLocaleDateString() %></span></p>
+                        <div class="p-2">
+                            <p class="pe-2 m-0">Rate: <%= feedback.rate %>/5</p>
+                            <%if(feedback.content != ""){%>
+                            <p class="m-0">Comment:</p>
+                            <% } %>
+                            <p class="m-0 ms-5 mt-1"><%= feedback.content%></p>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../shared/footer') %>

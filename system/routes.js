@@ -6,6 +6,7 @@ const $ = route_path;
 const PlatformsController = controller('Platforms');
 const CodesController = controller('Codes');
 const LevelsController = controller('Levels');
+const FeedbacksController = controller('Feedbacks');
 const middleware = require('./middleware.js');
 
 middleware.routeRole = {
@@ -20,8 +21,10 @@ middleware.routeRole = {
             '/material/:id/level/:level_id/preview',
             '/submit/code/:lesson_id/:id',
             '/update/code/:lesson_id/:id',
+            '/material/:lesson_id/feedback',
+            '/material/:lesson_id/feedback/submit',
         ],
-    "guest": ['/createAccount', '/register', '/login'],
+    "guest": ['/createAccount', '/register', '/login','/home'],
     "admin": [
         '/settings',
         '/create_lesson',
@@ -82,6 +85,12 @@ $.post['/submit/task/:lesson_id/:id'] = LevelsController.submit_task;
 $.get['/material/:id/level/:level_id/answers'] = LevelsController.task_answers;
 $.get['/material/:id/level/:level_id/preview'] = LevelsController.previewTask;
 /* END OF LEVELCONTROLLER */
+$.get['/material/:lesson_id/feedback'] = FeedbacksController.index;
+$.post['/material/:lesson_id/feedback/submit'] = FeedbacksController.add_feedback;
+
+/* START OF FEEDBACKCONTROLLER */
+
+/* END OF FEEDBACKCONTROLLER */
 module.exports = $.execute_path();
 middleware.routes = $.routes;
 

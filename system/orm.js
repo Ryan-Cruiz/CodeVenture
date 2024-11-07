@@ -117,6 +117,17 @@ class ORM {
         }
         return this;
     }
+    /**
+     * 
+     * @param {*} attr 
+     * table attribute
+     * @param {*} type
+     * ASC OR DESC DEFAULT IS ASC 
+     */
+    order(attr, type) {
+        this.queries += ` ORDER BY ${attr} ${type != "" ? type : "ASC"}`;
+        return this;
+    }
     // UPDATE `codeventure`.`users` SET `email` = 'developer.access@email.coms' WHERE (`id` = '1');
     values(arrVal) {
         this.arrVal = arrVal;

@@ -23,7 +23,9 @@
   width: 500px;
   height: 500px;
 }
-
+.feedback-container{
+  font-size: 15px;
+}
 /* HTML: <div class="octagon"></div> */
 .octagon {
   width: 80px;

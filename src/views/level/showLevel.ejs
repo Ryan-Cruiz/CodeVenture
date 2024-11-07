@@ -20,6 +20,10 @@
                             </a>
                             <% } %>
                                 <% }); %>
+                                <a href="/material/<%=data[0].lesson_id%>/feedback"
+                                    class="text-start list-group-item list-group-item-action btn btn-transparent">
+                                    Feedback
+                                </a>
             </div>
         </div>
         <div class="p-2 flex-fill">
@@ -33,6 +37,9 @@
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
                 <% } %>
             <% } %>
+            <div>
+                <span class="text-secondary fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
+            </div>
                     <% if(data[0].isTask=='0' ) { %>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
                     <% }else if(data[0].isTask=='1'){ %>
