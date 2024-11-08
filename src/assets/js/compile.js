@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log()
     // var editor = ace.edit("editor");
     // let s =  ace.createEditSession([""]);
     // editor.setSession(s);
@@ -12,9 +11,23 @@ $(document).ready(function () {
         $('#run-btn').text("Running")
         // console.log(editor.session.getTextRange(editor.getSelectionRange())); 
         // console.log($('.ace_line:last-child'));
-        let params = json.params;
+        let params = json.params.split(',');
         e.preventDefault();
-        let createdFunction = Function(params, document.getElementById('code').innerText);
+        let variables = [];
+        let arrFunc = [];
+        json.testCases.forEach((v)=>{
+            let temp = "";
+            v.split("|").forEach((value,j) =>{
+                temp += `${params[j]} = ${value};`;
+            })
+            console.log(temp);
+            variables.push(temp);
+        })
+        let createdFunction;
+        json.testCases.forEach((v,i) => {
+            createdFunction = Function(json.params,variables[i]+document.getElementById('code').innerText);
+            arrFunc.push(createdFunction());
+        })
         var logger = document.getElementById('output');
         logger.innerHTML = "";
         if (!console) {
@@ -31,18 +44,13 @@ $(document).ready(function () {
         }
         let caseType = "return";
         let testCases = json.testCasesAnswer
-        let arrFunc = [];
         var reg = /^\d+$/;
-        json.testCases.forEach(v => {
-            // console.log(v.split(',').map(Number)[0]);
-            if(reg){
-                arrFunc.push(createdFunction(v.split(',').map(Number)[0],v.split(',').map(Number)[1]));
-            }
-        })
-        // console.log(arrFunc)
+        console.log(variables)
+        console.log(createdFunction)
+        console.log(arrFunc)
         let correctAnswer = 0;
         arrFunc.forEach((item, i) => {
-            if (item == testCases[i]) {
+            if (item.toString() == testCases[i].toString()) {
                 $("#test_cases > li:nth-child(" + (i + 1) + ")").addClass('text-success');
                 // alert(i);
                 correctAnswer++
