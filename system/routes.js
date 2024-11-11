@@ -23,6 +23,7 @@ middleware.routeRole = {
             '/update/code/:lesson_id/:id',
             '/material/:lesson_id/feedback',
             '/material/:lesson_id/feedback/submit',
+            '/submit/codeTask/:lesson_id/:level_id',
         ],
     "guest": ['/createAccount', '/register', '/login','/home'],
     "admin": [
@@ -62,9 +63,10 @@ $.post['/create_lesson'] = PlatformsController.create_lesson;
 $.post['/edit_lesson'] = PlatformsController.edit_lesson;
 
 $.get['/new_level/:lesson_id/code'] = CodesController.new_code;
-$.post['/submit/code/:lesson_id'] = CodesController.submit_code;
-$.post['/update/code/:lesson_id/:id'] = CodesController.update_code;
+$.post['/submit/code/:lesson_id'] = CodesController.create_code;
+$.post['/update/code/:lesson_id/:level_id'] = CodesController.update_code;
 $.post['/test'] = CodesController.test;
+$.post['/submit/codeTask/:lesson_id/:level_id'] = CodesController.submit_taskCode;
 /* END OF PLATFORMCONTROLLER */
 
 /* START OF LEVELCONTROLLER */

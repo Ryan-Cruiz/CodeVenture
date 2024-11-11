@@ -23,11 +23,10 @@
                 <code>
                         <!-- <div id="editor" style="width: 500px; height: 200px;"></div> -->
                     </code>
-                <form action="" method="post">
-                    <input type="hidden" name="user_code" id="user_code">
-                    <!-- <textarea name="user_code" id="user_code" class="form-control"></textarea> -->
-                </form>
+                    <div id="lesson_id" data-value="<%= data[0].lesson_id %>" ></div>
+                    <div id="level_id" data-value="<%= data[0].id %>"></div>
             </div>
+            <div hidden data-value="<%= JSON.stringify(content) %>" id="value"></div>
             <div class="container d-flex border border-1">
                 <div class="col">
                     <p>Output</p>
@@ -55,5 +54,4 @@
     </div>
 </div>
 <!-- <script src="../src/ace.js" type="text/javascript" charset="utf-8"></script> -->
-<script>let json = <%- JSON.stringify(content) %></script>
 <script src="../../../js/compile.js"></script>

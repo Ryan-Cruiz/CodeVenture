@@ -12,7 +12,7 @@ class Codes {
         $.res.locals.params = $.req.params;
         $.res.render('code/addCode');
     }
-    async submit_code() {
+    async create_code() {
         let lesson_id = $.req.params.lesson_id;
         let description = $.req.body.description;
         let functionName = $.req.body.functionName;
@@ -39,6 +39,11 @@ class Codes {
     }
     async test() {
         console.log('log from node to ajax post');
+    }
+    async submit_taskCode(){
+        console.log($.req.body);
+        console.log($.req.params);
+        console.log($.req.session.user_data);
     }
 }
 module.exports = new Codes(); 
