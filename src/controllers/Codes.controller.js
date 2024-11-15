@@ -27,20 +27,43 @@ class Codes {
             testCasesAnswer: testCasesAnswer
         };
         console.log($.req.body);
-        let res = await Code.createCode($.req.body,JSON.stringify(content),lesson_id);
-        if(res != 'success'){
+        let res = await Code.createCode($.req.body, JSON.stringify(content), lesson_id);
+        if (res != 'success') {
+            $.req.session.msg = { error: res };
             $.res.redirect(`/new_level/${$.req.params.lesson_id}/code`);
-        }else{
+        } else {
+            $.req.session.msg = { success: ["Code Task added Successfully!"] };
             $.res.redirect(`/lesson/${$.req.params.lesson_id}`);
         }
     }
     async update_code() {
-
+        let level_id = $.req.params.level_id;
+        let description = $.req.body.description;
+        let functionName = $.req.body.functionName;
+        let params = $.req.body.params;
+        let testCases = $.req.body.testCases;
+        let testCasesAnswer = $.req.body.testCasesAnswer;
+        let content = {
+            description: description,
+            functionName: functionName,
+            params: params,
+            testCases: testCases,
+            testCasesAnswer: testCasesAnswer
+        };
+        let res = await Code.updateCode($.req.body, JSON.stringify(content), level_id);
+        if (res != 'success') {
+            $.req.session.msg = { error: res };
+            // $.res.redirect('back');
+            $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.level_id}/edit`);
+        } else {
+            $.req.session.msg = { success: ["Code Task updated Successfully!"] };
+            $.res.redirect(`/lesson/${$.req.params.lesson_id}`);
+        }
     }
     async test() {
         console.log('log from node to ajax post');
     }
-    async submit_taskCode(){
+    async submit_taskCode() {
         console.log($.req.body);
         console.log($.req.params);
         console.log($.req.session.user_data);

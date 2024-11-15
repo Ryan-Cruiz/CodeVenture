@@ -21,6 +21,7 @@ class Platforms {
             $.res.redirect('/');
         } else {
             $.req.session.msg = { error: res };
+            $.res.redirect('/');
         }
         // console.log($.req.body);
     }
@@ -32,6 +33,7 @@ class Platforms {
             $.res.redirect('/');
         } else {
             $.req.session.msg = { error: res };
+            $.res.redirect('/');
         }
     }
     /**END OF LESSON */

@@ -1,0 +1,45 @@
+<% const content = JSON.parse(data[0].content); %>
+<form action="/update/code/<%=data[0].lesson_id%>/<%= data[0].id %>" method="post">
+    <div class="mb-2 text-end">
+        <input type="submit" value="Save" class="btn btn-danger w-25">
+    </div>
+    <div class="mb-2">
+        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+        <input value="<%= data[0].level_name %>" type="text" name="title" id="title" class="form-control" required >
+    </div>
+    <div class="mb-2">
+        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+        <textarea name="description" class="form-control" id="descriptiony" required><%= content.description %></textarea>
+    </div>
+    <div class="mb-2">
+        <label for="functionName" class="form-label">Function Name <span class="text-danger">*</span></label>
+        <input value="<%= content.functionName %>" type="text" name="functionName" id="functionName" class="form-control" required>
+    </div>
+    <input type="hidden" name="isTask" value="<%= data[0].isTask %>">
+    <div class="mb-2">
+        <label for="params" class="form-label">Parameters <span class="fw-bold">(if multiple separate it with
+                comma i.e
+                x,y)</span></label>
+        <input type="text" name="params" class="form-control" value="<%= content.params %>">
+    </div>
+    <div class="mb-2" id="case_container">
+        <label class="form-label">Test Cases <span class="fw-bold">(if multiple separate it with comma i.e
+                1|2 or [1,2]|[3,4])</span> <span class="text-danger">*</span></label>
+        <% content.testCases.forEach((val,i) => { %>
+            <div class="input-group mb-3">
+                <input value="<%= val %>" type="text" name="testCases[]" class="form-control" required placeholder="Test Case">
+                <input type="text" name="testCasesAnswer[]" required class="form-control"
+                    placeholder="Test Case Answer" value="<%= content.testCasesAnswer[i] %>">
+                <div class="btn btn-outline-danger remove-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                    </svg>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div class="btn btn-primary" id="add_test">Add Test Case</div>
+</form>
+</div>
+<script src="../../js/codeScript.js"></script>

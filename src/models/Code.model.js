@@ -16,6 +16,16 @@ class Code extends model {
         console.log(result)
         return 'success';
     }
+    async updateCode(inputs, content, level_id) {
+        let validation = await this.level_validate(inputs);
+        if (validation != 'success') {
+            return validation;
+        }
+        let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
+            where(['id=?']).values([inputs.title, content, level_id]).exec();
+        console.log(result)
+        return 'success';
+    }
 
 
     async level_validate(inputs) {

@@ -1,6 +1,7 @@
 <%- include('../shared/header') %>
     <div class="container">
         <h2>New Task</h2>
+        <%- include('../shared/partials/alert') %>
         <form action="/create_task" method="post">
             <div class="text-end mb-3">
                 <input type="submit" value="Create" class="btn btn-danger w-25">

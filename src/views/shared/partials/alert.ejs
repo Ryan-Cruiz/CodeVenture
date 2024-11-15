@@ -1,0 +1,19 @@
+<% if(msg != undefined){ %>
+    <% const status = Object.keys(msg)[0]; %>
+    <% if(status == 'success' ) {%>
+        <div class="alert alert-success">
+            <%= msg.success[0] %>
+        </div>
+    <% } %>
+        <% if(status == 'error' ) { %>
+            <div class="alert alert-danger">
+                <ul>
+                    <% msg.error.forEach(err=>{ %>
+                        <li>
+                            <%= err %>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+        <% } %>
+<%}%>

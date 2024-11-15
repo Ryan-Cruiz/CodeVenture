@@ -3,6 +3,9 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
 
 $(document).ready(function () {
+    setTimeout(() => {
+        $('.alert').fadeOut(3000);
+    }, 1000);
     let counter=1;
     let user_container = $('#user-container');
     user_container.hide();

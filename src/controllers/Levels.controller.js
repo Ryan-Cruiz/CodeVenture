@@ -11,8 +11,10 @@ class Levels {
         let res = await Level.createMaterial($.req.body)
         let id = $.req.body.lesson_id;
         if (res != 'success') {
+            $.req.session.msg = { error: res };
             console.log(res);
         }
+        $.req.session.msg = { success: ["Material updated Successfully!"] };
         $.res.redirect(`lesson/${id}`);
     }
     async create_task() {
@@ -27,8 +29,10 @@ class Levels {
         let res = await Level.createTask($.req.body, JSON.stringify(content));
         if (res == 'success') {
             let id = $.req.body.lesson_id;
+            $.req.session.msg = { success: ["Task added Successfully!"] };
             $.res.redirect(`lesson/${id}`);
         } else {
+            $.req.session.msg = { error: res };
             $.res.redirect('back');
         }
     }
@@ -49,8 +53,10 @@ class Levels {
         if ($.req.body.isTask == '0') {
             let res = await Level.updateMaterial($.req.body, $.req.params)
             if (res != 'success') {
+                $.req.session.msg = { error: res };
                 $.res.redirect('back')
             } else {
+                $.req.session.msg = { success: ["Material updated Successfully!"] };
                 $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
             }
         } else if ($.req.body.isTask == '1') {
@@ -62,8 +68,10 @@ class Levels {
             console.log($.req.body, $.req.params, content);
             let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
             if (res != 'success') {
+                $.req.session.msg = { error: res };
                 $.res.redirect('back')
             } else {
+                $.req.session.msg = { success: ["Task updated Successfully!"] };
                 $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
             }
         }

@@ -65,11 +65,7 @@
         </div>
         <% } %>
             <div class="container">
-                <% if(msg !=undefined){ %>
-                    <div class="alert alert-success">
-                        <%= msg.success[0] %>
-                    </div>
-                    <% }%>
+                <%- include('../shared/partials/alert') %>
                         <h2 class="fs-5">Featured Lessons</h2>
             </div>
             <div class="container mt-2 d-flex">

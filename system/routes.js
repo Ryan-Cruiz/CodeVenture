@@ -42,7 +42,7 @@ middleware.routeRole = {
         '/material/:id/level/:level_id/answers',
         '/test',
         '/submit/code/:lesson_id',
-        '/update/code/:lesson_id/:id',
+        '/update/code/:lesson_id/:level_id',
     ]
 }
 /* $.post is for the forms  if you want to get the data */

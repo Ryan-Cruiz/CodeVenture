@@ -1,6 +1,7 @@
 <%- include('../shared/header') %>
     <div class="container">
         <h2>New Code Exercise</h2>
+        <%- include('../shared/partials/alert') %>
         <form action="/submit/code/<%=params.lesson_id%>" method="post">
             <div class="mb-2 text-end">
                 <input type="submit" value="Create" class="btn btn-danger w-25">

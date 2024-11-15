@@ -1,6 +1,7 @@
 <%- include('../shared/header') %>
     <div class="container">
-        <h2>Edit Material</h2>
+        <h2>Edit <%= data[0].isTask == '0' ? "Material" : data[0].isTask == '1' ? "Task" : "Code" %></h2>
+        <%- include('../shared/partials/alert') %>
         <% if(data[0].isTask=='0' ){ %>
             <form action="/edit_material/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="update_material">
                 <div class="text-end mb-3">
@@ -62,7 +63,9 @@
                     </div>
                     <div class="btn btn-primary float-end mt-3" id="addQuestion">Add Question</div>
                 </form>
-                <% } %>
+                <% }else if(data[0].isTask=='2') {%> 
+                    <%- include('../code/editCode') %>
+                <%} %>
     </div>
     <script src="/simplemde.min.js"></script>
     <% if(data[0].isTask == '0'){ %>
