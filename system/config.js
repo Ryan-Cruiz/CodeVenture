@@ -2,7 +2,7 @@
 
 module.exports = {
 
-    port: 3000,
+    port: 3001,
     db_type: 'mysql',
     // database:
     // {
@@ -15,9 +15,10 @@ module.exports = {
     database: {
         host: 'localhost',
         user: 'root',
-        password: 'root',
+        password: 'PINASolid_090528',
         database: 'codeventure',
         port: 3307
+
     },
     session:
     {

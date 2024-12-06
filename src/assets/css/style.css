@@ -1,141 +1,410 @@
-* {
-  /* padding:0px;
-    margin:0px;
-    outline:1px solid black; */
+  * {
+    /* padding:0px;
+      margin:0px;
+      outline:1px solid black; */
 
+  }
+
+  .sidebar {
+    width: 300px;
+  }
+
+  .level-container {
+    height: 90%;
+  }
+
+  #user-container {
+    top: 35px;
+    right: 10px;
+    z-index: 99;
+  }
+
+  #editor {
+    width: 500px;
+    height: 500px;
+  }
+  .feedback-container{
+    font-size: 15px;
+  }
+  /* HTML: <div class="octagon"></div> */
+  .octagon {
+    width: 80px;
+    aspect-ratio: 1;
+    --o: calc(50%*tan(-22.5deg));
+    clip-path: polygon(var(--o) 50%,
+        50% var(--o),
+        calc(100% - var(--o)) 50%,
+        50% calc(100% - var(--o)));
+    background: #3B8686;
+  }
+
+  .rhombus {
+    height: 200px;
+    /* adjust to control the size  */
+    aspect-ratio: 1;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    background: #88A65E;
+  }
+
+  .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    color: #333;
+    background: #f8f8f8
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold
+  }
+
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080
+  }
+
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14
+  }
+
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold
+  }
+
+  .hljs-subst {
+    font-weight: normal
+  }
+
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold
+  }
+
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal
+  }
+
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926
+  }
+
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073
+  }
+
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3
+  }
+
+  .hljs-meta {
+    color: #999;
+    font-weight: bold
+  }
+
+  .hljs-deletion {
+    background: #fdd
+  }
+
+  .hljs-addition {
+    background: #dfd
+  }
+
+  .hljs-emphasis {
+    font-style: italic
+  }
+
+  .hljs-strong {
+    font-weight: bold
+  }
+
+  /* General body styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a, #f54991);
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.sidebar {
-  width: 300px;
+/* Main container */
+.login-container {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.level-container {
-  height: 90%;
+/* Login content wrapper */
+.login-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #2a2a2a;
+  color: #fff;
 }
 
-#user-container {
-  top: 35px;
-  right: 10px;
-  z-index: 99;
+/* Welcome section */
+.welcome-section {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #ff0057, #b00042);
 }
 
-#editor {
-  width: 500px;
-  height: 500px;
-}
-.feedback-container{
-  font-size: 15px;
-}
-/* HTML: <div class="octagon"></div> */
-.octagon {
-  width: 80px;
-  aspect-ratio: 1;
-  --o: calc(50%*tan(-22.5deg));
-  clip-path: polygon(var(--o) 50%,
-      50% var(--o),
-      calc(100% - var(--o)) 50%,
-      50% calc(100% - var(--o)));
-  background: #3B8686;
+.welcome-section h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-.rhombus {
-  height: 200px;
-  /* adjust to control the size  */
-  aspect-ratio: 1;
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  background: #88A65E;
+.welcome-section p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.hljs {
+/* Form styles */
+.login-form {
+  padding: 20px 40px;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
   display: block;
-  overflow-x: auto;
-  padding: 0.5em;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ff0057;
+}
+
+/* Login button */
+.btn-login {
+  width: 100%;
+  padding: 10px 0;
+  background: linear-gradient(135deg, #ff0057, #b00042);
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #b00042, #ff0057);
+}
+
+/* Signup link */
+.signup-link {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #ff0057;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .login-content {
+      width: 100%;
+      border-radius: 0;
+  }
+}
+
+/* DITO ANG HEADER SA LOGIN*/
+/* Header styles */
+.main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent for elegance */
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar li {
+  display: inline;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ff0057; /* Matches the theme */
+}
+
+.navbar .btn-primary {
+  padding: 8px 15px;
+  background: linear-gradient(135deg, #ff0057, #b00042);
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.navbar .btn-primary:hover {
+  background: linear-gradient(135deg, #b00042, #ff0057);
+}
+
+/* Ensure content adjusts below the fixed header */
+body {
+  padding-top: 70px; /* Adjust based on header height */
+}
+
+/* AFTER LOGIN HEADER */
+/* Global Navbar Styles */
+.navbar {
+  background-color: #000000; /* Light background for header */
+}
+
+.navbar .navbar-brand {
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #333;
-  background: #f8f8f8
+  text-decoration: none;
 }
 
-.hljs-comment,
-.hljs-quote {
-  color: #998;
-  font-style: italic
+.navbar .navbar-brand img {
+  border-radius: 50%; /* Circular logo if needed */
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-subst {
-  color: #333;
-  font-weight: bold
+.navbar .dropdown-menu {
+  min-width: 150px; /* Dropdown width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
 }
 
-.hljs-number,
-.hljs-literal,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag .hljs-attr {
-  color: #008080
+.navbar .dropdown-menu .dropdown-item {
+  padding: 10px 15px;
+  font-size: 0.9rem;
 }
 
-.hljs-string,
-.hljs-doctag {
-  color: #d14
+.navbar .dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0;
 }
 
-.hljs-title,
-.hljs-section,
-.hljs-selector-id {
-  color: #900;
-  font-weight: bold
+.navbar .dropdown-menu .text-danger {
+  color: #dc3545; /* Sign Out button color */
 }
 
-.hljs-subst {
-  font-weight: normal
+/* Highlight "Hello, User" Text */
+#user-icon {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
 }
 
-.hljs-type,
-.hljs-class .hljs-title {
-  color: #458;
-  font-weight: bold
+/*Drop DOWN*/
+.dropdown-menu {
+  background-color: #fff; /* Dropdown background */
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
-.hljs-tag,
-.hljs-name,
-.hljs-attribute {
-  color: #000080;
-  font-weight: normal
+.dropdown-item {
+  font-size: 0.9rem;
+  color: #333; /* Text color */
 }
 
-.hljs-regexp,
-.hljs-link {
-  color: #009926
+.dropdown-item.text-danger {
+  color: #d9534f; /* Highlighted for Sign Out */
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-bullet {
-  color: #990073
-}
-
-.hljs-built_in,
-.hljs-builtin-name {
-  color: #0086b3
-}
-
-.hljs-meta {
-  color: #999;
-  font-weight: bold
-}
-
-.hljs-deletion {
-  background: #fdd
-}
-
-.hljs-addition {
-  background: #dfd
-}
-
-.hljs-emphasis {
-  font-style: italic
-}
-
-.hljs-strong {
-  font-weight: bold
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Subtle hover effect */
 }

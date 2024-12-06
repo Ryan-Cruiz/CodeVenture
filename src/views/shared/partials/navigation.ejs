@@ -1,20 +1,27 @@
-<nav class="navbar bg-body-tertiary">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #800020; color: white; padding: 1rem; z-index: 1030;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="../../../../img/logo.png" alt="Logo" width="30" height="25" class="d-inline-block align-text-top">
-            CodeVenture</a>
-        <div class="d-flex">
-            <div id="user-icon" class="user-select-none dropdown-toggle align-middle" style="cursor: pointer;">Hello, <%=
-                    user_data.name %>
-            </div>
-            <div class="list-group float-end position-absolute" id="user-container">
-                <!-- <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                    Profile
-                </a> -->
-                <a href="/logout" class="list-group-item list-group-item-action" aria-current="true">
-                    Sign Out
-                </a>
-            </div>
+        <!-- Logo and Brand -->
+        <a class="navbar-brand d-flex align-items-center text-white" href="/" style="font-weight: bold; font-size: 1.2rem; text-decoration: none;">
+            <img src="/img/logo.png" alt="CodeVenture Logo" width="35" height="35" style="margin-right: 10px; border-radius: 50%;">
+            CodeVenture
+        </a>
+
+        <!-- User Dropdown Menu -->
+        <div class="dropdown">
+            <button
+                class="btn btn-secondary dropdown-toggle bg-transparent border-0 text-white fw-semibold"
+                type="button"
+                id="userDropdownButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style="font-size: 1rem; cursor: pointer;">
+                Hello, <%= user_data.name %>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdownButton" style="min-width: 150px; border-radius: 5px;">
+                <li>
+                    <a class="dropdown-item text-danger" href="/logout">Sign Out</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
