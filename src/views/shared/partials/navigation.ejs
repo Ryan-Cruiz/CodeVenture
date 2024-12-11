@@ -1,25 +1,25 @@
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #800020; color: white; padding: 1rem; z-index: 1030;">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #800020; color: white; padding: 1rem; z-index: 1030; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
         <!-- Logo and Brand -->
         <a class="navbar-brand d-flex align-items-center text-white" href="/" style="font-weight: bold; font-size: 1.2rem; text-decoration: none;">
-            <img src="/img/logo.png" alt="CodeVenture Logo" width="35" height="35" style="margin-right: 10px; border-radius: 50%;">
+            <img src="/img/logo.png" alt="CodeVenture Logo" width="40" height="40" style="margin-right: 10px; border-radius: 50%; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
             CodeVenture
         </a>
 
         <!-- User Dropdown Menu -->
         <div class="dropdown">
             <button
-                class="btn btn-secondary dropdown-toggle bg-transparent border-0 text-white fw-semibold"
+                class="btn btn-transparent dropdown-toggle text-white fw-semibold"
                 type="button"
                 id="userDropdownButton"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                style="font-size: 1rem; cursor: pointer;">
+                style="font-size: 1rem; cursor: pointer; background: none; border: none;">
                 Hello, <%= user_data.name %>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdownButton" style="min-width: 150px; border-radius: 5px;">
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdownButton" style="min-width: 150px; border-radius: 8px;">
                 <li>
-                    <a class="dropdown-item text-danger" href="/logout">Sign Out</a>
+                    <a class="dropdown-item text-danger fw-bold" href="/logout">Sign Out</a>
                 </li>
             </ul>
         </div>

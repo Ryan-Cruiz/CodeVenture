@@ -1,23 +1,25 @@
 <%- include('shared/header') %>
 <div class="login-container">
-    <div class="login-content">
-        <div class="welcome-section">
-            <h1>WELCOME!</h1>
-            <p>Adventure into Code: Learn, Build, and Succeed with CodeVenture.</p>
-        </div>
-        <form class="login-form" action="/login" method="post">
-            <h2>Login</h2>
-            <div class="input-group">
-                <label for="email">Email address</label>
-                <input type="email" value="developer.access@email.com" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" value="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <button type="submit" class="btn-login">Login</button>
-            <p class="signup-link">Don't have an account? <a href="/register">Sign Up</a></p>
-        </form>
+  <div class="login-content">
+    <div class="welcome-section">
+      <h1>Welcome Back!</h1>
+      <p>Adventure into Code: Learn, Build, and Succeed with CodeVenture.</p>
     </div>
+    <form class="login-form" action="/login" method="post" aria-label="Login Form">
+      <h2>Login</h2>
+      <div class="input-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <p class="signup-link">
+        Don't have an account? <a href="/register">Sign Up</a>
+      </p>
+    </form>
+  </div>
 </div>
 <%- include('shared/footer') %>
