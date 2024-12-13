@@ -1,108 +1,191 @@
 <%- include('../shared/header') %>
 
-    <% if(roles.indexOf('admin') !==-1) { %>
-        <div class="container my-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
-                Create Lesson
-            </button>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="createLessonLabel" aria-hidden="true">
-            <form class="modal-dialog modal-dialog-centered" action="/create_lesson" method="post">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="createLessonLabel">Create Lesson</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Featured Lessons Section (Centered at the top) -->
+<div class="container">
+    <%- include('../shared/partials/alert') %> 
+    <div class="row justify-content-center my-4">
+        <h2 class="text-center featured-lessons-title">Featured Lessons</h2>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% if(lessons.length > 0) lessons.map(lesson => { %>
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body" data-id="<%= lesson.id %>">
+                        <h5 class="card-title text-dark"><%= lesson.title %></h5>
+                        <% if(roles.indexOf('admin') !== -1) { %>
+                            <button type="button" class="btn btn-outline-secondary btn-sm float-end" data-bs-toggle="modal" id="editBtn" data-bs-target="#editLesson">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </button>
+                        <% } %>
+                        <p class="card-text text-muted"><%= lesson.description %></p>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input required type="text" name="title" id="title" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea required class="form-control" id="description" name="description"
-                                rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
-                        <input type="submit" value="Create" class="btn btn-primary">
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="/lesson/<%= lesson.id %>" class="btn btn-outline-primary btn-sm w-100">See Lesson</a>
                     </div>
                 </div>
-            </form>
-        </div>
-        <!-- Edit -->
-        <div class="modal fade" id="editLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="editLessonLabel" aria-hidden="true">
-            <form class="modal-dialog modal-dialog-centered" action="/edit_lesson" method="post">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editLessonLabel">Edit Lesson</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<% if(roles.indexOf('admin') !== -1) { %>
+    <!-- Create Lesson Button -->
+    <div class="container my-3">
+        <button type="button" class="btn btn-outline-primary create-lesson-btn" data-bs-toggle="modal" data-bs-target="#createLesson">
+            Create Lesson
+        </button>
+    </div>
+
+
+    <!-- Modal for Creating Lesson -->
+    <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="createLessonLabel" aria-hidden="true">
+        <form class="modal-dialog modal-dialog-centered" action="/create_lesson" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createLessonLabel">Create Lesson</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input required type="text" name="title" id="editTitle" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea required class="form-control" id="editDescription" name="description"
-                                rows="3"></textarea>
-                                <input type="hidden" name="lesson_id" id="lesson_id">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
-                        <input type="submit" value="Save" class="btn btn-primary">
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                     </div>
                 </div>
-            </form>
-        </div>
-        <% } %>
-            <div class="container">
-                <%- include('../shared/partials/alert') %>
-                        <h2 class="fs-5">Featured Lessons</h2>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Create" class="btn btn-primary">
+                </div>
             </div>
-            <div class="container mt-2 d-flex">
-                <!-- <div class="card" style="width: 18rem;">
-            <img src="https://media.istockphoto.com/id/1406674466/photo/big-data-connection-technology-concept.jpg?s=1024x1024&w=is&k=20&c=ZVAnrfrUwzAW-2ScErMqUHJr1jPyaZOTaCq3D-Jemkc="
-                class="card-img-top" alt="...">
-            <div class="card-body">
-                <a href="#" class="btn btn-primary position-absolute rounded-circle" style="right: 10px;top:125px;width: 60px;height: 60px;padding:11px;font-size: 25px;">></a>
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-            </div>
-        </div> -->
-                <% if(lessons.length > 0) lessons.map(lesson=> { %>
-                    <div class="card me-2" style="width: 18rem;">
-                        <!-- <img src="https://media.istockphoto.com/id/1406674466/photo/big-data-connection-technology-concept.jpg?s=1024x1024&w=is&k=20&c=ZVAnrfrUwzAW-2ScErMqUHJr1jPyaZOTaCq3D-Jemkc="
-                            class="card-img-top" alt="..."> -->
-                        <div class="card-body" data-id="<%= lesson.id %>">
-                            <h5 class="card-title lesson-title d-inline-block align-bottom"><%= lesson.title %></h5>
-                            <% if(roles.indexOf('admin') !==-1) { %>
-                                <button type="button" class="btn btn-warning d-inline-block pb-2" data-bs-toggle="modal" id="editBtn" data-bs-target="#editLesson">
-                                    <svg class="align-middle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                      </svg>
-                                </button>
-                                
-                            <% } %>
-                            <p class="card-text lesson-description pt-2"><%= lesson.description %></p>
-                        </div>
-                        <div class="card-footer border border-top-0">
-                            <a href="/lesson/<%= lesson.id %>" class="btn btn-primary">See lesson</a>
-                        </div>
+        </form>
+    </div>
+
+    <!-- Modal for Editing Lesson -->
+    <div class="modal fade" id="editLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editLessonLabel" aria-hidden="true">
+        <form class="modal-dialog modal-dialog-centered" action="/edit_lesson" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLessonLabel">Edit Lesson</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="editTitle" class="form-control" required>
                     </div>
-                    <% }); %>
-
-
-
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="3" required></textarea>
+                        <input type="hidden" name="lesson_id" id="lesson_id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
             </div>
-            <%- include('../shared/footer') %>
+        </form>
+    </div>
+<% } %>
+
+<%- include('../shared/footer') %>
+
+<!-- Internal CSS for Minimalist Design -->
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin-top: 20px; /* Adjust top margin for the container */
+        max-width: 1200px;
+    }
+
+    .featured-lessons-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #212529;
+    margin-left: -650px;
+    text-align: center;
+    margin-top: -370px; /* Adjusted to position the title correctly */
+    }
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #212529;
+        margin-top: ;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .card {
+        border-radius: 12px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        margin-top: -330px; /* Adjusted to position the title correctly */
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .card-footer {
+        background-color: transparent;
+    }
+    
+    .create-lesson-btn {
+    position: absolute;
+    top: 90px;  /* Adjust top distance */
+    right: 20px; /* Adjust right distance */
+    z-index: 1000; /* Ensure the button is above other elements */
+    }
+
+    .btn-outline-primary {
+        border-color: #007bff;
+        color: #007bff;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .row-cols-md-3 {
+            row-gap: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 1rem;
+        }
+    }
+</style>
