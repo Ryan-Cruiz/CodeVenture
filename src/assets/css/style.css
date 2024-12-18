@@ -1,18 +1,23 @@
+/* Global Reset */
 * {
-  /* padding: 0px;
-  margin: 0px;
-  outline: 1px solid black; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #c3dfe4);
-  color: #333;
+  background: linear-gradient(135deg, #043345, #00b6c7, #00ff99); /* Blue and Green gradient */
+  color: #043345; /* Dark Blue text color */
   margin: 0;
   height: 100vh;
-  display: block; /* Remove flexbox centering */
+  display: flex; /* Flexbox for centering */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Stack content vertically */
 }
 
+/* Header */
 header.main-header {
   width: 100%;
   background-color: #fff;
@@ -22,12 +27,6 @@ header.main-header {
   left: 0;
   z-index: 99;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-header .logo {
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
 }
 
 header .logo img {
@@ -85,28 +84,237 @@ header .navbar ul li a:hover {
   font-size: 15px;
 }
 
-/* HTML: <div class="octagon"></div> */
+/* Login Form Containers */
+.login-container {
+  width: 100%;
+  max-width: 420px; /* Adjusted container size */
+  background: rgba(240, 240, 240, 0.9); /* Light Gray background */
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+  padding: 25px;
+  position: relative;
+  z-index: 100;
+  text-align: center;
+}
+
+/* Login Header */
+.login-container h2 {
+  color: #043345; /* Dark Blue for header text */
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 1.6rem;
+}
+
+/* Input Fields */
+.login-container .input-group input,
+.login-container .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #043345; /* Dark Blue border */
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+.login-container .input-group input:focus,
+.login-container .form-group input:focus {
+  border-color: #00b6c7; /* Teal on focus */
+  outline: none;
+}
+
+/* Login Buttons */
+.login-container .btn-primary {
+  background: #043345; /* Dark Blue background */
+  color: #fff;
+}
+
+.login-container .btn-primary:hover {
+  background: #00b6c7; /* Teal on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+.login-container .btn-success {
+  background: #00b6c7; /* Teal background */
+  color: #fff;
+}
+
+.login-container .btn-success:hover {
+  background: #043345; /* Dark Blue on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+
+/* Signup Container Styling */
+.signup-container {
+  width: 100%;
+  margin-left: 35%;
+  max-width: 420px; /* Set max width for the signup form */
+  background: rgba(240, 240, 240, 0.9); /* Light Gray background */
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
+  padding: 25px;
+  text-align: center;
+}
+
+.signup-container h2 {
+  color: #043345; /* Dark Blue for header text */
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 1.6rem;
+}
+
+/* Input Fields Styling */
+.signup-container .input-group input,
+.signup-container .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #043345; /* Dark Blue border */
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+.signup-container .input-group input:focus,
+.signup-container .form-group input:focus {
+  border-color: #00b6c7; /* Teal border on focus */
+  outline: none;
+}
+
+/* Buttons Styling */
+.signup-container .btn-primary {
+  background: #043345; /* Dark Blue background */
+  color: #fff;
+}
+
+.signup-container .btn-primary:hover {
+  background: #00b6c7; /* Teal on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+.signup-container .btn-success {
+  background: #00b6c7; /* Teal background */
+  color: #fff;
+}
+
+.signup-container .btn-success:hover {
+  background: #043345; /* Dark Blue on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+/* Welcome Text */
+h2 {
+  color: #043345; /* Dark Blue for header text */
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 1.6rem;
+}
+
+/* Shared Input Fields */
+.input-group input,
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #043345; /* Dark Blue border */
+  margin-bottom: 15px;
+  transition: border 0.3s ease;
+}
+
+.input-group input:focus,
+.form-group input:focus {
+  border-color: #00b6c7; /* Teal on focus */
+  outline: none;
+}
+
+/* Shared Button Styles */
+.btn {
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+/* Buttons */
+.btn {
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #043345; /* Dark Blue background */
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #00b6c7; /* Teal on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+.btn-success {
+  background: #00b6c7; /* Teal background */
+  color: #fff;
+}
+
+.btn-success:hover {
+  background: #043345; /* Dark Blue on hover */
+  transform: scale(1.05); /* Slightly grow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .login-container,
+  .signup-container {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+}
+
+/* Additional Shape Styling */
 .octagon {
   width: 80px;
   aspect-ratio: 1;
   --o: calc(50%*tan(-22.5deg));
   clip-path: polygon(var(--o) 50%, 50% var(--o), calc(100% - var(--o)) 50%, 50% calc(100% - var(--o)));
-  background: #3B8686;
+  background: #043345; /* Dark Blue */
+  transition: all 0.3s ease;
+}
+
+.octagon:hover {
+  background: #00b6c7; /* Teal on hover */
+  transform: rotate(45deg); /* Rotate on hover */
 }
 
 .rhombus {
   height: 200px;
   aspect-ratio: 1;
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  background: #88A65E;
+  background: #00b6c7; /* Teal */
+  transition: all 0.3s ease;
 }
 
+.rhombus:hover {
+  background: #043345; /* Dark Blue on hover */
+  transform: rotate(45deg); /* Rotate on hover */
+}
+
+/* Highlight Code Block Styling */
 .hljs {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  color: #333;
-  background: #f8f8f8;
+  color: #043345; /* Dark Blue text */
+  background: #f0f0f0; /* Light Gray background */
 }
 
 .hljs-comment,
@@ -118,7 +326,7 @@ header .navbar ul li a:hover {
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-subst {
-  color: #333;
+  color: #043345; /* Dark Blue for keywords */
   font-weight: bold;
 }
 
@@ -127,7 +335,7 @@ header .navbar ul li a:hover {
 .hljs-variable,
 .hljs-template-variable,
 .hljs-tag .hljs-attr {
-  color: #008080;
+  color: #00b6c7; /* Teal for numbers and variables */
 }
 
 .hljs-string,
@@ -193,168 +401,4 @@ header .navbar ul li a:hover {
 
 .hljs-strong {
   font-weight: bold;
-}
-
-/* General Styles */
-/* General Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #f5f7fa, #c3dfe4);
-  color: #333;
-  margin: 0;
-  height: 100vh;
-  display: flex; /* Use flexbox to center content */
-  align-items: center; /* Vertically center */
-  justify-content: center; /* Horizontally center */
-}
-
-/* Navbar */
-.navbar {
-  background-color: #800020; /* Dark red background for navbar */
-  color: black;  /* Changed from white to black */
-  padding: 1rem;
-  z-index: 1030;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar .navbar-brand {
-  font-weight: bold;
-  font-size: 1.2rem;
-  text-decoration: none;
-  margin-right: auto;
-  color: black;  /* Changed from white to black */
-}
-
-.navbar .logo img {
-  margin-right: 10px;
-  border-radius: 50%;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.navbar .navbar-nav .nav-link {
-  color: black !important;  /* Changed from white to black */
-  padding: 8px 15px;
-  font-size: 1rem;
-}
-
-.navbar .navbar-nav .nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Hover effect with dark background */
-  color: black;  /* Ensure hover text remains black */
-}
-
-.navbar .dropdown-toggle {
-  font-size: 1rem;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: black;  /* Changed from white to black */
-  font-weight: bold;
-}
-
-.navbar .dropdown-menu {
-  min-width: 150px;
-  border-radius: 8px;
-}
-
-.navbar .dropdown-menu .dropdown-item {
-  color: #800020;  /* Dark red text for dropdown items */
-  font-weight: bold;
-}
-
-.navbar .dropdown-menu .dropdown-item:hover {
-  background-color: rgba(128, 0, 32, 0.1);
-  color: black;  /* Ensure dropdown item text is black on hover */
-}
-
-/* Form Containers */
-.login-container,
-.signup-container {
-  width: 100%;
-  max-width: 500px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  padding: 20px;
-  margin: auto;
-}
-
-.welcome-section {
-  background: linear-gradient(135deg, #1e88e5, #43a047);
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-
-.welcome-section h1 {
-  font-size: 2rem;
-  margin: 0;
-}
-
-.welcome-section p {
-  margin: 5px 0 0;
-  font-size: 1rem;
-}
-
-/* Input Fields */
-.form-group,
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group label,
-.form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.input-group input,
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: border 0.3s ease;
-}
-
-.input-group input:focus,
-.form-group input:focus {
-  border-color: #1e88e5;
-  outline: none;
-}
-
-/* Buttons */
-.btn {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #1e88e5, #43a047);
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #43a047, #1e88e5);
-}
-
-.btn-success {
-  background: linear-gradient(135deg, #28a745, #218838);
-  color: #fff;
-}
-
-.btn-success:hover {
-  background: linear-gradient(135deg, #218838, #28a745);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .login-container,
-  .signup-container {
-    padding: 15px;
-    margin: 10px;
-  }
 }
