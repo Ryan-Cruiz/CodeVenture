@@ -2,22 +2,30 @@
 
 <!-- Featured Lessons Section (Centered at the top) -->
 <div class="container">
-    <%- include('../shared/partials/alert') %> 
     <div class="row justify-content-center my-4">
         <h2 class="text-center featured-lessons-title">Featured Lessons</h2>
     </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <%- include('../shared/partials/alert') %> 
+    <% if(roles.indexOf('admin') !== -1) { %>
+        <!-- Create Lesson Button -->
+        <div class="container my-3">
+            <button type="button" class="btn btn-primary create-lesson-btn" data-bs-toggle="modal" data-bs-target="#createLesson">
+                Create Lesson
+            </button>
+        </div>
+    <% }%>    
+    <div class="row row-cols-1 row-cols-md-3 g-4 container-lesson">
         <% if(lessons.length > 0) lessons.map(lesson => { %>
             <div class="col">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body" data-id="<%= lesson.id %>">
-                        <h5 class="card-title text-dark"><%= lesson.title %></h5>
+                        <h5 class="card-title text-dark lesson-title"><%= lesson.title %></h5>
                         <% if(roles.indexOf('admin') !== -1) { %>
                             <button type="button" class="btn btn-outline-secondary btn-sm float-end" data-bs-toggle="modal" id="editBtn" data-bs-target="#editLesson">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </button>
                         <% } %>
-                        <p class="card-text text-muted"><%= lesson.description %></p>
+                        <p class="card-text text-secondary lesson-description"><%= lesson.description %></p>
                     </div>
                     <div class="card-footer bg-transparent border-top-0">
                         <a href="/lesson/<%= lesson.id %>" class="btn btn-outline-primary btn-sm w-100">See Lesson</a>
@@ -30,12 +38,6 @@
 
 <% if(roles.indexOf('admin') !== -1) { %>
     <!-- Create Lesson Button -->
-    <div class="container my-3">
-        <button type="button" class="btn btn-outline-primary create-lesson-btn" data-bs-toggle="modal" data-bs-target="#createLesson">
-            Create Lesson
-        </button>
-    </div>
-
 
     <!-- Modal for Creating Lesson -->
     <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -95,7 +97,6 @@
 
 <%- include('../shared/footer') %>
 
-<!-- Internal CSS for Minimalist Design -->
 <style>
     body {
         background-color: #f8f9fa;
@@ -123,7 +124,7 @@
         font-size: 1.8rem;
         font-weight: 600;
         color: #212529;
-        margin-top: ;
+        /* margin-top: ; */
     }
 
     .row {
@@ -131,10 +132,14 @@
     }
 
     .card {
+        .create-lesson-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    }
+.card {
         border-radius: 12px;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease-in-out;
-        margin-top: -250px; /* Adjusted to position the title correctly */
     }
 
     .card:hover {

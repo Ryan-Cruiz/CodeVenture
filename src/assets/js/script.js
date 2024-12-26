@@ -6,7 +6,7 @@ $(document).ready(function () {
     setTimeout(() => {
         $('.alert').fadeOut(3000);
     }, 1000);
-    let counter=1;
+    let counter = 1;
     let user_container = $('#user-container');
     user_container.hide();
     $('#user-icon').click(function () {
@@ -59,12 +59,12 @@ $(document).ready(function () {
     $(document).on('keyup', 'input.option-input', function () {
         $(this).siblings('.input-group-text').children('input').val($(this).val())
     });
-    $("#editBtn").click(function(){
+    $(document).on('click', '#editBtn', function () {
         // console.log($(this).siblings());
         let title = $(this).siblings('.lesson-title').text();
         let description = $(this).siblings('.lesson-description').text();
         let id = $(this).parent().data('id')
-        console.log(id)
+        // console.log(id, title, description)
         $('#editTitle').val(title);
         $('#editDescription').val(description);
         $('#lesson_id').val(id);
