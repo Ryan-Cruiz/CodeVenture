@@ -14,14 +14,16 @@ class User extends model {
         // let result = await super.Rawquery(query)
         // console.log(result);
         let result = await this.select('users',['*']).left('roles',['user_id','id']).inner('credentials',['user_id','id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
-        this.profiler_enable();
+        // this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
         try{
             if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
+                this.connection.destroy();
                 return 'fail';
             }
         }catch(e){
         console.log(e);
+        this.connection.destroy();
             return 'fail';
         }
         this.connection.destroy();
@@ -36,7 +38,7 @@ class User extends model {
         // console.log(query)
         // return callback('success');
         let result = await this.select('users',['*']).where([`email=?`]).values([form_input.email]).exec();
-        console.log(result)
+        // console.log(result)
         // this.profiler_enable();
         if (result.length == 0) {
             return result;
@@ -49,7 +51,7 @@ class User extends model {
 
     async create_process(form_input) {
         let result = await this.email_validate(form_input);
-        console.log(result)
+        // console.log(result)
         if (result != 'fail') {
             let userQuery = this.insert('users', ['email', 'password']).values([form_input.email.toLowerCase(), this.bcrypt.hashSync(form_input.password, 10)]).exec();
             let lastData = await userQuery;

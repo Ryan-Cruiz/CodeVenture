@@ -10,11 +10,11 @@ body {
   background: linear-gradient(135deg, #043345, #00b6c7, #00ff99); /* Blue and Green gradient */
   color: #043345; /* Dark Blue text color */
   margin: 0;
-  height: 100vh;
-  display: flex; /* Flexbox for centering */
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; /* Stack content vertically */
+  /* height: 100vh; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-direction: column; Stack content vertically */
 }
 
 /* Header */
@@ -210,10 +210,10 @@ h2 {
 /* Shared Input Fields */
 .input-group input,
 .form-group input {
-  width: 100%;
+  /* width: 100%; */
   padding: 12px;
   border: 2px solid #043345; /* Dark Blue border */
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   transition: border 0.3s ease;
 }
 

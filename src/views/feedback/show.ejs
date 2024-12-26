@@ -14,10 +14,10 @@
             </div>
         </div>
         <div class="p-2 flex-fill">
-            <h2>Feedbacks</h2>
+            <h2 class="text-white">Feedbacks</h2>
             <div class="feedback-container">
                 <% data.forEach(feedback=>{ %>
-                    <div class="container border rounded">
+                    <div class="container border rounded bg-white">
                         <p class="p-2 pb-0 m-0"><%= feedback.first_name %> <%= feedback.last_name %> <span class="text-secondary">@ <%= new Date(feedback.created_at).toLocaleDateString() %></span></p>
                         <div class="p-2">
                             <p class="pe-2 m-0">Rate: <%= feedback.rate %>/5</p>
