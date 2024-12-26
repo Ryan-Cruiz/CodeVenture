@@ -23,7 +23,6 @@ class User extends model {
             }
         }catch(e){
         console.log(e);
-        this.connection.destroy();
             return 'fail';
         }
         this.connection.destroy();
