@@ -136,10 +136,7 @@ class ORM {
     exec() {
         // console.log(this.queries,'exec funct'); // debugger console
         return new Promise((resolve, reject) => {
-            this.connection.connect(function (err) {
-                if (err) throw err;
-                console.log("SQL Connected!");
-            });
+           
             const databaseType = this.CONFIG.db_type;
             // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
             this.connection.query(databaseType === 'pg' ? this.queries : this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
@@ -157,9 +154,10 @@ class ORM {
                     this.queries = '';
                     this.select_tbl = '';
                     this.arrVal = [];
-                    this.connection.destroy();
                 }, 300);
             });
+            // setTimeout(() => {
+                // }, 3000);
         });
     }
 }
