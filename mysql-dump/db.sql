@@ -10,20 +10,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema codeVenture
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `codeVenture` ;
+-- DROP SCHEMA IF EXISTS `codeVenture` ;
 
 -- -----------------------------------------------------
 -- Schema codeVenture
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `codeVenture` DEFAULT CHARACTER SET utf8 ;
-USE `codeVenture` ;
+-- CREATE SCHEMA IF NOT EXISTS `codeVenture` DEFAULT CHARACTER SET utf8 ;
+-- USE `codeVenture` ;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`users`
+-- Table `users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`users` ;
+DROP TABLE IF EXISTS `users` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NULL,
   `password` VARCHAR(255) NULL,
@@ -43,11 +43,11 @@ INSERT INTO `users` VALUES (1,'developer.access@email.com','$2a$10$HZp1TugssOp2h
 UNLOCK TABLES;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`credentials`
+-- Table `credentials`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`credentials` ;
+DROP TABLE IF EXISTS `credentials` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`credentials` (
+CREATE TABLE IF NOT EXISTS `credentials` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `first_name` VARCHAR(45) NULL,
@@ -57,12 +57,12 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`credentials` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_credentials_users`
     FOREIGN KEY (`user_id`)
-    REFERENCES `codeVenture`.`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_credentials_users_idx` ON `codeVenture`.`credentials` (`user_id` ASC) ;
+CREATE INDEX `fk_credentials_users_idx` ON `credentials` (`user_id` ASC) ;
 
 --
 -- Dumping data for table `credentials`
@@ -74,11 +74,11 @@ INSERT INTO `credentials` VALUES (1,1,'developer','access','2024-10-19 04:38:46'
 /*!40000 ALTER TABLE `credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 -- -----------------------------------------------------
--- Table `codeVenture`.`roles`
+-- Table `roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`roles` ;
+DROP TABLE IF EXISTS `roles` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `roles` VARCHAR(255) NULL,
@@ -87,12 +87,12 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`roles` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_roles_users1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `codeVenture`.`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_roles_users1_idx` ON `codeVenture`.`roles` (`user_id` ASC) ;
+CREATE INDEX `fk_roles_users1_idx` ON `roles` (`user_id` ASC) ;
 --
 -- Dumping data for table `roles`
 --
@@ -104,11 +104,11 @@ INSERT INTO `roles` VALUES (1,1,'admin','2024-10-19 04:38:46','2024-10-19 04:38:
 UNLOCK TABLES;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`lessons`
+-- Table `lessons`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`lessons` ;
+DROP TABLE IF EXISTS `lessons` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`lessons` (
+CREATE TABLE IF NOT EXISTS `lessons` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role_id` INT NOT NULL,
   `title` VARCHAR(45) NULL,
@@ -118,12 +118,12 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`lessons` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_groups_teachers1`
     FOREIGN KEY (`role_id`)
-    REFERENCES `codeVenture`.`roles` (`id`)
+    REFERENCES `roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_groups_teachers1_idx` ON `codeVenture`.`lessons` (`role_id` ASC) ;
+CREATE INDEX `fk_groups_teachers1_idx` ON `lessons` (`role_id` ASC) ;
 --
 -- Dumping data for table `lessons`
 --
@@ -135,11 +135,11 @@ INSERT INTO `lessons` VALUES (1,1,'New Lesson ','test','2024-10-19 04:39:18','20
 UNLOCK TABLES;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`levels`
+-- Table `levels`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`levels` ;
+DROP TABLE IF EXISTS `levels` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`levels` (
+CREATE TABLE IF NOT EXISTS `levels` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `lesson_id` INT NOT NULL,
   `level_name` VARCHAR(45) NULL,
@@ -150,12 +150,12 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`levels` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_challenges_groups1`
     FOREIGN KEY (`lesson_id`)
-    REFERENCES `codeVenture`.`lessons` (`id`)
+    REFERENCES `lessons` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_challenges_groups1_idx` ON `codeVenture`.`levels` (`lesson_id` ASC) ;
+CREATE INDEX `fk_challenges_groups1_idx` ON `levels` (`lesson_id` ASC) ;
 
 --
 -- Dumping data for table `levels`
@@ -168,11 +168,11 @@ INSERT INTO `levels` VALUES (1,1,'PHP Syntax','A PHP script is executed on the s
 UNLOCK TABLES;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`task_answers`
+-- Table `task_answers`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`task_answers` ;
+DROP TABLE IF EXISTS `task_answers` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`task_answers` (
+CREATE TABLE IF NOT EXISTS `task_answers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `answers` BLOB NULL,
   `user_id` INT NOT NULL,
@@ -183,33 +183,33 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`task_answers` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_challenge_answers_materials1`
     FOREIGN KEY (`task_id`)
-    REFERENCES `codeVenture`.`levels` (`id`)
+    REFERENCES `levels` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_challenge_answers_lessons1`
     FOREIGN KEY (`lesson_id`)
-    REFERENCES `codeVenture`.`lessons` (`id`)
+    REFERENCES `lessons` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_task_answers_users1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `codeVenture`.`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_challenge_answers_materials1_idx` ON `codeVenture`.`task_answers` (`task_id` ASC) ;
+CREATE INDEX `fk_challenge_answers_materials1_idx` ON `task_answers` (`task_id` ASC) ;
 
-CREATE INDEX `fk_challenge_answers_lessons1_idx` ON `codeVenture`.`task_answers` (`lesson_id` ASC) ;
+CREATE INDEX `fk_challenge_answers_lessons1_idx` ON `task_answers` (`lesson_id` ASC) ;
 
-CREATE INDEX `fk_task_answers_users1_idx` ON `codeVenture`.`task_answers` (`user_id` ASC) ;
+CREATE INDEX `fk_task_answers_users1_idx` ON `task_answers` (`user_id` ASC) ;
 
 -- -----------------------------------------------------
--- Table `codeVenture`.`feedbacks`
+-- Table `feedbacks`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `codeVenture`.`feedbacks` ;
+DROP TABLE IF EXISTS `feedbacks` ;
 
-CREATE TABLE IF NOT EXISTS `codeVenture`.`feedbacks` (
+CREATE TABLE IF NOT EXISTS `feedbacks` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `rate` INT(2) NOT NULL,
@@ -220,19 +220,19 @@ CREATE TABLE IF NOT EXISTS `codeVenture`.`feedbacks` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_feedbacks_users1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `codeVenture`.`users` (`id`)
+    REFERENCES `users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_feedbacks_lessons1`
     FOREIGN KEY (`lesson_id`)
-    REFERENCES `codeVenture`.`lessons` (`id`)
+    REFERENCES `lessons` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_feedbacks_users1_idx` ON `codeVenture`.`feedbacks` (`user_id` ASC) ;
+CREATE INDEX `fk_feedbacks_users1_idx` ON `feedbacks` (`user_id` ASC) ;
 
-CREATE INDEX `fk_feedbacks_lessons1_idx` ON `codeVenture`.`feedbacks` (`lesson_id` ASC) ;
+CREATE INDEX `fk_feedbacks_lessons1_idx` ON `feedbacks` (`lesson_id` ASC) ;
 
 
 

@@ -20,10 +20,6 @@ module.exports = class mvc_model extends ORM {
                 this.sql = require('mysql');
                 this.connection = this.sql.createConnection(this.CONFIG.database);
             }
-            this.connection.connect(function (err) {
-                if (err) throw err;
-                console.log("SQL Connected!");
-            });
 
         } catch (e) {
             console.log(e);
