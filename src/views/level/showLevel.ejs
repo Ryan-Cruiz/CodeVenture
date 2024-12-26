@@ -1,7 +1,7 @@
 <%- include('../shared/header') %>
     <style>
         .CodeMirror {
-            height: 90% !important;
+            height: 100vh !important;
             border: 0px !important;
         }
     </style>
@@ -38,7 +38,7 @@
                 <% } %>
             <% } %>
             <div>
-                <span class="text-secondary fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
+                <span class="text-white fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
             </div>
                     <% if(data[0].isTask=='0' ) { %>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
