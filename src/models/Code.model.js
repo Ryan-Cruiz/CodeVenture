@@ -11,9 +11,11 @@ class Code extends model {
         //     [lesson_id, inputs.title, content, inputs.isTask]
         // );
         // let result = await super.Rawquery(query);
+        super.dbConnection();
         let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
             values([lesson_id, inputs.title, content, inputs.isTask]).exec();
         console.log(result)
+        this.connection.destroy();
         return 'success';
     }
     async updateCode(inputs, content, level_id) {
@@ -21,9 +23,11 @@ class Code extends model {
         if (validation != 'success') {
             return validation;
         }
+        super.dbConnection();
         let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
             where(['id=?']).values([inputs.title, content, level_id]).exec();
         console.log(result)
+        this.connection.destroy();
         return 'success';
     }
 

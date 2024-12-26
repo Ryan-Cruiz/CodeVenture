@@ -9,7 +9,7 @@ module.exports = class mvc_model extends ORM {
         this.Validation = validation;
         this.CONFIG = config;
         this.bcrypt = require('bcryptjs');
-        this.dbConnection();
+        // this.dbConnection();
     }
     dbConnection() {
         try {
@@ -20,7 +20,6 @@ module.exports = class mvc_model extends ORM {
                 this.sql = require('mysql');
                 this.connection = this.sql.createConnection(this.CONFIG.database);
             }
-
         } catch (e) {
             console.log(e);
         }

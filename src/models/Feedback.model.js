@@ -7,12 +7,14 @@ class Feedback extends model {
         if(validation != 'success'){
             return validation;
         }
+        super.dbConnection();
         // this.profiler_enable();
         // let query = this.sql.format("INSERT INTO feedbacks(content,rate,lesson_id,user_id) VALUES(?,?,?,?)",
         //     [inputs.content,inputs.rate,lesson_id,user_id])
         // let res = await super.Rawquery(query);
         let feedbackQuery = await this.insert('feedbacks',['content','rate','lesson_id','user_id'])
         .values([inputs.content,inputs.rate,lesson_id,user_id]).exec();
+        this.connection.destroy();
         // console.log(res);
         return 'success';
     }
@@ -27,12 +29,18 @@ class Feedback extends model {
         }
     }
     async getFeedback(lesson_id,user_id){
-        return await this.select("feedbacks",["feedbacks.id,feedbacks.user_id,feedbacks.lesson_id"]).inner("lessons",['id',"lesson_id"])
+        super.dbConnection();
+        let query = await this.select("feedbacks",["feedbacks.id,feedbacks.user_id,feedbacks.lesson_id"]).inner("lessons",['id',"lesson_id"])
         .inner("users",['id','user_id']).exec();
+        this.connection.destroy();
+        return query 
     }
     async getFeedbacks(lesson_id){
-        return await this.select("feedbacks",["feedbacks.*,credentials.first_name,credentials.last_name"])
+        super.dbConnection();
+        let query = await this.select("feedbacks",["feedbacks.*,credentials.first_name,credentials.last_name"])
         .inner("lessons",['id',"lesson_id"]).inner("credentials",['id','user_id']).order('created_at','DESC').exec();
+        this.connection.destroy();
+        return query 
     }
 }
 module.exports = new Feedback(); 
