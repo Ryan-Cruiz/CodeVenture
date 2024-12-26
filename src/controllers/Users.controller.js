@@ -63,12 +63,12 @@ class Users {
             let createProcess = await user.create_process($.req.body);
             // console.log(data)
             if (createProcess != 'fail') {
-                let data = createProcess[0];
-                $.req.session.logged = true;
-                $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
-                let roles = new Array(data.roles);
-                $.req.session.roles = ['all', 'auth', ...roles];
-
+                // let data = createProcess[0];
+                // $.req.session.logged = true;
+                // $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
+                // let roles = new Array(data.roles);
+                // $.req.session.roles = ['all', 'auth', ...roles];
+                $.req.session.msg = { success: ['Successfully Created!'] };
                 $.res.redirect('/');
             } else {
                 // console.log('failedasdsad')

@@ -21,7 +21,7 @@ body {
 header.main-header {
   width: 100%;
   background-color: #fff;
-  padding: 10px 0;
+  padding: 0px 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -88,7 +88,7 @@ header .navbar ul li a:hover {
 .login-container {
   width: 100%;
   max-width: 420px; /* Adjusted container size */
-  background: rgba(240, 240, 240, 0.9); /* Light Gray background */
+  background: rgb(255 255 255 / 30%); /* Light Gray background */
   border-radius: 8px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow for depth */
   padding: 25px;

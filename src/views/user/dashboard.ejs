@@ -98,9 +98,44 @@
 <%- include('../shared/footer') %>
 
 <style>
-.create-lesson-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin-top: 20px; /* Adjust top margin for the container */
+        max-width: 1200px;
+    }
+
+    .featured-lessons-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #00fd9b;
+    margin-left: 10%;
+    text-align: center;
+    margin-top: -280px; /* Adjusted to position the title correctly */
+    margin-right: 1000px;
+    }
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #212529;
+        /* margin-top: ; */
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .card {
+        .create-lesson-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    }
 .card {
         border-radius: 12px;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -118,5 +153,38 @@
 
     .card-footer {
         background-color: transparent;
+    }
+    
+    
+    .create-lesson-btn {
+    position: absolute;
+    top: 75px;  /* Adjust top distance */
+    right: 75px; /* Adjust right distance */
+    z-index: 1000; /* Ensure the button is above other elements */
+    background-color: #1e88e5; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add some padding */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.create-lesson-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .row-cols-md-3 {
+            row-gap: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 1rem;
+        }
     }
 </style>

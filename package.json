@@ -21,7 +21,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --inspect=0.0.0.0 app.js",
+    "start":"node app.js",
+    "dev": "nodemon --inspect=0.0.0.0 app.js",
     "test": "mocha src/test/*.test.js",
     "test1": "./node_modules/.bin/mocha src/test/*.test.js",
     "controller": "chmod -x \"./controller.bat\" & \"./controller.bat\"",
