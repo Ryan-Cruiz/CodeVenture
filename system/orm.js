@@ -136,7 +136,7 @@ class ORM {
     exec() {
         // console.log(this.queries,'exec funct'); // debugger console
         return new Promise((resolve, reject) => {
-           
+            // this.dbConnection();
             const databaseType = this.CONFIG.db_type;
             // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
             this.connection.query(databaseType === 'pg' ? this.queries : this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
@@ -150,14 +150,17 @@ class ORM {
                 //     resolve(rows);
                 // }
                 setTimeout(() => {
+                    // console.log(this.queries)
                     resolve(rows);
                     this.queries = '';
                     this.select_tbl = '';
                     this.arrVal = [];
+                    console.log('Connection End')
+                    // this.connection.destroy();
                 }, 300);
             });
             // setTimeout(() => {
-                // }, 3000);
+            // }, 3000);
         });
     }
 }

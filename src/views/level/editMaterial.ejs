@@ -1,6 +1,6 @@
 <%- include('../shared/header') %>
     <div class="container">
-        <h2>Edit <%= data[0].isTask == '0' ? "Material" : data[0].isTask == '1' ? "Task" : "Code" %></h2>
+        <h2 class="text-white">Edit <%= data[0].isTask == '0' ? "Material" : data[0].isTask == '1' ? "Task" : "Code" %></h2>
         <%- include('../shared/partials/alert') %>
         <% if(data[0].isTask=='0' ){ %>
             <form action="/edit_material/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="update_material">
@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="mb-2">
-                    <label for="title" class="form-label">Level Title <span class="text-danger">*</span></label>
+                    <label for="title" class="form-label"><span class="text-white">Level Title </span> <span class="text-danger">*</span></label>
                     <input type="text" name="title" id="title" class="form-control" value="<%= data[0].level_name %>"
                         required>
                 </div>

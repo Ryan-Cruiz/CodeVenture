@@ -1,6 +1,6 @@
 <%- include('../shared/header') %>
     <div class="container">
-        <h2>New Task</h2>
+        <h2 class="text-white">New Task</h2>
         <%- include('../shared/partials/alert') %>
         <form action="/create_task" method="post">
             <div class="text-end mb-3">
@@ -9,14 +9,14 @@
                 <input type="hidden" name="lesson_id" value="<%= lesson_id %>">
             </div>
             <div class="mb-2">
-                <label for="title" class="form-label">Level Title <span class="text-danger">*</span></label>
+                <label for="title" class="form-label"><span class="text-white">Level Title</span> <span class="text-danger">*</span></label>
                 <input type="text" name="title" id="title" class="form-control" required>
             </div>
             <div class="container" id="question-container">
                 <div class="mt-5 border">
                     <div class="remove-question btn btn-danger float-end m-1">Remove</div>
                     <div class="m-2">
-                        <label>Question</label>
+                        <label class="text-white">Question</label>
                         <textarea name="question[]" class="form-control" required>Question</textarea>
                     </div>
                     <div class="choice-container m-2" aria-value="0">
@@ -25,12 +25,12 @@
                                 <input class="form-check-input mt-0" type="radio" value="Option" name="correctAnswer[0]">
                             </div>
                             <input type="text" class="form-control option-input" value="Option" autocomplete="off" name="questionChoice[]" onclick="this.select();" required>
-                            <div class="btn btn-danger remove-choice">Remove</div>
+                            <div class="btn btn-danger remove-choice m-0">Remove</div>
                         </div>
                     </div>
                     <input type="hidden" name="choice_length" value="1" class="choice-counter">
                     <div class="m-2">
-                        <label for="description">Description of Correct Answer</label>
+                        <label for="description" class="text-white">Description of Correct Answer</label>
                         <textarea name="description[]" class="form-control" id="description"></textarea>
                     </div>
                     <div class="btn btn-primary m-2 add-choice">Add Choice</div>

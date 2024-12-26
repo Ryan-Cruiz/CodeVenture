@@ -24,16 +24,21 @@ class Levels {
         let questionLen = $.req.body.choice_length;
         let description = $.req.body.description;
         console.log($.req.body, $.req.params);
-        let content = arrayToJson(questionLen, questions, answers, questionChoices, description)
-        // console.log(typeof content)
-        let res = await Level.createTask($.req.body, JSON.stringify(content));
-        if (res == 'success') {
-            let id = $.req.body.lesson_id;
-            $.req.session.msg = { success: ["Task added Successfully!"] };
-            $.res.redirect(`lesson/${id}`);
+        if (questionLen == undefined) {
+            $.req.session.msg = { error: ['Put At least 1 question.'] };
+            $.res.redirect('back')
         } else {
-            $.req.session.msg = { error: res };
-            $.res.redirect('back');
+            let content = arrayToJson(questionLen, questions, answers, questionChoices, description)
+            // console.log(typeof content)
+            let res = await Level.createTask($.req.body, JSON.stringify(content));
+            if (res == 'success') {
+                let id = $.req.body.lesson_id;
+                $.req.session.msg = { success: ["Task added Successfully!"] };
+                $.res.redirect(`lesson/${id}`);
+            } else {
+                $.req.session.msg = { error: res };
+                $.res.redirect('back');
+            }
         }
     }
 
@@ -64,15 +69,20 @@ class Levels {
             let answers = $.req.body.correctAnswer;
             let questionChoices = $.req.body.questionChoice;
             let questionLen = $.req.body.choice_length;
-            let content = arrayToJson(questionLen, questions, answers, questionChoices)
-            console.log($.req.body, $.req.params, content);
-            let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
-            if (res != 'success') {
-                $.req.session.msg = { error: res };
+            if (questionLen == undefined) {
+                $.req.session.msg = { error: ['Put At least 1 question.'] };
                 $.res.redirect('back')
             } else {
-                $.req.session.msg = { success: ["Task updated Successfully!"] };
-                $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
+                let content = arrayToJson(questionLen, questions, answers, questionChoices)
+                console.log($.req.body, $.req.params, content);
+                let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
+                if (res != 'success') {
+                    $.req.session.msg = { error: res };
+                    $.res.redirect('back')
+                } else {
+                    $.req.session.msg = { success: ["Task updated Successfully!"] };
+                    $.res.redirect(`/material/${$.req.params.lesson_id}/level/${$.req.params.id}`);
+                }
             }
         }
 
@@ -83,7 +93,7 @@ class Levels {
         // $.res.locals.params = $.req.params;
         let listRes = await Level.getMaterials($.req.params.id);
         let answers = "";
-        if(res[0].isTask == 1){
+        if (res[0].isTask == 1) {
             answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
         }
         // console.log($.req.query);
@@ -115,7 +125,7 @@ class Levels {
                 correct++;
             }
         }
-        let content = {answers: $.req.body.answers,score: correct};
+        let content = { answers: $.req.body.answers, score: correct };
         let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
         // console.log(answers.toString())
         // console.log(saveTaskAnswers);

@@ -1,7 +1,6 @@
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
-
 $(document).ready(function () {
     setTimeout(() => {
         $('.alert').fadeOut(3000);
@@ -25,7 +24,7 @@ $(document).ready(function () {
                               <input class="form-check-input mt-0" type="radio" value="Option" name="correctAnswer[${counter}]">
                             </div>
                             <input type="text" class="form-control option-input" value="Option" autocomplete="off" name="questionChoice[]" onclick="this.select();" required>
-                            <div class="btn btn-danger remove-choice">Remove</div>
+                            <div class="btn btn-danger remove-choice m-0">Remove</div>
                         </div>
                      </div>
                      <input type="hidden" name="choice_length" value="1" class="choice-counter">
@@ -48,7 +47,7 @@ $(document).ready(function () {
                               <input class="form-check-input mt-0" type="radio" value="Option" name="correctAnswer[${numbering}]">
                             </div>
                             <input type="text" class="form-control option-input" value="Option" autocomplete="off" name="questionChoice[]" onclick="this.select();" required>
-                            <div class="btn btn-danger remove-choice">Remove</div>
+                            <div class="btn btn-danger remove-choice m-0">Remove</div>
                         </div>`
         $(this).siblings('.choice-container').append(html);
         $(this).siblings('.choice-counter').val($(this).siblings('.choice-container').children().length)
