@@ -16,7 +16,7 @@ Things to remember before the doing spaghetti coding
     -> write it after the query is fired or else you might not able to catch the queries
 10.
 */
-require('dotenv').config();
+require('dotenv')
 const loader = require('./src/loaders.js');
 const config = loader.config;
 const profile = loader.profile;
