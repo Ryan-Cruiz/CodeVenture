@@ -34,7 +34,7 @@
                                 <div class="remove-question btn btn-danger float-end m-1">Remove</div>
                                 <div class="m-2">
                                     <label>Question</label>
-                                    <textarea name="question[]" class="form-control" required>Question</textarea>
+                                    <textarea name="question[]" class="form-control" required><%= item.question %></textarea>
                                 </div>
                                 <div class="choice-container m-2" aria-value="<%= i %>">
                                     <% item.choices.forEach((choice,j)=> { %>
@@ -55,7 +55,7 @@
                                     class="choice-counter">
                                     <div class="m-2">
                                         <label for="description">Description of Correct Answer</label>
-                                        <textarea name="description[]" class="form-control" id="description"></textarea>
+                                        <textarea name="description[]" class="form-control" id="description"><%= item.description %></textarea>
                                     </div>
                                 <div class="btn btn-primary m-2 add-choice">Add Choice</div>
                             </div>

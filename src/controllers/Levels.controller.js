@@ -69,11 +69,12 @@ class Levels {
             let answers = $.req.body.correctAnswer;
             let questionChoices = $.req.body.questionChoice;
             let questionLen = $.req.body.choice_length;
+            let description = $.req.body.description;
             if (questionLen == undefined) {
                 $.req.session.msg = { error: ['Put At least 1 question.'] };
                 $.res.redirect('back')
             } else {
-                let content = arrayToJson(questionLen, questions, answers, questionChoices)
+                let content = arrayToJson(questionLen, questions, answers, questionChoices,description)
                 console.log($.req.body, $.req.params, content);
                 let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
                 if (res != 'success') {
@@ -117,18 +118,21 @@ class Levels {
     async submit_task() {
         let inputs = { id: $.req.params.lesson_id, level_id: $.req.params.id, user_id: $.req.session.user_data.user_id };
         let res = await Level.getLevel(inputs);
+        let arrNum = $.req.body.numberArr.split(',');
         let answers = $.req.body.answers;
         let questions = JSON.parse(res[0].content.toString());
         let correct = 0;
+        // console.log(arrNum,answers,questions)
         for (let i = 0; i < questions.length; i++) {
-            if (questions[i].answer === answers[i]) {
+            if (questions[arrNum[i]].answer == answers[i]) {
                 correct++;
             }
         }
+        console.log(correct);
         let content = { answers: $.req.body.answers, score: correct };
         let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
         // console.log(answers.toString())
-        // console.log(saveTaskAnswers);
+        console.log(saveTaskAnswers);
         $.req.session.score = correct;
         // $.res.send($.req.body)
         $.res.redirect(`/lesson/${inputs.id}`);
@@ -143,7 +147,7 @@ class Levels {
 function arrayToJson(questionLen, questions, answers, questionChoices, description) {
     let content = []
     for (let i = 0; i < questionLen.length; i++) {
-        let json = { question: "", choices: [], answer: "", description: "" }
+        let json = { question: "", choices: [], answer: "", description: [] }
         json.question = questions[i];
         json.answer = answers[i];
         json.description = description[i];
