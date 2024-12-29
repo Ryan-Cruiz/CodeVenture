@@ -10,7 +10,7 @@
             <div class="list-group">
                 <% lists.forEach(list=> { %>
                     <% if(list.id==data[0].id) { %>
-                        <div class="list-group-item active mt-1">
+                        <div class="list-group-item active mt-1 rounded">
                             <%= list.level_name %>
                         </div>
                         <% } else { %>
@@ -43,21 +43,36 @@
                     <% if(data[0].isTask=='0' ) { %>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
                     <% }else if(data[0].isTask=='1'){ %>
+                    <% let n = JSON.parse(data[0].content).length;
+                    let arr = [];
+                    i = 0;
+                    while(i < n){
+                        let j = 0;
+                        let rand = Math.floor(Math.random() * n)
+                        if(arr.includes(rand)){
+                            j++;
+                            rand = Math.floor(Math.random() * n)
+                        }else{
+                            i++
+                            arr.push(rand);
+                        }
+                    }
+                    %>
                     <form action="/submit/task/<%=data[0].lesson_id%>/<%= data[0].id %>" method="post">
-                        <input type="hidden" value="">
+                        <input type="hidden" value="<%=arr%>" name="numberArr">
                         <%JSON.parse(data[0].content).forEach((item,i)=> { %>
                         <div class="container" id="question-container">
-                            <div class="mt-5 border">
+                            <div class="mt-5 p-1 glass-container">
                                 <div class="m-2">
                                     <label>Question</label>
-                                    <pre><%= item.question %></pre>
+                                    <pre><%= JSON.parse(data[0].content)[arr[i]].question %></pre>
                                 </div>
                                 <div class="choice-container m-2" aria-value="0">
-                                <% item.choices.forEach((choice)=> { %>
+                                <% JSON.parse(data[0].content)[arr[i]].choices.forEach((choice)=> { %>
                                     <div class="input-group my-2">
                                         <div class="input-group-text">
                                             <input class="form-check-input mt-0" type="radio"
-                                                value="<%= choice %>" name="answers[<%= i %>]" required>
+                                                value="<%= choice %>" name="answers[<%= arr[i] %>]" required>
                                         </div>
                                         <input type="text" class="form-control option-input"
                                             value="<%= choice %>" autocomplete="off"

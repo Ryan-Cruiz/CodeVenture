@@ -41,7 +41,7 @@ const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 // const passport = require('passport');
 app.locals.title = "CodeVenture";
-let saveTime = false;
+let saveTime = process.env.SAVETIME;
 app.use((req, res, next) => {
     app.locals.host = req.get('host');
     // console.log(app.locals);

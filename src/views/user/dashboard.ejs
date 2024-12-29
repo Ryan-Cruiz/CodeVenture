@@ -17,7 +17,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4 container-lesson">
         <% if(lessons.length > 0) lessons.map(lesson => { %>
             <div class="col">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm ">
                     <div class="card-body" data-id="<%= lesson.id %>">
                         <h5 class="card-title text-dark lesson-title"><%= lesson.title %></h5>
                         <% if(roles.indexOf('admin') !== -1) { %>
