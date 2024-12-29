@@ -88,6 +88,7 @@ class Users {
     }
     async logOut() {
         $.req.session.destroy();
+        user.connection.destroy();
         // console.log("dsadsad")
         // this.result = [];
         $.res.redirect('/');

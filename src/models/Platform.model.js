@@ -3,38 +3,38 @@ const model = loader.model;
 class Platform extends model {
     // Create something 
     async create_lesson(inputs, role_id) {
-        super.dbConnection();
+
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
             let lessonQuery = this.insert('lessons', ['role_id', 'title', 'description',]).
                 values([role_id, inputs.title, inputs.description]).exec();
             return 'success';
         }
-        this.connection.destroy()
+
         return validation;
 
     }
     async edit_lesson(inputs) {
-        super.dbConnection();
+
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
-            let lessonQuery = this.update('lessons', ['title=?', 'description=?','updated_at=NOW()']).
+            let lessonQuery = this.update('lessons', ['title=?', 'description=?', 'updated_at=NOW()']).
                 where(["id=?"]).
-                values([inputs.title, inputs.description,inputs.lesson_id]).exec();
-                // console.log(lessonQuery);
+                values([inputs.title, inputs.description, inputs.lesson_id]).exec();
+            // console.log(lessonQuery);
             return 'success';
         }
-        this.connection.destroy()
+
         return validation;
     }
     async getLessons() {
-        super.dbConnection();
+
         // let query = this.sql.format("SELECT * FROM credentials INNER JOIN roles ON credentials.user_id = roles.user_id INNER JOIN groups ON groups.role_id = roles.id");
         let result = await this.select('roles', ["*"]).inner('credentials', ['user_id', 'user_id']).inner('lessons', ['role_id', 'id']).exec()
         // let result = await super.Rawquery(query);
         // console.log(result);
         // console.log();
-        this.connection.destroy()
+
         return result;
     }
     async lesson_validate(inputs) {

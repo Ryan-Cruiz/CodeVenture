@@ -12,20 +12,20 @@ class User extends model {
         // let query = this.sql.format("SELECT * FROM users INNER JOIN credentials AS cred ON users.id = cred.user_id LEFT JOIN roles ON users.id = roles.user_id WHERE email = ?",
         //     [form_input.email]);
         // let result = await super.Rawquery(query)
+        let result = await this.select('users', ['*']).left('roles', ['user_id', 'id']).inner('credentials', ['user_id', 'id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
         // console.log(result);
-        let result = await this.select('users',['*']).left('roles',['user_id','id']).inner('credentials',['user_id','id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
         // this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
-        try{
+        try {
             if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
-                this.connection.destroy();
+                ;
                 return 'fail';
             }
-        }catch(e){
-        console.log(e);
+        } catch (e) {
+            console.log(e);
             return 'fail';
         }
-        this.connection.destroy();
+        ;
         return result;
     }
 
@@ -36,7 +36,7 @@ class User extends model {
         // console.log(await this.Rawquery(query));
         // console.log(query)
         // return callback('success');
-        let result = await this.select('users',['*']).where([`email=?`]).values([form_input.email]).exec();
+        let result = await this.select('users', ['*']).where([`email=?`]).values([form_input.email]).exec();
         // console.log(result)
         // this.profiler_enable();
         if (result.length == 0) {
@@ -60,7 +60,7 @@ class User extends model {
             if (lastData.insertId == 1) {
                 let roleQuery = this.insert('roles', ['roles', 'user_id',]).values([["admin"].toString(), lastData.insertId]).exec();
             }
-            this.connection.destroy()
+
             return await this.login_process(form_input);
             // console.log(credQuery.queries);
             // let credRes = await super.Rawquery(credQuery.queries);
@@ -69,7 +69,7 @@ class User extends model {
             //     [form_input.first_name, form_input.last_name, form_input.email, this.bcrypt.hashSync(form_input.password, 10)]);
             // super.query(query, (result) => { console.log('sucess!'); });
         } else {
-            this.connection.destroy()
+
             return 'fail';
         }
 
