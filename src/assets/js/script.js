@@ -68,4 +68,10 @@ $(document).ready(function () {
         $('#editDescription').val(description);
         $('#lesson_id').val(id);
     })
+    $(document).on('change','#after_level_selector',function(){
+        let lesson_id = $(this).data('lesson-id');
+        let selectedAfterId = $(this).children('option:selected').val();
+        $('#create_task').attr('href',`/new_level/${lesson_id}/task?after=`+selectedAfterId)
+        $('#create_material').attr('href',`/new_level/${lesson_id}/material?after=`+selectedAfterId);
+    })
 });

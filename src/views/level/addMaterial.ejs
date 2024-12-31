@@ -5,6 +5,7 @@
         <form action="/create_material" method="post" id="create_material">
             <div class="text-end mb-3">
                 <input type="submit" value="Create" class="btn btn-danger w-25">
+                <input type="hidden" name="afterLessonNumber" value="<%= afterLessonNumber%>">
             </div>
             <div class="mb-2">
                 <label for="title" class="form-label">Level Title <span class="text-danger">*</span></label>

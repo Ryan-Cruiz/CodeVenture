@@ -5,6 +5,7 @@ const $ = loader.profile;
 class Levels {
     async new_material() {
         $.res.locals.lesson_id = $.req.params.lesson_id;
+        $.res.locals.afterLessonNumber = $.req.query.after;
         $.res.render('level/addMaterial');
     }
     async create_material() {
@@ -43,6 +44,7 @@ class Levels {
     }
 
     async new_task() {
+        $.res.locals.afterLessonNumber = $.req.query.after;
         $.res.locals.lesson_id = $.req.params.lesson_id;
         $.res.render('level/addTask');
     }
