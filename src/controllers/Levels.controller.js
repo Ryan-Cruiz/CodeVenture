@@ -5,17 +5,20 @@ const $ = loader.profile;
 class Levels {
     async new_material() {
         $.res.locals.lesson_id = $.req.params.lesson_id;
+        $.res.locals.afterLessonNumber = $.req.query.after;
         $.res.render('level/addMaterial');
     }
     async create_material() {
         let res = await Level.createMaterial($.req.body)
         let id = $.req.body.lesson_id;
+        console.log(res);
         if (res != 'success') {
             $.req.session.msg = { error: res };
-            console.log(res);
+            $.res.redirect('back');
+        } else {
+            $.req.session.msg = { success: ["Material Created Successfully!"] };
+            $.res.redirect(`lesson/${id}`);
         }
-        $.req.session.msg = { success: ["Material updated Successfully!"] };
-        $.res.redirect(`lesson/${id}`);
     }
     async create_task() {
         let questions = $.req.body.question;
@@ -43,6 +46,7 @@ class Levels {
     }
 
     async new_task() {
+        $.res.locals.afterLessonNumber = $.req.query.after;
         $.res.locals.lesson_id = $.req.params.lesson_id;
         $.res.render('level/addTask');
     }
@@ -74,7 +78,7 @@ class Levels {
                 $.req.session.msg = { error: ['Put At least 1 question.'] };
                 $.res.redirect('back')
             } else {
-                let content = arrayToJson(questionLen, questions, answers, questionChoices,description)
+                let content = arrayToJson(questionLen, questions, answers, questionChoices, description)
                 console.log($.req.body, $.req.params, content);
                 let res = await Level.updateTask($.req.body, $.req.params, JSON.stringify(content));
                 if (res != 'success') {

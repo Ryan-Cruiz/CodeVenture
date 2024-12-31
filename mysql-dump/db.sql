@@ -145,6 +145,7 @@ CREATE TABLE IF NOT EXISTS `levels` (
   `level_name` VARCHAR(45) NULL,
   `content` BLOB NULL,
   `isTask` TINYINT NULL,
+  `order_number` INT DEFAULT NULL
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),

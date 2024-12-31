@@ -36,12 +36,15 @@ module.exports = class mvc_model extends ORM {
      *  This function will query the statement
      * @returns A promise
      */
-    Rawquery(query) {
+    Rawquery(query, arrVal = []) {
         return new Promise((resolve, reject) => {
-            this.connection.query(query, (err, rows) => {
+            this.dbConnection();
+            const databaseType = this.CONFIG.db_type;
+            this.connection.query(databaseType === 'pg' ? query : arrVal.length > 0 ? this.sql.format(query, arrVal) : this.sql.format(query), (err, rows) => {
                 if (err) reject(err);
                 this.profiler.query_result = rows;
                 resolve(rows);
+                this.connection.destroy();
             });
         });
     }
