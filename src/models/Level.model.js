@@ -5,6 +5,7 @@ class Level extends model {
 
     async createMaterial(inputs) {
 
+
         let validation = await this.level_validate(inputs);
         if (validation != 'success') {
             return validation;
@@ -57,14 +58,23 @@ class Level extends model {
         let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?'])
             .values([inputs.id, inputs.level_id]).exec();
         return query;
+
+        let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?'])
+            .values([inputs.id, inputs.level_id]).exec();
+        return query;
     }
     async getMaterials(id) {
 
         let query = await this.select('levels', ["id,lesson_id,level_name,order_number"])
             .where(['lesson_id=?']).order('order_number', 'ASC').values([id]).exec();
         return query
+
+        let query = await this.select('levels', ["id,lesson_id,level_name,order_number"])
+            .where(['lesson_id=?']).order('order_number', 'ASC').values([id]).exec();
+        return query
     }
     async saveTaskAnswers(params, input) {
+
 
         let isUserExist = await this.select("task_answers", ["*"]).where(["user_id=? AND task_id=? AND lesson_id=?"])
             .values([params.user_id, params.level_id, params.id]).exec();
@@ -74,6 +84,7 @@ class Level extends model {
             let result = await this.update('task_answers', ["answers=?", "updated_at=NOW()"])
                 .where(["task_id=?", this.and("lesson_id=?"), this.and("user_id=?")])
                 .values([JSON.stringify(input), params.level_id, params.id, params.user_id]).exec();
+            // console.log(result,'asd')
             // console.log(result,'asd')
             return 'success';
             // this.profiler_enable();
@@ -88,6 +99,7 @@ class Level extends model {
     }
     async createTask(inputs, content) {
 
+
         if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
             let queryLastLessonId = await this.select('levels', ['*']).where(['lesson_id=?']).order('order_number', 'ASC').values([inputs.lesson_id]).exec();
             let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask', 'order_number']).
@@ -100,6 +112,7 @@ class Level extends model {
     }
     async updateTask(inputs, params, content) {
 
+
         if (inputs.isTask == '1' || inputs.isTask != "" || inputs.title != "") {
             let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
                 where(['lesson_id=?', this.and('id=?')]).
@@ -107,6 +120,7 @@ class Level extends model {
             console.log(result);
             return 'success';
         }
+
 
         return 'fail';
     }
@@ -116,22 +130,31 @@ class Level extends model {
             return validation;
         }
 
+
         let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
             where(['lesson_id=?', this.and('id=?')]).
             values([inputs.title, inputs.description, params.lesson_id, params.id]).exec()
+        // console.log(result);
+
         // console.log(result);
 
         return 'success'
     }
     async getTaskAnswer(params) {
 
+
         let query = await this.select("task_answers", ["*"]).inner('credentials', ['id', 'user_id']).where(["task_id=?", this.and("lesson_id=?")]).values([params.level_id, params.id]).exec();
+
+        return query
 
         return query
     }
     async getUserAnswer(params, user_id) {
 
+
         let query = await this.select("task_answers", ["*"]).where(["user_id=?", this.and("task_id=?"), this.and("lesson_id=?")]).values([user_id, params.level_id, params.id]).exec();
+
+        return query
 
         return query
     }
