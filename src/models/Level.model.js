@@ -54,21 +54,11 @@ class Level extends model {
         console.log(queryOutput);
     }
     async getLevel(inputs) {
-
-        let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?'])
-            .values([inputs.id, inputs.level_id]).exec();
-        return query;
-
         let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?'])
             .values([inputs.id, inputs.level_id]).exec();
         return query;
     }
     async getMaterials(id) {
-
-        let query = await this.select('levels', ["id,lesson_id,level_name,order_number"])
-            .where(['lesson_id=?']).order('order_number', 'ASC').values([id]).exec();
-        return query
-
         let query = await this.select('levels', ["id,lesson_id,level_name,order_number"])
             .where(['lesson_id=?']).order('order_number', 'ASC').values([id]).exec();
         return query
@@ -129,33 +119,19 @@ class Level extends model {
         if (validation != 'success') {
             return validation;
         }
-
-
         let result = await this.update('levels', ['level_name=?', 'content=?', 'updated_at=NOW()']).
             where(['lesson_id=?', this.and('id=?')]).
             values([inputs.title, inputs.description, params.lesson_id, params.id]).exec()
         // console.log(result);
-
         // console.log(result);
-
         return 'success'
     }
     async getTaskAnswer(params) {
-
-
         let query = await this.select("task_answers", ["*"]).inner('credentials', ['id', 'user_id']).where(["task_id=?", this.and("lesson_id=?")]).values([params.level_id, params.id]).exec();
-
-        return query
-
         return query
     }
     async getUserAnswer(params, user_id) {
-
-
         let query = await this.select("task_answers", ["*"]).where(["user_id=?", this.and("task_id=?"), this.and("lesson_id=?")]).values([user_id, params.level_id, params.id]).exec();
-
-        return query
-
         return query
     }
     async level_validate(inputs) {
