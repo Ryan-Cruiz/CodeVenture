@@ -33,7 +33,24 @@ app.use(Express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(Express.static(__dirname + '/node_modules/simplemde/dist'));
 app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
-app.use(session(config.session));
+const sqlite = require("better-sqlite3");
+const SqliteStore = require("better-sqlite3-session-store")(session)
+const db = new sqlite("sessions.db");
+// const db = new sqlite("sessions.db", { verbose: console.log });
+app.use(session(
+    {
+        secret: 'c0d3V3nTuR3',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: 60000 },
+        store: new SqliteStore({
+            client: db,
+            expired: {
+                clear: true,
+                intervalMs: 900000 //ms = 15min
+            }
+        }),
+    }));
 //require('./passport.js')
 app.set('view engine', 'ejs');
 app.use(cors());

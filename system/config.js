@@ -20,11 +20,5 @@ module.exports = {
         port: process.env.DB_PORT
 
     },
-    session:
-    {
-        secret: 'c0d3V3nTuR3',
-        resave: false,
-        saveUninitialized: true,
-        cookie: { maxAge: 60000 }
-    },
+
 }
