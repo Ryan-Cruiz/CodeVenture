@@ -16,16 +16,15 @@ class User extends model {
         // console.log(result);
         // this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
+        if(result[0] == undefined) return 'notexist';
         try {
             if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
-                ;
                 return 'fail';
             }
         } catch (e) {
             console.log(e);
             return 'fail';
         }
-        ;
         return result;
     }
 

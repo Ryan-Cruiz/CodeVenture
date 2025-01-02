@@ -7,9 +7,9 @@
     <% } %>
         <% if(status == 'error' ) { %>
             <div class="alert alert-danger">
-                <ul>
+                <ul class="list-group">
                     <% msg.error.forEach(err=>{ %>
-                        <li>
+                        <li class="list-group-item bg-transparent border-0">
                             <%= err %>
                         </li>
                         <% }) %>

@@ -38,10 +38,16 @@ class Users {
             // console.log(res, 'login res');
             if (res == 'fail') { // check if not
                 $.req.session.msg = { error: ['Wrong Password'] }; // get the result as a array of message
+                $.res.redirect('/');
+                $.res.end();
+            } else if (res == 'notexist') {
+                $.req.session.msg = { error: ['Invalid Email'] };
+                $.res.redirect('/');
+                $.res.end();
             } else {
                 let data = res[0];
                 $.req.session.regenerate(function (err) {
-                    if (err) next(err);
+                    if (err) console.log(err);
                     // store user information in session, typically a user id
                     $.req.session.logged = true;
                     $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
@@ -50,7 +56,8 @@ class Users {
                     // save the session before redirection to ensure page
                     // load does not happen before session is saved
                     $.req.session.save(function (err) {
-                        if (err) return next(err);
+                        if (err)
+                            console.log(err)
                         $.res.redirect('/');
                     })
                 })
