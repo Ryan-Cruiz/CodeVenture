@@ -86,9 +86,8 @@ app.use((req, res, next) => {
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
     profiler is called in specific method
     */
-    console.log(req.session)
-    if (req.session.logged) next()
-    else next('route')
+    // console.log(req.session)
+    next()
 });
 // this middleware is checking if id = 0 then to the next route
 app.get('/user/:id', (req, res, next) => {
