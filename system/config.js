@@ -23,7 +23,7 @@ module.exports = {
     session:
     {
         secret: 'c0d3V3nTuR3',
-        resave: false,
+        resave: true,
         saveUninitialized: true,
         cookie: { maxAge: 600000 }
     },
