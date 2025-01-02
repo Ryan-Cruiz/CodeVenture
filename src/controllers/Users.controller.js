@@ -40,19 +40,29 @@ class Users {
                 $.req.session.msg = { error: ['Wrong Password'] }; // get the result as a array of message
             } else {
                 let data = res[0];
-                $.req.session.logged = true;
-                $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
-                let roles = new Array(data.roles);
-                $.req.session.roles = ['all', 'auth', ...roles];
+                $.req.session.regenerate(function (err) {
+                    if (err) next(err);
+                    // store user information in session, typically a user id
+                    $.req.session.logged = true;
+                    $.req.session.user_data = { name: data.first_name, user_id: data.user_id };
+                    let roles = new Array(data.roles);
+                    $.req.session.roles = ['all', 'auth', ...roles];
+                    // save the session before redirection to ensure page
+                    // load does not happen before session is saved
+                    $.req.session.save(function (err) {
+                        if (err) return next(err);
+                        $.res.redirect('/');
+                    })
+                })
             }
             // console.log($.req.session)
             // $.res.redirect('/')
             // this.result = data; // reference the result to the data and render this.result on result.ejs
         } else {
             $.req.session.msg = { error: result };
+            $.res.redirect('/');
+            $.res.end();
         }
-        $.res.redirect('/');
-        $.res.end();
     }
     async createAccount() {
         //check create validate if rules are all correct
@@ -87,11 +97,20 @@ class Users {
         $.res.render('user/create');
     }
     async logOut() {
-        $.req.session.destroy();
         user.connection.destroy();
         // console.log("dsadsad")
         // this.result = [];
-        $.res.redirect('/');
+        $.req.session.user_data = null
+        $.req.session.save(function (err) {
+            if (err) next(err)
+
+            // regenerate the session, which is good practice to help
+            // guard against forms of session fixation
+            $.req.session.regenerate(function (err) {
+                if (err) next(err)
+                $.res.redirect('/')
+            })
+        })
     }
     async settings() {
 

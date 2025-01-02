@@ -50,7 +50,7 @@ app.use((req, res, next) => {
         if (saveTime) {
             req.session.logged = true;
             req.session.user_data = { name: "developer", user_id: 1 }
-            req.session.roles = ['all', 'auth','admin'];
+            req.session.roles = ['all', 'auth', 'admin'];
         } else {
             req.session.logged = false;
             req.session.roles = ['all', 'guest']; // you can change this as a config.session or a database object(json)
@@ -69,7 +69,9 @@ app.use((req, res, next) => {
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
     profiler is called in specific method
     */
-    next();
+    console.log(req.session)
+    if (req.session.logged) next()
+    else next('route')
 });
 // this middleware is checking if id = 0 then to the next route
 app.get('/user/:id', (req, res, next) => {
