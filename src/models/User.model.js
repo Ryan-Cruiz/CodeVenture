@@ -13,10 +13,10 @@ class User extends model {
         //     [form_input.email]);
         // let result = await super.Rawquery(query)
         let result = await this.select('users', ['*']).left('roles', ['user_id', 'id']).inner('credentials', ['user_id', 'id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
-        // console.log(result);
+        console.log(result);
         // this.profiler_enable();
         // console.log(this.bcrypt.compareSync(form_input.password, result[0].password), form_input.password, result[0].password)
-        if(result[0] == undefined) return 'notexist';
+        if(result == undefined) return 'notexist';
         try {
             if (this.bcrypt.compareSync(form_input.password, result[0].password) == false) {
                 return 'fail';

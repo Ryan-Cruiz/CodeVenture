@@ -40,9 +40,9 @@ const db = new sqlite("sessions.db");
 app.use(session(
     {
         secret: 'c0d3V3nTuR3',
-        resave: false,
+        resave: true,
         saveUninitialized: true,
-        cookie: { maxAge: 60000 },
+        cookie: { maxAge: 600000 },
         store: new SqliteStore({
             client: db,
             expired: {
@@ -58,12 +58,12 @@ const routes = require('./system/routes.js');
 const middleware = require('./system/middleware.js');
 // const passport = require('passport');
 app.locals.title = "CodeVenture";
-let saveTime = false;
+let saveTime = true;
 app.use((req, res, next) => {
     app.locals.host = req.get('host');
     // console.log(app.locals);
     profiler.time = Date.now(); // take the current time of execution
-    if (req.session.roles == undefined) {
+    if (req.session.user_data == undefined) {
         if (saveTime) {
             req.session.logged = true;
             req.session.user_data = { name: "developer", user_id: 1 }
@@ -86,7 +86,7 @@ app.use((req, res, next) => {
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
     profiler is called in specific method
     */
-    // console.log(req.session)
+    console.log(req.session)
     next()
 });
 // this middleware is checking if id = 0 then to the next route
