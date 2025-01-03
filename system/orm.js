@@ -164,7 +164,7 @@ class ORM {
                     this.connection.end();
                 }, 300);
             });
-            console.log(this.connection.query(this.sql.format('SELECT 1')));
+            // console.log(this.connection.query(this.sql.format('SELECT 1')));
             
             // setTimeout(() => {
             // }, 3000);

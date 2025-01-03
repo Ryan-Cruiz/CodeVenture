@@ -35,8 +35,8 @@ app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 const sqlite = require("better-sqlite3");
 const SqliteStore = require("better-sqlite3-session-store")(session)
-const db = new sqlite("sessions.db");
-// const db = new sqlite("sessions.db", { verbose: console.log });
+// const db = new sqlite("sessions.db");
+const db = new sqlite("sessions.db", { verbose: console.log });
 app.use(session(
     {
         secret: 'c0d3V3nTuR3',
@@ -51,7 +51,7 @@ app.use(session(
             }
         }),
     }));
-//require('./passport.js')
+// require('./passport.js')
 app.set('view engine', 'ejs');
 app.use(cors());
 const routes = require('./system/routes.js');
@@ -86,7 +86,7 @@ app.use((req, res, next) => {
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
     profiler is called in specific method
     */
-    console.log(req.session)
+    // console.log(req.session.passport)
     next()
 });
 // this middleware is checking if id = 0 then to the next route
@@ -106,20 +106,15 @@ app.get('/user/:id', (req, res, next) => {
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies
-  }
-/*
-app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        successRedirect: '/success',
-        failureRedirect: '/failure'
-    }));
-*/
-// app.use((req, res, next) => {
-//     // console.log(res.locals)
-//     // res.locals.msg = {};
-//     next();
-// })
+}
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+// app.get('/auth/google/callback',
+//     passport.authenticate('google', {
+//         successRedirect: '/success',
+//         failureRedirect: '/failure'
+//     }));
 app.use(routes);
 app.listen(config.port, function () {
     console.log("listening on port " + `http://localhost:${config.port}`);
