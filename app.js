@@ -37,20 +37,20 @@ const sqlite = require("better-sqlite3");
 const SqliteStore = require("better-sqlite3-session-store")(session)
 // const db = new sqlite("sessions.db");
 const db = new sqlite("sessions.db", { verbose: console.log });
-app.use(session(
-    {
-        secret: 'c0d3V3nTuR3',
-        resave: true,
-        saveUninitialized: true,
-        cookie: { maxAge: 600000 },
-        store: new SqliteStore({
-            client: db,
-            expired: {
-                clear: true,
-                intervalMs: 900000 //ms = 15min
-            }
-        }),
-    }));
+let sess = {
+    secret: 'c0d3V3nTuR3',
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 600000 },
+    store: new SqliteStore({
+        client: db,
+        expired: {
+            clear: true,
+            intervalMs: 900000 //ms = 15min
+        }
+    }),
+}
+app.use(session(sess));
 // require('./passport.js')
 app.set('view engine', 'ejs');
 app.use(cors());
