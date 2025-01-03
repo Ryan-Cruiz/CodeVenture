@@ -103,6 +103,10 @@ app.get('/user/:id', (req, res, next) => {
     // console.log(req);
 
 })
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+  }
 /*
 app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 app.get('/auth/google/callback',

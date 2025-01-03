@@ -57,8 +57,8 @@ class Levels {
         $.res.render('level/editMaterial', { data: res });
     }
     async update_level() {
-        console.log($.req.body);
-        console.log($.req.params)
+        // console.log($.req.body);
+        // console.log($.req.params)
         if ($.req.body.isTask == '0') {
             let res = await Level.updateMaterial($.req.body, $.req.params)
             if (res != 'success') {
@@ -98,6 +98,7 @@ class Levels {
         // $.res.locals.params = $.req.params;
         let listRes = await Level.getMaterials($.req.params.id);
         let answers = "";
+        console.log(res);
         if (res[0].isTask == 1) {
             answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
         }

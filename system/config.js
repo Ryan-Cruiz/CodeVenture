@@ -2,7 +2,7 @@
 require('dotenv');
 module.exports = {
 
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3001,
     db_type: 'mysql',
     // database:
     // {
@@ -13,6 +13,7 @@ module.exports = {
     //     port: 3306
     // },
     database: {
+        // connectionLimit: 5,
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,

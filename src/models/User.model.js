@@ -8,7 +8,6 @@ class User extends model {
         return query;
     }
     async login_process(form_input) {
-        super.dbConnection()
         // let query = this.sql.format("SELECT * FROM users INNER JOIN credentials AS cred ON users.id = cred.user_id LEFT JOIN roles ON users.id = roles.user_id WHERE email = ?",
         //     [form_input.email]);
         // let result = await super.Rawquery(query)

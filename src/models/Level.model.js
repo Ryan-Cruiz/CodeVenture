@@ -54,8 +54,7 @@ class Level extends model {
         console.log(queryOutput);
     }
     async getLevel(inputs) {
-        let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?'])
-            .values([inputs.id, inputs.level_id]).exec();
+        let query = await this.select('levels', ["*"]).where(['lesson_id=? AND id=?']).values([inputs.id, inputs.level_id]).exec();
         return query;
     }
     async getMaterials(id) {

@@ -18,7 +18,7 @@ module.exports = class mvc_model extends ORM {
                 this.connection = new Pool(this.CONFIG.database);
             } else if (this.CONFIG.db_type === 'mysql') {
                 this.sql = require('mysql');
-                this.connection = this.sql.createConnection(this.CONFIG.database);
+                this.connection = this.sql.createPool(this.CONFIG.database);
             }
         } catch (e) {
             console.log(e);
