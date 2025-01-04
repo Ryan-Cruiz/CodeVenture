@@ -41,6 +41,7 @@ module.exports = class mvc_model extends ORM {
             this.dbConnection();
             const databaseType = this.CONFIG.db_type;
             this.connection.query(databaseType === 'pg' ? query : arrVal.length > 0 ? this.sql.format(query, arrVal) : this.sql.format(query), (err, rows) => {
+                this.connection.release();
                 if (err) reject(err);
                 this.profiler.query_result = rows;
                 resolve(rows);

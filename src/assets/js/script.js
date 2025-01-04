@@ -13,7 +13,11 @@ $(document).ready(function () {
     })
     $("#addQuestion").click(function (e) {
         let html = `<div class="mt-5 border">
-                    <div class="remove-question btn btn-danger float-end m-1">Remove</div>
+                    <div class="remove-question btn btn-danger float-end m-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="mt-1" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
+                        </svg>
+                    </div>
                     <div class="m-2">
                         <label>Question</label>
                         <textarea name="question[]" class="form-control" required>Question</textarea>
@@ -24,7 +28,11 @@ $(document).ready(function () {
                               <input class="form-check-input mt-0" type="radio" value="Option" name="correctAnswer[${counter}]">
                             </div>
                             <input type="text" class="form-control option-input" value="Option" autocomplete="off" name="questionChoice[]" onclick="this.select();" required>
-                            <div class="btn btn-danger remove-choice m-0">Remove</div>
+                            <div class="btn btn-danger remove-choice m-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="mt-1" viewBox="0 0 16 16">
+                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
+                                </svg>
+                            </div>
                         </div>
                      </div>
                      <input type="hidden" name="choice_length" value="1" class="choice-counter">
@@ -61,11 +69,14 @@ $(document).ready(function () {
     $(document).on('click', '#editBtn', function () {
         // console.log($(this).siblings());
         let title = $(this).siblings('.lesson-title').text();
+        let img_link = $(this).parent().siblings('.img-link').attr('src');
+        console.log(img_link)
         let description = $(this).siblings('.lesson-description').text();
         let id = $(this).parent().data('id')
         // console.log(id, title, description)
         $('#editTitle').val(title);
         $('#editDescription').val(description);
+        $('#editImg_link').val(img_link)
         $('#lesson_id').val(id);
     })
     $(document).on('change','#after_level_selector',function(){

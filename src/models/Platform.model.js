@@ -6,8 +6,8 @@ class Platform extends model {
 
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
-            let lessonQuery = this.insert('lessons', ['role_id', 'title', 'description',]).
-                values([role_id, inputs.title, inputs.description]).exec();
+            let lessonQuery = await this.insert('lessons', ['role_id', 'title', 'description','img_link']).
+                values([role_id, inputs.title, inputs.description,inputs.img_link]).exec();
             return 'success';
         }
 
@@ -18,10 +18,10 @@ class Platform extends model {
 
         let validation = await this.lesson_validate(inputs);
         if (validation == 'success') {
-            let lessonQuery = this.update('lessons', ['title=?', 'description=?', 'updated_at=NOW()']).
+            let lessonQuery = await this.update('lessons', ['title=?', 'description=?','img_link=?', 'updated_at=NOW()']).
                 where(["id=?"]).
-                values([inputs.title, inputs.description, inputs.lesson_id]).exec();
-            // console.log(lessonQuery);
+                values([inputs.title, inputs.description,inputs.img_link, inputs.lesson_id]).exec();
+            console.log(lessonQuery);
             return 'success';
         }
 

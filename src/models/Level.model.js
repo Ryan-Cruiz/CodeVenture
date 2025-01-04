@@ -63,27 +63,15 @@ class Level extends model {
         return query
     }
     async saveTaskAnswers(params, input) {
-
-
-        let isUserExist = await this.select("task_answers", ["*"]).where(["user_id=? AND task_id=? AND lesson_id=?"])
-            .values([params.user_id, params.level_id, params.id]).exec();
-        console.log(isUserExist)
-        // console.log('submitted')
-        if (isUserExist.length > 0) {
-            let result = await this.update('task_answers', ["answers=?", "updated_at=NOW()"])
-                .where(["task_id=?", this.and("lesson_id=?"), this.and("user_id=?")])
-                .values([JSON.stringify(input), params.level_id, params.id, params.user_id]).exec();
-            // console.log(result,'asd')
-            // console.log(result,'asd')
-            return 'success';
-            // this.profiler_enable();
-            // console.log(result);
-        } else {
+        try {
             let result = await this.insert('task_answers', ["answers", "task_id", "lesson_id", "user_id"])
                 .values([JSON.stringify(input), params.level_id, params.id, params.user_id]).exec();
             // this.profiler_enable();
             // console.log(result,'gsdsdg');
             return 'success';
+        } catch (e) {
+            console.log(e)
+            return 'fail';
         }
     }
     async createTask(inputs, content) {
@@ -130,7 +118,7 @@ class Level extends model {
         return query
     }
     async getUserAnswer(params, user_id) {
-        let query = await this.select("task_answers", ["*"]).where(["user_id=?", this.and("task_id=?"), this.and("lesson_id=?")]).values([user_id, params.level_id, params.id]).exec();
+        let query = await this.select("task_answers", ["*"]).where(["user_id=?", this.and("task_id=?"), this.and("lesson_id=?")]).order('created_at', 'DESC LIMIT 1').values([user_id, params.level_id, params.id]).exec();
         return query
     }
     async level_validate(inputs) {

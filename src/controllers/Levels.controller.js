@@ -104,7 +104,7 @@ class Levels {
         }
         // console.log($.req.query);
         if (answers.length == 0 || $.req.query.event == "retake") {
-            $.res.render('level/showLevel', { data: res, lists: listRes });
+            $.res.render('level/showLevel', { data: res, lists: listRes, isRetake: $.req.query.event });
         } else {
             $.res.redirect(`/material/${$.req.params.id}/level/${$.req.params.level_id}/preview`);
         }
@@ -129,12 +129,12 @@ class Levels {
         let correct = 0;
         // console.log(arrNum,answers,questions)
         for (let i = 0; i < questions.length; i++) {
-            if (questions[arrNum[i]].answer == answers[i]) {
+            if (questions[i].answer == answers[i]) {
                 correct++;
             }
         }
-        console.log(correct);
-        let content = { answers: $.req.body.answers, score: correct };
+        console.log(correct,'score');
+        let content = { answers: $.req.body.answers, score: correct,isRetake: $.req.body.isRetake };
         let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
         // console.log(answers.toString())
         console.log(saveTaskAnswers);
@@ -147,6 +147,9 @@ class Levels {
         // console.log(getTask);
         $.res.locals.params = $.req.params;
         $.res.render('level/showAnswers', { users_answers: getTask });
+    }
+    async show_quiz_history() {
+        $.res.send("History!")
     }
 }
 function arrayToJson(questionLen, questions, answers, questionChoices, description) {

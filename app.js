@@ -35,11 +35,11 @@ app.use(Express.static(path.join(__dirname, "./src/assets")));
 app.set('views', path.join(__dirname, './src/views'));
 const sqlite = require("better-sqlite3");
 const SqliteStore = require("better-sqlite3-session-store")(session)
-// const db = new sqlite("sessions.db");
-const db = new sqlite("sessions.db", { verbose: console.log });
+const db = new sqlite("sessions.db");
+// const db = new sqlite("sessions.db", { verbose: console.log });
 let sess = {
     secret: 'c0d3V3nTuR3',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 600000 },
     store: new SqliteStore({

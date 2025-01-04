@@ -1,7 +1,10 @@
 <%- include('../shared/header') %>
+<%- include('../shared/partials/alert') %>
+    <div class="container">
+        <a class="btn btn-secondary" href="/">Back</a>
+    </div>
     <% if(roles.indexOf('admin') !==-1) { %>
-        <%- include('../shared/partials/alert') %>
-        <div class="container my-3 border p-2">
+        <div class="container my-3 p-2">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLesson">
                 Create Level
             </button>
@@ -21,27 +24,28 @@
                         <select class="form-select" aria-label="after level selector" data-lesson-id="<%= lesson_id %>" id="after_level_selector">
                             <% data.forEach((item,i) => { %>
                                 <% if(data.length > i) { %>
-                                <option value="<%= i+1 %>" selected><%= item.level_name %></option>
+                                    <option value="<%= i+1 %>" selected><%= item.level_name %></option>
                                 <% }else { %>
                                     <option value="<%= i+1 %>"><%= item.level_name %></option>
-                                <% } %>
+                                    <% } %>
                             <% }) %>
                         </select>
                         <div class="m-1 text-center">
                             
                             <a href="/new_level/<%= lesson_id %>/material" id="create_material" class="btn btn-primary w-50">Create
                                 Material</a>
-                        </div>
-                        <div class="m-1 text-center">
-                            <a href="/new_level/<%= lesson_id %>/task" id="create_task" class="btn btn-primary w-50">Create
-                                Task</a>
+                            </div>
+                            <div class="m-1 text-center">
+                                <a href="/new_level/<%= lesson_id %>/task" id="create_task" class="btn btn-primary w-50">Create
+                                    Task</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <% } %>
-            <div class="container border p-2">
+                <% } %>
+                <div class="container p-2">
+                    <h2>Levels:</h2>
                         <% data.forEach(item => { %>
                                 <a class="btn btn-primary m-2" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
                                     <%= item.level_name %>

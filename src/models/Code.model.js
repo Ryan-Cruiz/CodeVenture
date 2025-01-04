@@ -12,10 +12,12 @@ class Code extends model {
         // )
         // let result = await super.Rawquery(query)
         // 
-        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask']).
-            values([lesson_id, inputs.title, content, inputs.isTask]).exec()
+        let queryLastLessonId = await this.select('levels', ['*']).where(['lesson_id=?']).order('order_number', 'ASC').values([inputs.lesson_id]).exec();
+        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask', 'order_number']).
+            values([inputs.lesson_id, inputs.title, inputs.description, inputs.isTask, ((parseInt(inputs.afterLessonNumber) + 1) || queryLastLessonId.length + 1)]).exec();
+        // console.log(result);
+        await this.updateOrderNumber(afterLessonNumber, result.insertId, inputs, queryLastLessonId)
         console.log(result)
-
         return 'success'
     }
     async updateCode(inputs, content, level_id) {
@@ -30,7 +32,40 @@ class Code extends model {
 
         return 'success'
     }
+    async updateOrderNumber(afterLessonNumber, id, inputs, queryLastLessonId) {
+        // console.log(inputs.afterLessonNumber == "", "sajdkasjdksajdksa", afterLessonNumber == NaN);
+        this.dbConnection();
+        let queryOutput = "INSERT INTO levels(lesson_id,id,order_number) VALUES ";
+        // console.log(afterLessonNumber, queryLastLessonId.length)
+        if (inputs.afterLessonNumber == "") {
+            return
+        }
+        let lessonNumber = parseInt(inputs.afterLessonNumber);
+        let newNumber = afterLessonNumber + 1;
+        for (let i = parseInt(inputs.afterLessonNumber) - 1; i <= queryLastLessonId.length; i++) {
+            if (i >= queryLastLessonId.length && id == queryLastLessonId[i - 1].id) {
+                // console.log('hwet')
+                queryOutput += `(${inputs.lesson_id},${id},${parseInt(inputs.afterLessonNumber) + 1}) ON DUPLICATE KEY UPDATE order_number = VALUES(order_number)`;
+            } else if (i >= queryLastLessonId.length) {
+                // console.log('hwetasgasgasg', id, queryLastLessonId[i - 1].id, id == queryLastLessonId[i - 1].id)
+                if (queryLastLessonId[i - 1].order_number == lessonNumber) {
+                    queryOutput += `(${inputs.lesson_id},${queryLastLessonId[i - 1].id},${queryLastLessonId[i - 1].order_number}) ON DUPLICATE KEY UPDATE order_number = VALUES(order_number)`
+                } else {
+                    queryOutput += `(${inputs.lesson_id},${queryLastLessonId[i - 1].id},${newNumber++}) ON DUPLICATE KEY UPDATE order_number = VALUES(order_number)`
+                }
+            } else {
+                // console.log(newNumber >= queryLastLessonId[i].order_number, newNumber < queryLastLessonId.length + 1, lessonNumber, queryLastLessonId[i].order_number, queryLastLessonId.length, newNumber)
+                if (lessonNumber < queryLastLessonId[i].order_number && newNumber < queryLastLessonId.length + 1) {
+                    queryOutput += `(${inputs.lesson_id},${queryLastLessonId[i].id},${newNumber++}),`
+                    // console.log(queryOutput, 'asdsa');
+                }
 
+            }
+        }
+        let queryRes = await super.Rawquery(queryOutput);
+        this.connection.destroy();
+        console.log(queryOutput);
+    }
 
     async level_validate(inputs) {
         const form = this.Validation

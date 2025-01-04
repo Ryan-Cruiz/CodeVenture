@@ -1,5 +1,6 @@
 <%- include('../shared/header') %>
     <div class="container">
+        <a href="/lesson/<%=lesson_id%>" class="btn btn-secondary">Back</a>
         <h2>New Material</h2>
         <%- include('../shared/partials/alert') %>
         <form action="/create_material" method="post" id="create_material">

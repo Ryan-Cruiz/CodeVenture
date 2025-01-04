@@ -1,17 +1,25 @@
 <%- include('../shared/header') %>
     <style>
-        .CodeMirror {
-            height: 100vh !important;
-            border: 0px !important;
+        @media only screen and (min-width:1024px) {
+            .CodeMirror {
+                height: 100vh !important;
+                border: 0px !important;
+            }
         }
     </style>
+    <% var next = "",prev = ""; %>
     <div class="d-flex level-container">
-        <div class="p-2 sidebar" style="overflow:scroll;height: 100vh;">
+        <div class="p-2 sidebar d-none d-lg-block">
             <div class="list-group">
-                <% lists.forEach(list=> { %>
+                <a href="/lesson/<%=data[0].lesson_id%>" class="text-start list-group-item active bg-secondary border-0 list-group-item-action btn btn-transparent mt-1">Back</a>
+                <% lists.forEach((list,i)=> { %>
                     <% if(list.id==data[0].id) { %>
                         <div class="list-group-item active mt-1 rounded">
                             <%= list.level_name %>
+                            <% 
+                                if(lists[i - 1] != undefined) prev = lists[i - 1].id;
+                                if(lists[i + 1] != undefined) next = lists[i + 1].id;
+                            %>
                         </div>
                         <% } else { %>
                             <a href="/material/<%=list.lesson_id%>/level/<%=list.id%>"
@@ -41,6 +49,16 @@
                 <span class="text-white fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
             </div>
                     <% if(data[0].isTask=='0' ) { %>
+                    <div class="mb-2 <%= (next != "" && prev == "") ? "text-end" : ""%>">
+                        <% if(prev != "") { %>
+                            <a href="/material/<%= data[0].lesson_id %>/level/<%= prev %>" class="btn btn-secondary float w-25">Prev</a>
+                        <% } %>
+                        <% if(next != "" && prev == "" ) { %>
+                            <a href="/material/<%= data[0].lesson_id %>/level/<%= next %>" class="btn btn-secondary w-25">Next</a>
+                        <% }else if(next != ""){ %>
+                            <a href="/material/<%= data[0].lesson_id %>/level/<%= next %>" class="btn btn-secondary float-end w-25">Next</a>
+                        <% } %>
+                    </div>
                     <textarea id="previewMode"><%= data[0].content %></textarea>
                     <% }else if(data[0].isTask=='1'){ %>
                     <% let n = JSON.parse(data[0].content).length;
@@ -58,14 +76,21 @@
                         }
                     }
                     %>
+                    <div class="mb-2">
+                        <a href="/material/<%= data[0].lesson_id %>/level/<%= prev %>" class="btn btn-secondary float w-25">Prev</a>
+                        <a href="/material/<%= data[0].lesson_id %>/level/<%= next %>" class="btn btn-secondary float-end w-25">Next</a>
+                    </div>
                     <form action="/submit/task/<%=data[0].lesson_id%>/<%= data[0].id %>" method="post">
                         <input type="hidden" value="<%=arr%>" name="numberArr">
-                        <%JSON.parse(data[0].content).forEach((item,i)=> { %>
+                        <input type="hidden" name="isRetake" value="<%= isRetake == "retake" ? 1 : 0 %>">
                         <div class="container" id="question-container">
+                        <%JSON.parse(data[0].content).forEach((item,i)=> { %>
                             <div class="mt-5 p-1 glass-container">
                                 <div class="m-2">
                                     <label>Question</label>
-                                    <pre><%= JSON.parse(data[0].content)[arr[i]].question %></pre>
+                                    <p>
+                                        <%= JSON.parse(data[0].content)[arr[i]].question %>
+                                    </p>
                                 </div>
                                 <div class="choice-container m-2" aria-value="0">
                                 <% JSON.parse(data[0].content)[arr[i]].choices.forEach((choice)=> { %>
@@ -81,8 +106,8 @@
                                 <% }); %>
                                 </div>
                             </div>
+                            <% }); %>
                         </div>
-                        <% }); %>
                         <div class="m-4">
                             <input type="submit" class="mb-2 btn btn-danger float-end w-25"
                                 value="Submit">

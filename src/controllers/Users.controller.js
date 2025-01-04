@@ -79,7 +79,7 @@ class Users {
             // register the user
             let createProcess = await user.create_process($.req.body);
             // console.log(data)
-            if (createProcess != 'fail') {
+            if (createProcess == 'success') {
                 // let data = createProcess[0];
                 // $.req.session.logged = true;
                 // $.req.session.user_data = { name: data.first_name, user_id: data.user_id };

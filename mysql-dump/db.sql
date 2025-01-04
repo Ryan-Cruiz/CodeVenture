@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `lessons` (
   `role_id` INT NOT NULL,
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
+  `img_link` VARCHAR(255) NULL,
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),

@@ -1,14 +1,14 @@
 <%- include('../shared/header') %>
     <div class="d-flex level-container">
-        <div class="p-2 sidebar">
+        <div class="p-2 sidebar d-none d-lg-block">
             <div class="list-group">
                 <% lists.forEach(list=> { %>
                     <a href="/material/<%=list.lesson_id%>/level/<%=list.id%>"
-                        class="text-start list-group-item list-group-item-action btn btn-transparent">
+                        class="text-start list-group-item list-group-item-action btn btn-transparent mt-1">
                         <%= list.level_name %>
                     </a>
                     <% }); %>
-                        <div class="list-group-item active">
+                        <div class="list-group-item active mt-1 rounded">
                             Feedback
                         </div>
             </div>
