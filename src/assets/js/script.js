@@ -85,4 +85,8 @@ $(document).ready(function () {
         $('#create_task').attr('href',`/new_level/${lesson_id}/task?after=`+selectedAfterId)
         $('#create_material').attr('href',`/new_level/${lesson_id}/material?after=`+selectedAfterId);
     })
+    $(document).on('submit','.submit-form',function(){
+        $(this).find(':input[type=submit]').attr('disabled',true)
+        $(this).find(':input[type=submit]').val('Processing...')
+    })
 });

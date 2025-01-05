@@ -149,8 +149,10 @@ class ORM {
             this.connection.query(this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
                 // this.connection.end();
                 //  this.profiler.queries(query,rows);
-                // if (err) {
-                //     reject(fase);
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
                 // } else {
                 //     this.queries = '';
                 //     this.select_tbl = '';

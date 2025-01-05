@@ -10,7 +10,8 @@ class Platforms {
         // console.log($.res.locals)
         let materials_res = await Level.getMaterials($.req.params.id);
         // console.log(materials_res);
-        $.res.render('platform/index', { data: materials_res });
+        let lessonTitle = await Platform.getLessonTitle($.req.params.id);
+        $.res.render('platform/index', { data: materials_res, lessonTitle: lessonTitle[0].title });
     }
     /**LESSON */
     async create_lesson() {
@@ -24,6 +25,12 @@ class Platforms {
             $.res.redirect('/');
         }
         // console.log($.req.body);
+    }
+    async show_quiz_history() {
+        $.res.locals.params = $.req.params;
+        console.log($.req.session.user_data)
+        let res = await Platform.getUserTaskHistory($.req.params, $.req.session.user_data.user_id)
+        $.res.render('platform/showHistory', { data: res })
     }
     async edit_lesson() {
         console.log($.req.body);

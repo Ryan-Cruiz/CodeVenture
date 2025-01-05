@@ -133,14 +133,14 @@ class Levels {
                 correct++;
             }
         }
-        console.log(correct,'score');
-        let content = { answers: $.req.body.answers, score: correct,isRetake: $.req.body.isRetake };
+        console.log(correct, 'score');
+        let content = { answers: $.req.body.answers, score: correct, isRetake: $.req.body.isRetake, totalQuestion: questions.length };
         let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
         // console.log(answers.toString())
         console.log(saveTaskAnswers);
         $.req.session.score = correct;
         // $.res.send($.req.body)
-        $.res.redirect(`/lesson/${inputs.id}`);
+        $.res.redirect(`/material/${inputs.id}/level/${inputs.level_id}/score`);
     }
     async task_answers() {
         let getTask = await Level.getTaskAnswer($.req.params);
@@ -148,8 +148,11 @@ class Levels {
         $.res.locals.params = $.req.params;
         $.res.render('level/showAnswers', { users_answers: getTask });
     }
-    async show_quiz_history() {
-        $.res.send("History!")
+    async taskScore() {
+        console.log($.req.params);
+        let res = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+        $.res.locals.params = $.req.params;
+        $.res.render('level/showScore', { data: res });
     }
 }
 function arrayToJson(questionLen, questions, answers, questionChoices, description) {

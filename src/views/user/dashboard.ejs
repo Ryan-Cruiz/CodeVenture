@@ -53,7 +53,7 @@
     <!-- Modal for Creating Lesson -->
     <div class="modal fade" id="createLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="createLessonLabel" aria-hidden="true">
-        <form class="modal-dialog modal-dialog-centered" action="/create_lesson" method="post">
+        <form class="modal-dialog modal-dialog-centered submit-form" action="/create_lesson" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createLessonLabel">Create Lesson</h5>
@@ -61,15 +61,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
+                        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                         <input type="text" name="title" id="title" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="img_link" class="form-label">Image Link</label>
-                        <input type="text" name="img_link" id="img_link" class="form-control" required>
+                        <input type="text" name="img_link" id="img_link" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
                         <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
     <!-- Modal for Editing Lesson -->
     <div class="modal fade" id="editLesson" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="editLessonLabel" aria-hidden="true">
-        <form class="modal-dialog modal-dialog-centered" action="/edit_lesson" method="post">
+        <form class="modal-dialog modal-dialog-centered submit-form" action="/edit_lesson" method="post" >
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editLessonLabel">Edit Lesson</h5>
@@ -92,15 +92,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
+                        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                         <input type="text" name="title" id="editTitle" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="img_link" class="form-label">Image Link</label>
-                        <input type="text" name="img_link" id="editImg_link" class="form-control" required>
+                        <input type="text" name="img_link" id="editImg_link" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
                         <textarea class="form-control" id="editDescription" name="description" rows="3" required></textarea>
                         <input type="hidden" name="lesson_id" id="lesson_id">
                     </div>
@@ -129,8 +129,11 @@
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease-in-out;
     }
-
+    .card:hover{
+        transform: translateY(-3px);
+    }
     .lesson-btn:hover {
+        transition: transform 0.3s ease-in-out;
         transform: translateY(-5px);
     }
     .card-img-top {

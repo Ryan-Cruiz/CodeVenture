@@ -36,18 +36,19 @@
                     Level</a>
                 <% if(data[0].isTask == '1') { %>
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
-                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/history" class="btn btn-secondary">History</a>
-                <span class="float-end">/5</span>
                 <% } %>
             <% } %>
-            <div class="container" id="question-container">
-                <div>
-                    <span class="text-white fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
-                </div>
-                <div class="mb-2">
-                    <a href="/material/<%= data[0].lesson_id %>/level/<%= prev %>" class="btn btn-secondary float w-25">Prev</a>
-                    <a href="/material/<%= data[0].lesson_id %>/level/<%= next %>" class="btn btn-secondary float-end w-25">Next</a>
-                </div>
+            <% if(data[0].isTask == '1') { %>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/history" class="btn btn-secondary">History</a>
+            <% } %>
+            <div>
+                <span class="text-white fs-6 p-2">Updated @ <%= new Date(data[0].updated_at).toLocaleDateString() %></span>
+            </div>
+            <div class="mb-2">
+                <a href="/material/<%= data[0].lesson_id %>/level/<%= prev %>" class="btn btn-secondary float w-25">Prev</a>
+                <a href="/material/<%= data[0].lesson_id %>/level/<%= next %>" class="btn btn-secondary float-end w-25">Next</a>
+            </div>
+            <div class="container level-content" id="question-container">
                 <%JSON.parse(data[0].content).forEach((item,i)=> { %>
                     <div class="mt-5 p-1 glass-container">
                         <div class="m-2">

@@ -25,6 +25,7 @@ middleware.routeRole = {
             '/material/:lesson_id/feedback/submit',
             '/submit/codeTask/:lesson_id/:level_id',
             '/material/:id/level/:level_id/history',
+            '/material/:id/level/:level_id/score'
         ],
     "guest": ['/createAccount', '/register', '/login','/home','/success','/failure'],
     "admin": [
@@ -86,8 +87,9 @@ $.post['/submit/task/:lesson_id/:id'] = LevelsController.submit_task;
 
 
 $.get['/material/:id/level/:level_id/answers'] = LevelsController.task_answers;
-$.get['/material/:id/level/:level_id/history'] = LevelsController.show_quiz_history;
+$.get['/material/:id/level/:level_id/history'] = PlatformsController.show_quiz_history;
 $.get['/material/:id/level/:level_id/preview'] = LevelsController.previewTask;
+$.get['/material/:id/level/:level_id/score'] = LevelsController.taskScore;
 /* END OF LEVELCONTROLLER */
 $.get['/material/:lesson_id/feedback'] = FeedbacksController.index;
 $.post['/material/:lesson_id/feedback/submit'] = FeedbacksController.add_feedback;

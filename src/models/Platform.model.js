@@ -14,6 +14,17 @@ class Platform extends model {
         return validation;
 
     }
+    async getLessonTitle(id){
+        let lessonTitle = await this.select('lessons',['title']).where(['id=?']).values([id]).exec();
+        return lessonTitle 
+    }
+    async getUserTaskHistory(inputs,user_id){
+        let queryTaskHistory = await this.select('task_answers',['task_answers.*','credentials.first_name','credentials.last_name'])
+        .left('credentials',['user_id','user_id'])
+        .where(['lesson_id=?',this.and('task_id=?'),this.and('task_answers.user_id=?')])
+        .values([inputs.id,inputs.level_id,user_id]).exec();
+        return queryTaskHistory;
+    }
     async edit_lesson(inputs) {
 
         let validation = await this.lesson_validate(inputs);

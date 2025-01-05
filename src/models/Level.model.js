@@ -50,7 +50,6 @@ class Level extends model {
             }
         }
         let queryRes = await super.Rawquery(queryOutput);
-        this.connection.destroy();
         console.log(queryOutput);
     }
     async getLevel(inputs) {
@@ -58,7 +57,8 @@ class Level extends model {
         return query;
     }
     async getMaterials(id) {
-        let query = await this.select('levels', ["id,lesson_id,level_name,order_number"])
+        let query = await this.select('levels', ["levels.id,lesson_id,level_name,order_number,isTask,lessons.title"])
+            .inner('lessons',['id','lesson_id'])
             .where(['lesson_id=?']).order('order_number', 'ASC').values([id]).exec();
         return query
     }
@@ -114,7 +114,7 @@ class Level extends model {
         return 'success'
     }
     async getTaskAnswer(params) {
-        let query = await this.select("task_answers", ["*"]).inner('credentials', ['id', 'user_id']).where(["task_id=?", this.and("lesson_id=?")]).values([params.level_id, params.id]).exec();
+        let query = await this.select("task_answers", ["task_answers.*",'credentials.first_name','credentials.last_name']).inner('credentials', ['id', 'user_id']).where(["task_id=?", this.and("lesson_id=?")]).values([params.level_id, params.id]).exec();
         return query
     }
     async getUserAnswer(params, user_id) {

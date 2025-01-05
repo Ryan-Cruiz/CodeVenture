@@ -1,7 +1,17 @@
 <%- include('../shared/header') %>
-<%- include('../shared/partials/alert') %>
+<style>
+    .card:hover{
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+</style>
+    <div class="bg-primary text-center p-3 text-white">
+        <h2><%= lessonTitle %></h2>
+    </div>
     <div class="container">
         <a class="btn btn-secondary" href="/">Back</a>
+        <%- include('../shared/partials/alert') %>
     </div>
     <% if(roles.indexOf('admin') !==-1) { %>
         <div class="container my-3 p-2">
@@ -45,13 +55,22 @@
                 </div>
                 <% } %>
                 <div class="container p-2">
-                    <h2>Levels:</h2>
+                    <div class="row">
                         <% data.forEach(item => { %>
-                                <a class="btn btn-primary m-2" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
-                                    <%= item.level_name %>
-                                </a>
-
+                            <div class="col-sm-6 col-md-4 mb-2 mb-md-2">
+                                <div class="card glass-container">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center"><%= item.level_name %></h5>
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-primary m-2 w-50" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
+                                                <%= item.isTask == 0 ? "See Topic" : "Take Quiz" %>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <% });%>
+                        </div>
 
             </div>
 

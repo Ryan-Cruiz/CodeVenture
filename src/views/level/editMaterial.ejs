@@ -4,7 +4,7 @@
         <h2 class="text-white">Edit <%= data[0].isTask == '0' ? "Material" : data[0].isTask == '1' ? "Task" : "Code" %></h2>
         <%- include('../shared/partials/alert') %>
         <% if(data[0].isTask=='0' ){ %>
-            <form action="/edit_material/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="update_material">
+            <form action="/edit_material/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="update_material" class="submit-form">
                 <div class="text-end mb-3">
                     <input type="submit" value="Update" class="btn btn-danger w-25">
                 </div>
@@ -18,7 +18,7 @@
                 <textarea class="form-control" id="MyID" name="description"><%= data[0].content %></textarea>
             </form>
             <% } else if(data[0].isTask=='1' ) {%>
-                <form action="/edit_task/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" id="update_task">
+                <form action="/edit_task/<%= data[0].lesson_id %>/<%= data[0].id %>" method="post" class="submit-form" id="update_task">
                     <div class="text-end mb-3">
                         <input type="submit" value="Update" class="btn btn-danger w-25">
                         <input type="hidden" name="isTask" value="<%= data[0].isTask %>">

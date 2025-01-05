@@ -1,0 +1,24 @@
+<%- include('../shared/header') %>
+<div class="container">
+    <a href="/material/<%= params.id %>/level/<%= params.level_id %>" class="btn btn-secondary">Back</a>
+    <table class="table table-light rounded table-striped mt-2 table-hover">
+        <thead>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Retake</th>
+            <th>Taken At</th>
+        </thead>
+        <tbody>
+            <% data.forEach(answers =>{ %>
+                <tr>
+                    <td><%= answers.first_name %> <%= answers.last_name %></td>
+                    <td><%= JSON.parse(answers.answers).score %></td>
+                    <td><%- JSON.parse(answers.answers).isRetake == "1" ? "<span class='badge text-bg-success'>Yes</span>" : "<span class='badge text-bg-secondary'>No</span>" %></td>
+                    <td><%= new Date(answers.created_at).toLocaleDateString() %></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+
+</div>
+<%- include('../shared/footer') %>

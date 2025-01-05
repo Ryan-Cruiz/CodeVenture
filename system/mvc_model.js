@@ -39,13 +39,25 @@ module.exports = class mvc_model extends ORM {
     Rawquery(query, arrVal = []) {
         return new Promise((resolve, reject) => {
             this.dbConnection();
+            this.connection.getConnection(function (err) {
+                if (err) {
+                    this.connection.rollback();
+                    this.connection.end();
+                    throw err;
+                }
+                console.log("SQL POOL CONNECTED RAW")
+            })
             const databaseType = this.CONFIG.db_type;
             this.connection.query(databaseType === 'pg' ? query : arrVal.length > 0 ? this.sql.format(query, arrVal) : this.sql.format(query), (err, rows) => {
-                this.connection.release();
-                if (err) reject(err);
+                this.connection.end();
                 this.profiler.query_result = rows;
                 resolve(rows);
-                this.connection.destroy();
+            });
+            this.connection.on('error', function (err) {
+                this.connection.rollback();
+                this.connection.end();
+                reject(err)
+                throw err;
             });
         });
     }

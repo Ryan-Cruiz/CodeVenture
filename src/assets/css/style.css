@@ -70,12 +70,15 @@ header .navbar ul li a {
 header .navbar ul li a:hover {
   color: #1e88e5;
 }
-
+.level-content{
+  height: 85%;
+  overflow-y: scroll;
+}
 .sidebar {
   width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 100vh;
+  /* height: ; */
 
 }
 /* width */

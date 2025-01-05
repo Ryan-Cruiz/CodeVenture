@@ -1,0 +1,45 @@
+<%- include('../shared/header') %>
+    <style>
+        .container {
+            height: 90vh;
+        }
+        .glass-container{
+            height: 500px;
+            width: 400px;
+        }
+        .center{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .circle{
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #04384A, #00b6c7, #017b8c);
+            border-radius: 50%;
+        }
+        .score{
+            font-size: 5rem;
+        }
+    </style>
+    <% let user = JSON.parse(data[0].answers), score = user.score , overall = user.totalQuestion, rating = Math.floor(overall / 2) %>
+    <div class="container center">
+        <div class="glass-container center">
+            <h3 class="mb-5 fw-bold">YOUR RESULT</h3>
+            <div class="circle center text-white mb-5">
+                <h3 class="score"><%= score %></h3>
+                <p>out of <%= overall %></p>
+            </div>
+            <% if(score == 0) { %>
+                <p class="fs-4 fw-bold">BETTER LUCK NEXT TIME</p>
+            <% } else if(rating <= score) { %>
+                <p class="fs-4 fw-bold">EXCELLENT</p>
+            <% } else { %>
+                <p class="fs-4 fw-bold">GOOD JOB</p>
+            <% } %>
+            <a href="/material/<%=params.id%>/level/<%= params.level_id %>?event=retake" class="btn btn-danger rounded-pill w-50">Retake</a>
+            <a href="/material/<%=params.id%>/level/<%= params.level_id %>" class="btn btn-success rounded-pill w-50">Continue</a>
+        </div>
+    </div>
+<%- include('../shared/footer') %>

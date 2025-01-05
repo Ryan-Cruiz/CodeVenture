@@ -3,7 +3,7 @@
         <a href="/lesson/<%=lesson_id%>" class="btn btn-secondary">Back</a>
         <h2>New Material</h2>
         <%- include('../shared/partials/alert') %>
-        <form action="/create_material" method="post" id="create_material">
+        <form action="/create_material" method="post" id="create_material" class="submit-form">
             <div class="text-end mb-3">
                 <input type="submit" value="Create" class="btn btn-danger w-25">
                 <input type="hidden" name="afterLessonNumber" value="<%= afterLessonNumber%>">
