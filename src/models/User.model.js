@@ -4,7 +4,7 @@ class User extends model {
     // Create something 
     async login_process(form_input) {
         let result = await this.select('users', ['*']).left('roles', ['user_id', 'id']).inner('credentials', ['user_id', 'id']).where(['email=?']).values([form_input.email.toLowerCase()]).exec();
-        // console.log(result);
+        console.log(result);
         if (result == undefined) return 'notexist';
         try {
             if (await this.bcrypt.compare(form_input.password, result[0].password) == false) {
@@ -55,11 +55,12 @@ class User extends model {
     async login_validate(form_input) {
         const form = this.Validation;
         form.validate['email'] = { form_data: form_input.email, rules: ['required', 'email'] };
-        form.validate['password'] = { form_data: form_input.password, rules: ['required', 'min_length[8]'] };
+        form.validate['password'] = { form_data: form_input.password, rules: ['required'] };
 
         if (form.run().length > 0) {
             return form.run();
         } else {
+            this.Validation.validate = {};
             return 'success'
         }
     }
@@ -74,6 +75,7 @@ class User extends model {
         if (form.run().length > 0) {
             return form.run();
         } else {
+            this.Validation.validate = {};
             return 'success';
         }
     }
