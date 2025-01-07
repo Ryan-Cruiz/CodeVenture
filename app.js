@@ -46,7 +46,7 @@ let sess = {
         client: db,
         expired: {
             clear: true,
-            intervalMs: 900000 //ms = 15min
+            intervalMs: 86400000 //ms = 1day
         }
     }),
 }

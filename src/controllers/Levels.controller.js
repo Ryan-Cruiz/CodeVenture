@@ -54,7 +54,11 @@ class Levels {
         $.res.locals.lesson_id = $.req.params.lesson_id;
         let res = await Level.getLevel($.req.params);
         console.log(res)
-        $.res.render('level/editMaterial', { data: res });
+        if (res.length <= 0) {
+            $.res.status(404).render('404');
+        } else {
+            $.res.render('level/editMaterial', { data: res });
+        }
     }
     async update_level() {
         // console.log($.req.body);
@@ -95,30 +99,37 @@ class Levels {
     async show_material() {
         let res = await Level.getLevel($.req.params);
         // console.log(res, typeof JSON.parse(res[0].content));
-        // $.res.locals.params = $.req.params;
-        let listRes = await Level.getMaterials($.req.params.id);
-        let answers = "";
-        console.log(res);
-        if (res[0].isTask == 1) {
-            answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
-        }
-        // console.log($.req.query);
-        if (answers.length == 0 || $.req.query.event == "retake") {
-            $.res.render('level/showLevel', { data: res, lists: listRes, isRetake: $.req.query.event });
+        if (res == undefined || res.length <= 0) {
+            $.res.status(404).render('404');
         } else {
-            $.res.redirect(`/material/${$.req.params.id}/level/${$.req.params.level_id}/preview`);
+            // $.res.locals.params = $.req.params;
+            let listRes = await Level.getMaterials($.req.params.id);
+            let answers = "";
+            console.log(res);
+            if (res[0].isTask == 1) {
+                answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+            }
+            // console.log($.req.query);
+            if (answers.length == 0 || $.req.query.event == "retake") {
+                $.res.render('level/showLevel', { data: res, lists: listRes, isRetake: $.req.query.event });
+            } else {
+                $.res.redirect(`/material/${$.req.params.id}/level/${$.req.params.level_id}/preview`);
+            }
         }
-
     }
     async previewTask() {
         let res = await Level.getLevel($.req.params);
         // console.log(res, typeof JSON.parse(res[0].content));
         console.log($.req.params);
-        // $.res.locals.params = $.req.params;
-        let listRes = await Level.getMaterials($.req.params.id);
-        let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
-        console.log(JSON.parse(answers[0].answers));
-        $.res.render('level/previewTask', { data: res, lists: listRes, answers: JSON.parse(answers[0].answers).answers });
+        if (res.length <= 0) {
+            $.res.status(404).render('404');
+        } else {
+            // $.res.locals.params = $.req.params;
+            let listRes = await Level.getMaterials($.req.params.id);
+            let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
+            console.log(JSON.parse(answers[0].answers));
+            $.res.render('level/previewTask', { data: res, lists: listRes, answers: JSON.parse(answers[0].answers).answers });
+        }
     }
     async submit_task() {
         let inputs = { id: $.req.params.lesson_id, level_id: $.req.params.id, user_id: $.req.session.user_data.user_id };
@@ -145,14 +156,22 @@ class Levels {
     async task_answers() {
         let getTask = await Level.getTaskAnswer($.req.params);
         // console.log(getTask);
-        $.res.locals.params = $.req.params;
-        $.res.render('level/showAnswers', { users_answers: getTask });
+        if (getTask.length <= 0) {
+            $.res.status(404).render('404');
+        } else {
+            $.res.locals.params = $.req.params;
+            $.res.render('level/showAnswers', { users_answers: getTask });
+        }
     }
     async taskScore() {
         console.log($.req.params);
         let res = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
         $.res.locals.params = $.req.params;
-        $.res.render('level/showScore', { data: res });
+        if (res.length <= 0) {
+            $.res.status(404).render('404');
+        } else {
+            $.res.render('level/showScore', { data: res });
+        }
     }
 }
 function arrayToJson(questionLen, questions, answers, questionChoices, description) {

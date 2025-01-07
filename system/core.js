@@ -47,6 +47,9 @@ class route_path {
             }, this.destroy[destroy[i]]);
             this.routes.push(destroy[i]);
         }
+        Router.get('*', function (req, res) {
+            res.status(404).render('404');
+        });
         return Router;
     }
     middlewareRoleChecker(req, res, next, currentURL) {

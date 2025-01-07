@@ -37,7 +37,7 @@ class Users {
             // console.log(data.first_name, 'this is data');
             // console.log(res, 'login res');
             if (res == 'fail') { // check if not
-                $.req.session.msg = { error: ['Wrong Password'] }; // get the result as a array of message
+                $.req.session.msg = { error: ['Invalid Email or Password'] }; // get the result as a array of message
                 $.res.redirect('/');
                 $.res.end();
             } else if (res == 'notexist') {

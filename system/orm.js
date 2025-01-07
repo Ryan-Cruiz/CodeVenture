@@ -140,7 +140,6 @@ class ORM {
             // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
             this.connection.getConnection(function (err) {
                 if (err) {
-                    this.connection.rollback();
                     this.connection.end();
                     throw err;
                 }
