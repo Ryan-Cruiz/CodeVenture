@@ -31,22 +31,27 @@ class User extends model {
     }
 
     async create_process(form_input) {
-        let result = await this.email_validate(form_input);
-        // console.log(result)
-        if (result != 'fail') {
-            let hashPass = await this.bcrypt.hash(form_input.password, 10);
-            let userQuery = this.insert('users', ['email', 'password']).values([form_input.email.toLowerCase(), hashPass]).exec();
-            let lastData = await userQuery;
-            // console.log(lastData.insertId, lastData, 'sadksaldksaldksa')
-            let credQuery = await this.insert('credentials', ['first_name', 'last_name', 'user_id']).values([form_input.firstName, form_input.lastName, lastData.insertId]).exec();
-
-            if (lastData.insertId == 1) {
-                let roleQuery = await this.insert('roles', ['roles', 'user_id',]).values([["admin"].toString(), lastData.insertId]).exec();
+        try{
+            let result = await this.email_validate(form_input);
+            // console.log(result)
+            if (result != 'fail') {
+                let hashPass = await this.bcrypt.hash(form_input.password, 10);
+                let userQuery = this.insert('users', ['email', 'password']).values([form_input.email.toLowerCase(), hashPass]).exec();
+                let lastData = await userQuery;
+                // console.log(lastData.insertId, lastData, 'sadksaldksaldksa')
+                let credQuery = await this.insert('credentials', ['first_name', 'last_name', 'user_id']).values([form_input.firstName, form_input.lastName, lastData.insertId]).exec();
+    
+                if (lastData.insertId == 1) {
+                    let roleQuery = await this.insert('roles', ['roles', 'user_id',]).values([["admin"].toString(), lastData.insertId]).exec();
+                }
+    
+                return 'success'
+            } else {
+    
+                return 'fail';
             }
-
-            return 'success'
-        } else {
-
+        }catch(e){
+            console.log(e)
             return 'fail';
         }
 

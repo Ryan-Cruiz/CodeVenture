@@ -138,46 +138,50 @@ class ORM {
         this.dbConnection();
         return new Promise((resolve, reject) => {
             // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
-            this.connection.getConnection(function (err) {
-                if (err) {
-                    this.connection.end();
-                    throw err;
-                }
-                console.log("SQL POOL CONNECTED")
-            })
-            this.connection.query(this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
-                // this.connection.end();
-                //  this.profiler.queries(query,rows);
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                }
-                // } else {
-                //     this.queries = '';
-                //     this.select_tbl = '';
-                //     this.arrVal = [];
-                //     resolve(rows);
-                // }
-                this.connection.on('error', function (err) {
-                    this.connection.rollback();
-                    this.connection.end();
-                    reject(err)
-                    throw err;
+            try {
+                this.connection.getConnection(function (err) {
+                    if (err) {
+                        this.connection.end();
+                        throw err;
+                    }
+                    console.log("SQL POOL CONNECTED")
+                })
+                this.connection.query(this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
+                    // this.connection.end();
+                    //  this.profiler.queries(query,rows);
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    // } else {
+                    //     this.queries = '';
+                    //     this.select_tbl = '';
+                    //     this.arrVal = [];
+                    //     resolve(rows);
+                    // }
+                    this.connection.on('error', function (err) {
+                        this.connection.rollback();
+                        this.connection.end();
+                        reject(err)
+                        throw err;
+                    });
+                    setTimeout(() => {
+                        // console.log(rows,err)
+                        resolve(rows);
+                        this.queries = '';
+                        this.select_tbl = '';
+                        this.arrVal = [];
+                        console.log('Connection End')
+                        // this.connection.destroy();
+                        this.connection.end();
+                    }, 300);
                 });
-                setTimeout(() => {
-                    // console.log(rows,err)
-                    resolve(rows);
-                    this.queries = '';
-                    this.select_tbl = '';
-                    this.arrVal = [];
-                    console.log('Connection End')
-                    // this.connection.destroy();
-                    this.connection.end();
-                }, 300);
-            });
-            // console.log(this.connection.query(this.sql.format('SELECT 1')));
-            // setTimeout(() => {
-            // }, 3000);
+                // console.log(this.connection.query(this.sql.format('SELECT 1')));
+                // setTimeout(() => {
+                // }, 3000);
+            } catch (e) {
+                console.log(e);
+            }
         });
     }
 }

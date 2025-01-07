@@ -3,12 +3,16 @@ const model = loader.model;
 class Platform extends model {
     // Create something 
     async create_lesson(inputs, role_id) {
-
         let validation = await this.lesson_validate(inputs);
-        if (validation == 'success') {
-            let lessonQuery = await this.insert('lessons', ['role_id', 'title', 'description','img_link']).
-                values([role_id, inputs.title, inputs.description,inputs.img_link]).exec();
-            return 'success';
+        try{
+
+            if (validation == 'success') {
+                let lessonQuery = await this.insert('lessons', ['role_id', 'title', 'description','img_link']).
+                    values([role_id, inputs.title, inputs.description,inputs.img_link]).exec();
+                return 'success';
+            }
+        }catch(e){
+            console.log(e)
         }
 
         return validation;
