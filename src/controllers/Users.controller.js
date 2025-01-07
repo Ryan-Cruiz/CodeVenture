@@ -31,7 +31,7 @@ class Users {
     }
     async login() {
         let result = await user.login_validate($.req.body); // get validate
-        console.log('wiwi',result,$.req.body);
+        // console.log('wiwi',result,$.req.body);
         if (result == 'success') {
             let res = await user.login_process($.req.body); // get the query
             // console.log(data.first_name, 'this is data');
