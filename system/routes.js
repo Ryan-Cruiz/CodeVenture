@@ -27,7 +27,7 @@ middleware.routeRole = {
             '/material/:id/level/:level_id/history',
             '/material/:id/level/:level_id/score'
         ],
-    "guest": ['/createAccount', '/register', '/login','/home','/success','/failure'],
+    "guest": ['/createAccount', '/register', '/loginAccount','/success','/failure','/login'],
     "admin": [
         '/settings',
         '/create_lesson',
@@ -49,16 +49,16 @@ middleware.routeRole = {
 }
 /* $.post is for the forms  if you want to get the data */
 /* START OF USERCONTROLLER */
-$.get['/'] = UserController.index; // index function
-$.post['/login'] = UserController.login;
+$.get['/login'] = UserController.index; // index function
+$.post['/loginAccount'] = UserController.login;
 $.post['/createAccount'] = UserController.createAccount;
 $.get['/register'] = UserController.register;
 $.get['/logout'] = UserController.logOut;
 // $.get['/dashboard'] = UserController.success;
 // $.get['/failure'] = UserController.fail; 
-$.get['/settings'] = UserController.settings;
+// $.get['/settings'] = UserController.settings;
 /* END OF USERCONTROLLER */
-
+$.get['/'] = UserController.homepage;
 /* START OF PLATFORMCONTROLLER */
 $.get['/lesson/:id'] = PlatformsController.index;
 $.post['/create_lesson'] = PlatformsController.create_lesson;
@@ -84,7 +84,6 @@ $.post['/edit_material/:lesson_id/:id'] = LevelsController.update_level;
 $.post['/create_task'] = LevelsController.create_task;
 $.post['/edit_task/:lesson_id/:id'] = LevelsController.update_level;
 $.post['/submit/task/:lesson_id/:id'] = LevelsController.submit_task;
-
 
 $.get['/material/:id/level/:level_id/answers'] = LevelsController.task_answers;
 $.get['/material/:id/level/:level_id/history'] = PlatformsController.show_quiz_history;

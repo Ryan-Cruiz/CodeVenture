@@ -38,11 +38,11 @@ class Users {
             // console.log(res, 'login res');
             if (res == 'fail') { // check if not
                 $.req.session.msg = { error: ['Invalid Email or Password'] }; // get the result as a array of message
-                $.res.redirect('/');
+                $.res.redirect('/login');
                 $.res.end();
             } else if (res == 'notexist') {
                 $.req.session.msg = { error: ['Invalid Email'] };
-                $.res.redirect('/');
+                $.res.redirect('/login');
                 $.res.end();
             } else {
                 let data = res[0];
@@ -67,7 +67,7 @@ class Users {
             // this.result = data; // reference the result to the data and render this.result on result.ejs
         } else {
             $.req.session.msg = { error: result };
-            $.res.redirect('/');
+            $.res.redirect('/login');
             $.res.end();
         }
     }
@@ -115,7 +115,7 @@ class Users {
             // guard against forms of session fixation
             $.req.session.regenerate(function (err) {
                 if (err) next(err)
-                $.res.redirect('/')
+                $.res.redirect('/login')
             })
         })
     }
@@ -123,7 +123,22 @@ class Users {
 
         $.res.render('user/settings', { config: config.database });
     }
-
+    async homepage() {
+        if (!$.req.session.logged) {
+            $.req.session.logged = false;
+            // this.result = [];
+            $.res.render('index');
+            // $.res.render('user/index');
+        } else {
+            // $.res.locals.user_data = {name: "developer", user_id: 27};
+            // console.log($.req.app.locals)
+            let res = await Platform.getLessons();
+            let data = res || [];
+            // console.log(data);
+            $.res.render('user/dashboard', { user: $.req.session.user_data, lessons: data });
+        }
+        $.res.end();
+    }
     // for google auth
     async success() {
         if ($.req.user) {
