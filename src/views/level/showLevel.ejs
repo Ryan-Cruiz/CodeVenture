@@ -42,8 +42,7 @@
                 <%= data[0].level_name %>
             </h2>
             <% if(roles.indexOf('admin') !==-1) { %>
-                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="align-middle btn btn-danger">Edit
-                    Level</a>
+                <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/edit" class="align-middle btn btn-danger">Edit</a>
                 <% if(data[0].isTask == '1') { %>
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
                 <% } %>

@@ -30,15 +30,22 @@ class Feedback extends model {
     }
     async getFeedback(lesson_id, user_id) {
 
-        let query = await this.select("feedbacks", ["feedbacks.id,feedbacks.user_id,feedbacks.lesson_id"]).inner("lessons", ['id', "lesson_id"])
-            .inner("users", ['id', 'user_id']).exec()
+        let query = await this.select("feedbacks", ["feedbacks.id,feedbacks.user_id,feedbacks.lesson_id"])
+            .inner("lessons", ['id', "lesson_id"])
+            .inner("users", ['id', 'user_id'])
+            .where(['feedbacks.lesson_id=?', this.and('feedbacks.user_id=?')])
+            .values([lesson_id, user_id]).exec()
 
         return query
     }
     async getFeedbacks(lesson_id) {
 
-        let query = await this.select("feedbacks", ["feedbacks.*,credentials.first_name,credentials.last_name"])
-            .inner("lessons", ['id', "lesson_id"]).inner("credentials", ['id', 'user_id']).order('created_at', 'DESC').exec()
+        let query = await this.select("feedbacks", 
+            ["feedbacks.*,credentials.first_name,credentials.last_name"])
+            .inner("lessons", ['id', "lesson_id"])
+            .inner("credentials", ['id', 'user_id'])
+            .where(['lesson_id=?']).values([lesson_id])
+            .order('created_at', 'DESC').exec()
 
         return query
     }

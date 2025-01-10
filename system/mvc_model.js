@@ -18,7 +18,11 @@ module.exports = class mvc_model extends ORM {
                 this.connection = new Pool(this.CONFIG.database);
             } else if (this.CONFIG.db_type === 'mysql') {
                 this.sql = require('mysql');
-                this.connection = this.sql.createPool(this.CONFIG.database);
+                try {
+                    this.connection = this.sql.createConnection(this.CONFIG.database);
+                } catch (e) {
+                    console.log(e,'dbConnection')
+                }
             }
         } catch (e) {
             console.log(e);
@@ -42,9 +46,10 @@ module.exports = class mvc_model extends ORM {
                 this.dbConnection();
                 this.connection.getConnection(function (err) {
                     if (err) {
-                        this.connection.rollback();
-                        this.connection.end();
-                        throw err;
+                        this.connection.destroy();
+                        console.log('error connecting. retrying in 1 sec');
+                        setTimeout(this.Rawquery(), 1000);
+                        // throw err;
                     }
                     console.log("SQL POOL CONNECTED RAW")
                 })
@@ -56,9 +61,9 @@ module.exports = class mvc_model extends ORM {
                 });
                 this.connection.on('error', function (err) {
                     this.connection.rollback();
-                    this.connection.end();
+                    this.connection.destroy();
                     reject(err)
-                    throw err;
+                    // throw err;
                 });
             } catch (e) {
                 console.log(e);

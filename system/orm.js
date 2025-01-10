@@ -135,35 +135,28 @@ class ORM {
     }
     exec() {
         // console.log(this.queries,'exec funct'); // debugger console
-        this.dbConnection();
+        // this.dbConnection();
         return new Promise((resolve, reject) => {
             // console.log(this.arrVal.length > 0 ? [this.queries,this.arrVal] : this.queries,'from exec')
+            this.dbConnection();
+            console.log("SQL POOL CONNECTED")
             try {
-                this.connection.getConnection(function (err) {
-                    if (err) {
-                        this.connection.end();
-                        throw err;
-                    }
-                    console.log("SQL POOL CONNECTED")
-                })
+                // console.log(this.connection.query(this.sql.format('SELECT 1')));
                 this.connection.query(this.arrVal.length > 0 ? this.sql.format(this.queries, this.arrVal) : this.sql.format(this.queries), (err, rows) => {
-                    // this.connection.end();
+                    this.connection.destroy();
                     //  this.profiler.queries(query,rows);
                     if (err) {
-                        console.log(err);
+                        this.connection.destroy();
+                        console.log('error connecting. retrying in 1 sec');
+                        setTimeout(this.exec(), 1000);
+                        // throw err;
                         reject(err);
                     }
-                    // } else {
-                    //     this.queries = '';
-                    //     this.select_tbl = '';
-                    //     this.arrVal = [];
-                    //     resolve(rows);
-                    // }
                     this.connection.on('error', function (err) {
                         this.connection.rollback();
                         this.connection.end();
                         reject(err)
-                        throw err;
+                        // throw err;
                     });
                     setTimeout(() => {
                         // console.log(rows,err)
@@ -173,7 +166,7 @@ class ORM {
                         this.arrVal = [];
                         console.log('Connection End')
                         // this.connection.destroy();
-                        this.connection.end();
+                        // this.connection.end();
                     }, 300);
                 });
                 // console.log(this.connection.query(this.sql.format('SELECT 1')));

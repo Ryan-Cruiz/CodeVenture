@@ -86,23 +86,10 @@ app.use((req, res, next) => {
     /* deliver all this on profiler.js and fetch it on mvc_model and logs it there when
     profiler is called in specific method
     */
-    // console.log(req.session.passport)
+    console.log(req.session)
     next()
 });
-// this middleware is checking if id = 0 then to the next route
-app.get('/user/:id', (req, res, next) => {
-    if (req.params.id == 0)
-        next('route');
-    else next();
-}, (req, res, next) => {
-    res.send('regular');
-})
-app.get('/user/:id', (req, res, next) => {
-    console.log(req.params.id);
-    // res.send('special');
-    // console.log(req);
 
-})
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies

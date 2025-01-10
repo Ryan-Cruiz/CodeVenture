@@ -9,14 +9,14 @@ class Feedbacks {
         $.res.locals.lesson_id = $.req.params.lesson_id;
 
         let res = await Feedback.getFeedback($.req.params.lesson_id, $.req.session.user_data.user_id);
-        console.log(res);
+        console.log(res,$.req.session.user_data.user_id);
         if (res.length > 0) {
             let listRes = await Level.getMaterials($.req.params.lesson_id);
             let feedbackRes = await Feedback.getFeedbacks($.req.params.lesson_id);
             console.log(feedbackRes);
             $.res.render('feedback/show', { data: feedbackRes, lists: listRes });
         } else {
-            $.res.status(404).render('404');
+            $.res.render('feedback/index');
         }
     }
     async add_feedback() {
