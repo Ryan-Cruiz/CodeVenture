@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeVenture</title>
     <link rel="stylesheet" href="./css/landingStyle.css">
-    <link rel="icon" href="img/logo.png" type="image/x-icon">
 </head>
-
 <body>
-
-    <!-- Header -->
     <header>
+        <div class="logo">CodeVenture</div>
         <nav>
-            <div class="logo">
-                <img src="img/logo.png" alt="Logo" width="40" height="40">
-                <span>CodeVenture</span>
-            </div>
-            <ul>
-                <li><a href="/login">Login</a></li>
-            </ul>
+            <a href="/login">Login</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+    <main>
+        <section class="hero-section">
             <h1>Welcome to CodeVenture!</h1>
-            <p>Transform your coding skills and build your dream projects with CodeVenture.</p>
-        </div>
-    </section>
+            <p class="tagline">Your journey to coding excellence begins here.</p>
+            <p>Start your adventure to master your Coding skills.</p>
+            <a class="cta-button" href="/login">Start Your Journey</a>
+        </section>
 
-    <!-- Footer -->
+        <section class="feature-section">
+            <div class="feature">
+                <img src="img/php.png" alt="PHP Basics">
+                <h3>PHP Basics</h3>
+                <p>Learn the foundational skills to build dynamic web applications.</p>
+            </div>
+
+            <div class="feature">
+                <img src="img/JS.png" alt="JavaScript Fundamentals">
+                <h3>JavaScript Fundamentals</h3>
+                <p>Discover the power of JavaScript to create interactive web experiences.</p>
+            </div>
+
+            <div class="feature">
+                <img src="img/test.png" alt="Coding Challenges">
+                <h3>Coding Challenges</h3>
+                <p>Test your skills and grow through challenges.</p>
+            </div>
+        </section>
+
+        <section class="adventure-section">
+            <h2>Adventure Awaits!</h2>
+            <p>Unlock the secrets of web development and take your skills to the next level.</p>
+            <img src="img/img.png" alt="Coding Adventure">
+        </section>
+    </main>
+
     <footer>
         <p>&copy; 2024 CodeVenture. All rights reserved.</p>
     </footer>
-
 </body>
-
 </html>
