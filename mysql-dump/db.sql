@@ -114,6 +114,8 @@ CREATE TABLE IF NOT EXISTS `lessons` (
   `title` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
   `img_link` VARCHAR(255) NULL,
+  `isEnabled` TINYINT NULL DEFAULT '0',
+  `school_year` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),
@@ -131,7 +133,7 @@ CREATE INDEX `fk_groups_teachers1_idx` ON `lessons` (`role_id` ASC) ;
 
 LOCK TABLES `lessons` WRITE;
 /*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
-INSERT INTO `lessons` VALUES (1,1,'New Lesson ','test','2024-10-19 04:39:18','2024-10-19 04:39:18');
+INSERT INTO `lessons` VALUES (1,1,'New Lesson ','test','','0','2024-10-19 04:39:18','2024-10-19 04:39:18');
 /*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,6 +148,7 @@ CREATE TABLE IF NOT EXISTS `levels` (
   `level_name` VARCHAR(45) NULL,
   `content` BLOB NULL,
   `isTask` TINYINT NULL,
+  `isEnabled` TINYINT NULL DEFAULT '1',
   `order_number` INT DEFAULT NULL
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),
@@ -180,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `task_answers` (
   `user_id` INT NOT NULL,
   `task_id` INT NOT NULL,
   `lesson_id` INT NOT NULL,
+  `school_year` VARCHAR(45) NULL,
   `created_at` DATETIME NULL DEFAULT NOW(),
   `updated_at` DATETIME NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),

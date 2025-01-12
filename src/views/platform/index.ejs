@@ -53,12 +53,17 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
                 <div class="container p-2">
                     <div class="row">
                         <% data.forEach(item => { %>
                             <div class="col-sm-6 col-md-4 mb-2 mb-md-2">
                                 <div class="card glass-container">
+                                    <% if(item.isTask == '1'){ %>
+                                    <% if(item.level_enabled == '1') { %>
+                                        <span class="badge text-bg-success is-enabled" data-enabled="1">Enabled</span>
+                                    <% } else { %>
+                                        <span class="badge text-bg-secondary is-enabled" data-enabled="0">Disabled</span>
+                                    <% } } %>
                                     <div class="card-body">
                                         <h5 class="card-title text-center"><%= item.level_name %></h5>
                                         <div class="text-center">
@@ -71,7 +76,27 @@
                             </div>
                             <% });%>
                         </div>
-
-            </div>
+                </div>
+                <% } else {%>
+                <div class="container p-2">
+                    <div class="row">
+                        <% data.forEach(item => { %>
+                            <% if(item.level_enabled == '1') { %>
+                            <div class="col-sm-6 col-md-4 mb-2 mb-md-2">
+                                <div class="card glass-container">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center"><%= item.level_name %></h5>
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-primary m-2 w-50" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
+                                                <%= item.isTask == 0 ? "See Topic" : "Take Quiz" %>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } });%>
+                        </div>
+                </div>
+            <% } %>
 
             <%- include('../shared/footer') %>

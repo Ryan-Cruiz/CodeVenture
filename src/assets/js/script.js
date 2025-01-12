@@ -3,7 +3,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
 $(document).ready(function () {
     setTimeout(() => {
-        $('.alert').fadeOut(3000);
+        $('.alert').fadeOut(5000);
     }, 1000);
     let counter = 1;
     let user_container = $('#user-container');
@@ -75,12 +75,16 @@ $(document).ready(function () {
         let title = $(this).siblings('.lesson-title').text();
         let img_link = $(this).parent().siblings('.img-link').attr('src');
         console.log(img_link)
+        let isEnabled = $(this).parent().siblings('.is-enabled').data('enabled');
         let description = $(this).siblings('.lesson-description').text();
         let id = $(this).parent().data('id')
+        let school_year = $(this).parent().attr('aria-valueschoolyear')
         // console.log(id, title, description)
         $('#editTitle').val(title);
         $('#editDescription').val(description);
         $('#editImg_link').val(img_link)
+        $('#editIsEnabled').val(isEnabled)
+        $('#editSchool_year').val(school_year);
         $('#lesson_id').val(id);
     })
     $(document).on('change','#after_level_selector',function(){
@@ -92,5 +96,9 @@ $(document).ready(function () {
     $(document).on('submit','.submit-form',function(){
         $(this).find(':input[type=submit]').attr('disabled',true)
         $(this).find(':input[type=submit]').val('Processing...')
+        setTimeout(() => {
+            $(this).find(':input[type=submit]').attr('disabled',false)
+            $(this).find(':input[type=submit]').val('Save')
+        }, 3000);
     })
 });

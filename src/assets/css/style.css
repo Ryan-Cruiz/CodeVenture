@@ -18,7 +18,11 @@ body {
   /* justify-content: center; */
   /* flex-direction: column; Stack content vertically */
 }
-
+.is-enabled{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 /* Header */
 header.main-header {
   width: 100%;

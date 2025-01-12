@@ -25,11 +25,12 @@
                             %>
                         </div>
                         <% } else { %>
+                            <% if(list.level_enabled == '1' || roles.indexOf('admin') !==-1) { %>
                             <a href="/material/<%=list.lesson_id%>/level/<%=list.id%>"
                                 class="text-start list-group-item list-group-item-action btn btn-transparent mt-1">
                                 <%= list.level_name %>
                             </a>
-                            <% } %>
+                            <% } } %>
                                 <% }); %>
                                 <a href="/material/<%=data[0].lesson_id%>/feedback"
                                     class="text-start list-group-item list-group-item-action btn btn-transparent mt-1">
@@ -38,6 +39,15 @@
             </div>
         </div>
         <div class="p-2 flex-fill">
+            <%  if(data[0].isTask == '1' && roles.indexOf('admin') !== -1) {%>
+                <div>
+                    <% if(data[0].isEnabled == '1') { %>
+                        <span class="badge text-bg-success w-25">Enabled</span>
+                    <% } else { %>
+                        <span class="badge text-bg-secondary w-25" >Disabled</span>
+                    <% }  %>
+                </div>
+            <% } %>
             <h2 class="m-2 d-inline-block align-middle text-white">
                 <%= data[0].level_name %>
             </h2>
@@ -84,6 +94,7 @@
                     </div>
                     <form action="/submit/task/<%=data[0].lesson_id%>/<%= data[0].id %>" method="post" class="level-content submit-form">
                         <input type="hidden" value="<%=arr%>" name="numberArr">
+                        <input type="hidden" name="school_year" value="<%= data[0].school_year %>">
                         <input type="hidden" name="isRetake" value="<%= isRetake == "retake" ? 1 : 0 %>">
                         <div class="container" id="question-container">
                         <%JSON.parse(data[0].content).forEach((item,i)=> { %>

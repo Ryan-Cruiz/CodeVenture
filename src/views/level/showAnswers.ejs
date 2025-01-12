@@ -1,24 +1,65 @@
 <%- include('../shared/header') %>
     <div class="container">
+        <div hidden data-lesson="<%= params.id %>"  data-level="<%= params.level_id%>" id="param"></div>
+        <div hidden id="currentYear" aria-currentyear></div>
         <a href="/material/<%= params.id %>/level/<%= params.level_id %>" class="btn btn-secondary">Back</a>
+        <div class="m-3 d-flex flex-row-reverse">
+            <select id="school_year_select" class="form-select w-25">
+                <% school_year_data.forEach(data => {%>
+                    <option value="<%= data.school_year %>" <%= data.school_year == current_school_year ? "selected" : ""%>><%= data.school_year %></option>
+                <% }); %>
+            </select>
+        </div>
         <table class="table table-light rounded table-striped mt-2 table-hover">
             <thead>
                 <th>Name</th>
-                <th>Score</th>
-                <th>Retake</th>
-                <th>Taken At</th>
+                <th>Action</th>
             </thead>
-            <tbody>
+            <tbody id="userTable">
                 <% users_answers.forEach(answers =>{ %>
-                    <tr>
-                        <td><%= answers.first_name %> <%= answers.last_name %></td>
-                        <td><%= JSON.parse(answers.answers).score %></td>
-                        <td><%- JSON.parse(answers.answers).isRetake == "1" ? "<span class='badge text-bg-success'>Yes</span>" : "<span class='badge text-bg-secondary'>No</span>" %></td>
-                        <td><%= new Date(answers.created_at).toLocaleDateString() %></td>
+                    <tr class="align-middle" data-user="<%= answers.user_id %>">
+                        <td class="user_name"><%= answers.first_name %> <%= answers.last_name %></td>
+                        <td>
+                            <button type="button" class="btn btn-primary m-0 task-btn" data-bs-toggle="modal" data-bs-target="#taskAnswerModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                </svg>
+                            </button>
+                        </td>
                     </tr>
                 <% }) %>
                 </tbody>
             </table>
 
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="taskAnswerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div hidden id="currentUser"></div>
+            <div class="modal-body">
+                <p>Total Retakes: <span class="fw-bold total-retake">2</span></p>
+                <p>Highest Score: <span class="fw-bold high-score">3</span></p>
+                <table class="table table-light rounded table-striped mt-2 table-hover">
+                    <thead>
+                        <th>Score</th>
+                        <th>Taken At</th>
+                        <th>School Year</th>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="../../../../js/showAnswerScript.js" defer></script>
     <%- include('../shared/footer') %>

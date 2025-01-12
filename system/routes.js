@@ -45,6 +45,8 @@ middleware.routeRole = {
         '/test',
         '/submit/code/:lesson_id',
         '/update/code/:lesson_id/:level_id',
+        '/api/getUserTasks/:user_id/:lesson_id/:level_id',
+        '/api/getUsersTasksBySchoolYear/:id/:level_id'
     ]
 }
 /* $.post is for the forms  if you want to get the data */
@@ -72,6 +74,8 @@ $.post['/submit/codeTask/:lesson_id/:level_id'] = CodesController.submit_taskCod
 /* END OF PLATFORMCONTROLLER */
 
 /* START OF LEVELCONTROLLER */
+$.get['/api/getUserTasks/:user_id/:lesson_id/:level_id'] = LevelsController.getUserTasksApi;
+$.get['/api/getUsersTasksBySchoolYear/:id/:level_id'] = LevelsController.getUsersTasksBySchoolYearApi;
 $.get['/material/:id/level/:level_id'] = LevelsController.show_material;
 
 $.get['/material/:id/level/:level_id/edit'] = LevelsController.edit_level;

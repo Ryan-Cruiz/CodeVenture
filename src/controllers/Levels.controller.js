@@ -99,7 +99,8 @@ class Levels {
     async show_material() {
         let res = await Level.getLevel($.req.params);
         // console.log(res, typeof JSON.parse(res[0].content));
-        if (res == undefined || res.length <= 0) {
+        console.log(res, 'show material')
+        if ((res == undefined || res.length <= 0 || res[0].isEnabled == '0') && $.req.session.roles.indexOf('admin') == -1) {
             $.res.status(404).render('404');
         } else {
             // $.res.locals.params = $.req.params;
@@ -120,15 +121,19 @@ class Levels {
     async previewTask() {
         let res = await Level.getLevel($.req.params);
         // console.log(res, typeof JSON.parse(res[0].content));
-        console.log($.req.params);
-        if (res.length <= 0) {
+        console.log($.req.params, res);
+        if ((res.length <= 0 || res[0].isEnabled == '0') && $.req.session.roles.indexOf('admin') == -1) {
             $.res.status(404).render('404');
         } else {
             // $.res.locals.params = $.req.params;
             let listRes = await Level.getMaterials($.req.params.id);
             let answers = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
-            console.log(JSON.parse(answers[0].answers));
-            $.res.render('level/previewTask', { data: res, lists: listRes, answers: JSON.parse(answers[0].answers).answers });
+            // console.log(JSON.parse(answers[0].answers));
+            if (answers.length <= 0) {
+                $.res.status(404).render('404');
+            } else {
+                $.res.render('level/previewTask', { data: res, lists: listRes, answers: JSON.parse(answers[0].answers).answers });
+            }
         }
     }
     async submit_task() {
@@ -146,7 +151,7 @@ class Levels {
         }
         console.log(correct, 'score');
         let content = { answers: $.req.body.answers, score: correct, isRetake: $.req.body.isRetake, totalQuestion: questions.length };
-        let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content);
+        let saveTaskAnswers = await Level.saveTaskAnswers(inputs, content, $.req.body.school_year);
         // console.log(answers.toString())
         console.log(saveTaskAnswers);
         $.req.session.score = correct;
@@ -154,20 +159,43 @@ class Levels {
         $.res.redirect(`/material/${inputs.id}/level/${inputs.level_id}/score`);
     }
     async task_answers() {
-        let getTask = await Level.getTaskAnswer($.req.params);
-        // console.log(getTask);
-        if (getTask.length <= 0) {
-            $.res.status(404).render('404');
+        console.log($.req.params)
+        let res = await Level.getLessonSchoolYear($.req.params.id);
+        let getTask = await Level.getTaskAnswer($.req.params, res[0].school_year);
+        let resSchooYear = await Level.getSchoolYears($.req.params);
+        console.log(resSchooYear, 'sadasd')
+        // console.log(getTask)
+        $.res.locals.params = $.req.params;
+        $.res.render('level/showAnswers', { users_answers: getTask, school_year_data: resSchooYear, current_school_year: res[0].school_year });
+    }
+    async getUsersTasksBySchoolYearApi(){
+        console.log($.req.query,'query');
+        console.log($.req.params)
+        let res = await Level.getTaskAnswer($.req.params, $.req.query.school_year);
+        return $.res.json(res);
+    }
+    async getUserTasksApi() {
+        let res = await Level.getUserAnswers($.req.params);
+        // console.log(res);
+        if (res.length <= 0) {
+            $.res.send('not exist')
         } else {
-            $.res.locals.params = $.req.params;
-            $.res.render('level/showAnswers', { users_answers: getTask });
+            const data = res.map(item => {
+                return {
+                    answers: JSON.parse(item.answers),
+                    school_year: item.school_year,
+                    created_at: item.created_at
+                }
+            })
+            $.res.json(data);
         }
     }
     async taskScore() {
         console.log($.req.params);
         let res = await Level.getUserAnswer($.req.params, $.req.session.user_data.user_id);
         $.res.locals.params = $.req.params;
-        if (res.length <= 0) {
+        console.log(res);
+        if ((res.length <= 0 || res[0].isEnabled == '0') && $.req.session.roles.indexOf('admin') == -1) {
             $.res.status(404).render('404');
         } else {
             $.res.render('level/showScore', { data: res });

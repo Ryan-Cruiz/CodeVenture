@@ -28,6 +28,13 @@
         </div>
         
         <div class="p-2 flex-fill">
+            <div>
+                <% if(data[0].isEnabled == '1' && roles.indexOf('admin') !== -1) { %>
+                    <span class="badge text-bg-success w-25">Enabled</span>
+                <% } else { %>
+                    <span class="badge text-bg-secondary w-25" >Disabled</span>
+                <% }  %>
+            </div>
             <h2 class="m-2 d-inline-block align-middle">
                 <%= data[0].level_name %>
             </h2>
@@ -38,7 +45,7 @@
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/answers" class="btn btn-primary">All Answer</a>
                 <% } %>
             <% } %>
-            <% if(data[0].isTask == '1') { %>
+            <% if(data[0].isTask == '1' && roles.indexOf('admin') == -1) { %>
                 <a href="/material/<%=data[0].lesson_id%>/level/<%= data[0].id %>/history" class="btn btn-secondary">History</a>
             <% } %>
             <div>

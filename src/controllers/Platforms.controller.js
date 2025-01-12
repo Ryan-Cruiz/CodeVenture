@@ -8,18 +8,19 @@ class Platforms {
     async index() {
         $.res.locals.lesson_id = $.req.params.id;
         // console.log($.res.locals)
-        let materials_res = await Level.getMaterials($.req.params.id);
-        // console.log(materials_res);
-        if (materials_res.length <= 0) {
-            $.res.status(404).render('404');
+        let lesson_res = await Platform.getLesson($.req.params.id);
+        if(lesson_res[0].isEnabled == '0'){
+            $.res.status(404).render('404')
         } else {
-            let lessonTitle = await Platform.getLessonTitle($.req.params.id);
-            $.res.render('platform/index', { data: materials_res, lessonTitle: lessonTitle[0].title });
+            let materials_res = await Level.getMaterials($.req.params.id);
+            // console.log(materials_res);
+            $.res.render('platform/index', { data: materials_res, lessonTitle: lesson_res[0].title });
         }
     }
     /**LESSON */
     async create_lesson() {
         // $.res.render('platform/createLesson');
+        console.log($.req.body);
         let res = await Platform.create_lesson($.req.body, $.req.session.user_data.user_id);
         if (res == 'success') {
             $.req.session.msg = { success: ["Lesson Created Successfully!"] };
@@ -28,7 +29,7 @@ class Platforms {
             $.req.session.msg = { error: res };
             $.res.redirect('/');
         }
-        // console.log($.req.body);
+        console.log($.req.body);
     }
     async show_quiz_history() {
         $.res.locals.params = $.req.params;

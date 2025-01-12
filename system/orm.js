@@ -128,6 +128,10 @@ class ORM {
         this.queries += ` ORDER BY ${attr} ${type != "" ? type : "ASC"}`;
         return this;
     }
+    raw(query){
+        this.queries += query;
+        return this;
+    }
     // UPDATE `codeventure`.`users` SET `email` = 'developer.access@email.coms' WHERE (`id` = '1');
     values(arrVal) {
         this.arrVal = arrVal;
@@ -147,27 +151,31 @@ class ORM {
                     //  this.profiler.queries(query,rows);
                     if (err) {
                         this.connection.destroy();
+                        console.log(err);
                         console.log('error connecting. retrying in 1 sec');
-                        setTimeout(this.exec(), 1000);
+                        setTimeout(async () => {
+                            this.exec()
+                        }, 3000);
                         // throw err;
-                        reject(err);
+                        // reject(err);
+                    }else{
+                        this.connection.on('error', function (err) {
+                            this.connection.rollback();
+                            this.connection.end();
+                            reject(err)
+                            // throw err;
+                        });
+                        setTimeout(() => {
+                            // console.log(rows,err)
+                            resolve(rows);
+                            this.queries = '';
+                            this.select_tbl = '';
+                            this.arrVal = [];
+                            console.log('Connection End')
+                            // this.connection.destroy();
+                            // this.connection.end();
+                        }, 300);
                     }
-                    this.connection.on('error', function (err) {
-                        this.connection.rollback();
-                        this.connection.end();
-                        reject(err)
-                        // throw err;
-                    });
-                    setTimeout(() => {
-                        // console.log(rows,err)
-                        resolve(rows);
-                        this.queries = '';
-                        this.select_tbl = '';
-                        this.arrVal = [];
-                        console.log('Connection End')
-                        // this.connection.destroy();
-                        // this.connection.end();
-                    }, 300);
                 });
                 // console.log(this.connection.query(this.sql.format('SELECT 1')));
                 // setTimeout(() => {

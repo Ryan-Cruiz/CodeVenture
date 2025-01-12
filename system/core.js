@@ -55,9 +55,15 @@ class route_path {
     middlewareRoleChecker(req, res, next, currentURL) {
         let appServiceRole = middleware.validate_role(req.session.roles, currentURL);
         if (!appServiceRole) {
+            if (!req.session.logged) {
+                res.status(402).redirect('/');
+                res.end();
+            } else {
+                res.status(402).redirect(req.get("Referrer") || '/');
+                res.end();
+            }
             // console.log(appServiceRole, 'app', currentURL);
-            res.redirect('back');
-            res.end();
+            // console.log(,'hey there')
         } else {
             next();
         }

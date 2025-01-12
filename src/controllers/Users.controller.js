@@ -73,6 +73,7 @@ class Users {
     }
     async createAccount() {
         //check create validate if rules are all correct
+        console.log($.req.body,'asdsad')
         let result = user.create_validate($.req.body);
         // console.log(result)
         if (await result == 'success') {
@@ -86,7 +87,7 @@ class Users {
                 // let roles = new Array(data.roles);
                 // $.req.session.roles = ['all', 'auth', ...roles];
                 $.req.session.msg = { success: ['Successfully Created!'] };
-                $.res.redirect('/');
+                $.res.redirect('/login');
             } else {
                 // console.log('failedasdsad')
                 $.req.session.msg = { error: ['Email is Taken'] };

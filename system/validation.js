@@ -51,7 +51,7 @@ class validation {
                 if (key[x].rules[j] === 'is_numeric' && this.is_numeric(key[x].form_data) === false) {
                     error_arr.push('The ' + validation_rules[count] + ' only need numbers');
                 }
-                if (key[x].rules[j] === 'is_char' && this.is_numeric(key[x].form_data) === true) {
+                if (key[x].rules[j] === 'is_char' && this.is_numeric(key[x].form_data.replace(/\s/g, "")) === true) {
                     error_arr.push('The ' + validation_rules[count] + ' only need characters');
                 }
 
