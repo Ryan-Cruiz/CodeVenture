@@ -9,7 +9,7 @@ class Platforms {
         $.res.locals.lesson_id = $.req.params.id;
         // console.log($.res.locals)
         let lesson_res = await Platform.getLesson($.req.params.id);
-        if(lesson_res[0].isEnabled == '0'){
+        if(lesson_res[0].isEnabled == '0' && $.req.session.roles.indexOf('admin') == -1){
             $.res.status(404).render('404')
         } else {
             let materials_res = await Level.getMaterials($.req.params.id);

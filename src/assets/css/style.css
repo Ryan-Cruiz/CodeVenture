@@ -79,7 +79,6 @@ header .navbar ul li a:hover {
   overflow-y: scroll;
 }
 .sidebar {
-  width: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
   /* height: ; */

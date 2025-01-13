@@ -118,10 +118,10 @@ class Level extends model {
     }
     async getTaskAnswer(params,school_year) {
         let query = await this.select("task_answers", 
-        ["task_answers.*",'credentials.first_name','credentials.last_name'])
+        ["lesson_id","task_answers.user_id",'task_id','credentials.first_name','credentials.last_name'])
         .inner('credentials', ['id', 'user_id'])
         .where(["task_id=?", this.and("lesson_id=?"),this.and('school_year=?')])
-        .raw(" GROUP BY task_answers.user_id")
+        .raw(" GROUP BY credentials.id")
         .values([params.level_id, params.id,school_year]).exec();
         return query
     }
