@@ -4,8 +4,6 @@ class Level extends model {
     // Create something 
 
     async createMaterial(inputs) {
-
-
         let validation = await this.level_validate(inputs);
         if (validation != 'success') {
             return validation;
@@ -85,7 +83,7 @@ class Level extends model {
             let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask', 'order_number','isEnabled']).
                 values([inputs.lesson_id, inputs.title, content, inputs.isTask, ((parseInt(inputs.afterLessonNumber) + 1) || queryLastLessonId.length + 1),inputs.isEnabled]).exec();
             let afterLessonNumber = parseInt(inputs.afterLessonNumber) + 1;
-            await this.updateOrderNumber(afterLessonNumber, result, inputs, queryLastLessonId);
+            await this.updateOrderNumber(afterLessonNumber, result.insertId, inputs, queryLastLessonId);
             return 'success';
         }
         return 'fail';

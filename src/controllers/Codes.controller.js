@@ -10,6 +10,8 @@ class Codes {
     }
     async new_code() {
         $.res.locals.params = $.req.params;
+        $.res.locals.afterLessonNumber = $.req.query.after;
+        $.res.locals.lesson_id = $.req.params.lesson_id;
         $.res.render('code/addCode');
     }
     async create_code() {

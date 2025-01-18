@@ -94,6 +94,9 @@ if (app.get('env') === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies
 }
+app.get('/php',function(req,res){
+    res.render('code/phpIndex');
+})
 // app.use(passport.initialize());
 // app.use(passport.session());
 // app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));

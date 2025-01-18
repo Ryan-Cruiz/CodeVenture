@@ -92,6 +92,7 @@ $(document).ready(function () {
         let selectedAfterId = $(this).children('option:selected').val();
         $('#create_task').attr('href',`/new_level/${lesson_id}/task?after=`+selectedAfterId)
         $('#create_material').attr('href',`/new_level/${lesson_id}/material?after=`+selectedAfterId);
+        $('#create_code').attr('href',`/new_level/${lesson_id}/code?after=`+selectedAfterId)
     })
     $(document).on('submit','.submit-form',function(){
         $(this).find(':input[type=submit]').attr('disabled',true)

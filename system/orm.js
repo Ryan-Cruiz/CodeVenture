@@ -160,7 +160,7 @@ class ORM {
                         // reject(err);
                     }else{
                         this.connection.on('error', function (err) {
-                            this.connection.rollback();
+                            // this.connection.rollback();
                             this.connection.end();
                             reject(err)
                             // throw err;

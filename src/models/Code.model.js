@@ -12,13 +12,13 @@ class Code extends model {
         // )
         // let result = await super.Rawquery(query)
         // 
-        let queryLastLessonId = await this.select('levels', ['*']).where(['lesson_id=?']).order('order_number', 'ASC').values([inputs.lesson_id]).exec();
-        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask', 'order_number']).
-            values([inputs.lesson_id, inputs.title, inputs.description, inputs.isTask, ((parseInt(inputs.afterLessonNumber) + 1) || queryLastLessonId.length + 1)]).exec();
-        // console.log(result);
+        let afterLessonNumber = parseInt(inputs.afterLessonNumber) + 1;
+        let queryLastLessonId = await this.select('levels', ['*']).where(['lesson_id=?']).order('order_number', 'ASC').values([lesson_id]).exec();
+        let result = await this.insert('levels', ['lesson_id', 'level_name', 'content', 'isTask', 'order_number', 'isEnabled']).
+            values([lesson_id, inputs.title, content, inputs.isTask, ((parseInt(inputs.afterLessonNumber) + 1) || queryLastLessonId.length + 1), inputs.isEnabled]).exec();
+        console.log(result, lesson_id, queryLastLessonId.length);
         await this.updateOrderNumber(afterLessonNumber, result.insertId, inputs, queryLastLessonId)
-        console.log(result)
-        return 'success'
+        return 'success';
     }
     async updateCode(inputs, content, level_id) {
         let validation = await this.level_validate(inputs)
@@ -34,10 +34,8 @@ class Code extends model {
     }
     async updateOrderNumber(afterLessonNumber, id, inputs, queryLastLessonId) {
         // console.log(inputs.afterLessonNumber == "", "sajdkasjdksajdksa", afterLessonNumber == NaN);
-        this.dbConnection();
         let queryOutput = "INSERT INTO levels(lesson_id,id,order_number) VALUES ";
-        // console.log(afterLessonNumber, queryLastLessonId.length)
-        if (inputs.afterLessonNumber == "") {
+        if (inputs.afterLessonNumber == "" || afterLessonNumber == NaN) {
             return
         }
         let lessonNumber = parseInt(inputs.afterLessonNumber);
@@ -62,9 +60,8 @@ class Code extends model {
 
             }
         }
-        let queryRes = await super.Rawquery(queryOutput);
-        this.connection.destroy();
         console.log(queryOutput);
+        let queryRes = await super.Rawquery(queryOutput);
     }
 
     async level_validate(inputs) {

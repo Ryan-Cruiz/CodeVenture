@@ -40,14 +40,17 @@
                                     <% } %>
                             <% }) %>
                         </select>
-                        <div class="m-1 text-center">
-                            
-                            <a href="/new_level/<%= lesson_id %>/material" id="create_material" class="btn btn-primary w-50">Create
-                                Material</a>
-                            </div>
+                            <div class="m-1 text-center">
+                                <a href="/new_level/<%= lesson_id %>/material" id="create_material" class="btn btn-primary w-50">Create
+                                    Material</a>
+                                </div>
                             <div class="m-1 text-center">
                                 <a href="/new_level/<%= lesson_id %>/task" id="create_task" class="btn btn-primary w-50">Create
                                     Task</a>
+                            </div>
+                            <div class="m-1 text-center">
+                                <a href="/new_level/<%= lesson_id %>/code" id="create_code" class="btn btn-primary w-50">Create
+                                    Code</a>
                                 </div>
                             </div>
                         </div>
@@ -58,17 +61,19 @@
                         <% data.forEach(item => { %>
                             <div class="col-sm-6 col-md-4 mb-2 mb-md-2">
                                 <div class="card glass-container">
-                                    <% if(item.isTask == '1'){ %>
+                                    <% if(item.isTask == '1' || item.isTask == '2'){ %>
                                     <% if(item.level_enabled == '1') { %>
                                         <span class="badge text-bg-success is-enabled" data-enabled="1">Enabled</span>
+                                        <span class="badge text-bg-info info-badge"><%= item.isTask == 1 ? "Quiz" : "Code" %></span>
                                     <% } else { %>
                                         <span class="badge text-bg-secondary is-enabled" data-enabled="0">Disabled</span>
-                                    <% } } %>
+                                        <span class="badge text-bg-info info-badge"><%= item.isTask == 1 ? "Quiz" : "Code" %></span>
+                                        <% } } %>
                                     <div class="card-body">
                                         <h5 class="card-title text-center"><%= item.level_name %></h5>
                                         <div class="text-center">
                                             <a class="btn btn-outline-primary m-2 w-50" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
-                                                <%= item.isTask == 0 ? "See Topic" : "Take Quiz" %>
+                                                <%= item.isTask == 0 ? "See Topic" : (item.isTask == 1 ? "Take Quiz" : "Start Code") %>
                                             </a>
                                         </div>
                                     </div>
@@ -88,7 +93,7 @@
                                         <h5 class="card-title text-center"><%= item.level_name %></h5>
                                         <div class="text-center">
                                             <a class="btn btn-outline-primary m-2 w-50" href="/material/<%= item.lesson_id%>/level/<%= item.id %>">
-                                                <%= item.isTask == 0 ? "See Topic" : "Take Quiz" %>
+                                                <%= item.isTask == 0 ? "See Topic" : (item.isTask == 1 ? "Take Quiz" : "Start Code") %>
                                             </a>
                                         </div>
                                     </div>
